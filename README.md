@@ -19,4 +19,11 @@ COMPANY The hirers, if you work for a company, they have hired you, if you work 
 
 CONTRACTS Between PERSONA and COMPANY. Of every conceivable kind.
 
-APIs Payroll Access Control HR Worked Hours Evaluations Other modules
+APIs: 
+   * Payroll
+   * Access
+   * Control
+   * HR
+   * Worked Hours
+   * Evaluations
+   * Other...
