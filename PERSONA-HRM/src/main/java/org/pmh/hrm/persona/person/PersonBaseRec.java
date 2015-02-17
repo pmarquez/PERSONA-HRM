@@ -1,15 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.pmh.hrm.persona.person;
 
+//   Standard Libraries Imports
+
+//   Third Party Libraries Imports
+
+//   FENIX Framework Imports
+
+//   Application Domain Imports
+
+
+/**
+ * PersonBaseRec.java<br/><br/>
+ * Creation Date 2015-02-09 07:19<br/><br/>
+ * <b>DESCRIPTION:</b><br/><br/>
+ * <p></p>
+ *
+ *<PRE>
+ *<table width="90%" border="1" cellpadding="3" cellspacing="2">
+ *<tr><th colspan="2">   History   </th></tr>
+ *
+ *<tr>
+ *<td width="20%">Version 1.0<br/>
+ * Version Date: 2015-02-09 07:19<br/>
+ * Version Creator: Paulo Márquez</td>
+ *<td width="80%"><p>Creation</p></td>
+ *</tr>
+ *</table>
+ *</PRE>
+ * @author Paulo Márquez
+ * @version 1.0 - 2015-02-09 07:19
+ */
 /**
  *
- * @author pmarquez- 2015-02-09 07:19
+ * @author pmarquez- 2015-02-09 
  */
-public class  PersonBaseRec{
+public class  PersonBaseRec {
     private int    personCode;
     private int    idTypeCode;
     private String idType;
