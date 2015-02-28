@@ -3,12 +3,15 @@ package org.pmh.hrm.persona;
 //   Standard Libraries Imports
 
 //   Third Party Libraries Imports
+import javax.sql.DataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 //   FENIX Framework Imports
 
@@ -37,12 +40,25 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0 - 2015-02-17 21:51
  */
 @EnableAutoConfiguration                                          // This annotation tells Spring to auto-wire your application
-@ComponentScan(basePackages = {"com.pmh.hrm.persona.controller"}) // This annotation tells Spring to look for controllers, etc. starting in the current package
+@ComponentScan(basePackages = {"org.pmh.hrm.persona.controller"}) // This annotation tells Spring to look for controllers, etc. starting in the current package
 @Configuration                                                    // This annotation tells Spring that this class contains configuration information for the application.
 public class Main extends SpringBootServletInitializer {
     
     private static final String MAX_REQUEST_SIZE = "10MB";
         
+    @Bean
+//    @ConfigurationProperties(prefix="datasource.persona_hrm")
+    public DataSource personaDataSource ( ) {
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource ( );
+
+        dataSource.setDriverClass ( com.mysql.jdbc.Driver.class            );
+        dataSource.setUsername    ( "personauser"                             );
+        dataSource.setUrl         ( "jdbc:mysql://localhost:3306/personahrm" );
+        dataSource.setPassword    ( "p3r50n4"                             );
+
+        return dataSource;
+    }
+
     @Override
     protected SpringApplicationBuilder configure ( SpringApplicationBuilder application ) {
         return application.sources ( Main.class );
