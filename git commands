@@ -1,0 +1,7 @@
+cd PERSONA-HRM/
+git remote add origin https://github.com/pmarquez/PERSONA-HRM
+git remote -v
+git add .
+git commit -m "2015-02-28 10:52 commit"
+git push origin master
+

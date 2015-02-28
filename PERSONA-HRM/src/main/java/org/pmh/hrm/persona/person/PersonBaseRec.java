@@ -33,10 +33,6 @@ import java.time.Period;
  * @author Paulo Márquez
  * @version 1.0 - 2015-02-09 07:19
  */
-/**
- *
- * @author pmarquez- 2015-02-09 
- */
 public class  PersonBaseRec {
     private int       personCode;
     private int       idTypeCode;
