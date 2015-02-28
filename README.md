@@ -5,7 +5,7 @@ PERSONA has been conceived as an HRM platform that emphasizes the HUMAN part of 
 
 Now, since github is for code, I will briefly describe a few of the design goals and technical elements that will be a part of the platform.
 
-SOME DESIRED GOALS 100% decoupling between server and clients. 100% componentized [web client, web components]. 100% API access to back end. TOP% APIS for inter-module comm. Micro services for the rest.
+SOME DESIRED GOALS 100% decoupling between server and clients. 100% componentized [web client, web components]. 100% API access to back end. TOP% APIS for inter-module comm (Microservices).
 
 Decoupling between the clients and the server is achieved by channeling all communication via APIs, making sure that mobile clients can be first class citizens in this brave new world.
 
