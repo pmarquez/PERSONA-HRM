@@ -1,4 +1,4 @@
-# PERSONA-HRM
+# PERSONA-HRM (CODE NAME)
  Human Resources Management for the 21st Century
 
 PERSONA has been conceived as an HRM platform that emphasizes the HUMAN part of the HRM.

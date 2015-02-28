@@ -1,6 +1,9 @@
 package org.pmh.hrm.persona.person;
 
 //   Standard Libraries Imports
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
 
 //   Third Party Libraries Imports
 
@@ -35,24 +38,43 @@ package org.pmh.hrm.persona.person;
  * @author pmarquez- 2015-02-09 
  */
 public class  PersonBaseRec {
-    private int    personCode;
-    private int    idTypeCode;
-    private String idType;
-    private String idNumber;
-    private String firstName;
-    private String middleName;
-    private String lastName;
+    private int       personCode;
+    private int       idTypeCode;
+    private String    idType;
+    private String    idNumber;
+    private String    firstName;
+    private String    middleName;
+    private String    lastName;
+    private String    socialSecurityNumber;
+    private LocalDate birthdate;
     
-//    DateTimeUtil dateOfBirth;
-
     public PersonBaseRec ( ) {
-        this.personCode       = 0;
-        this.idTypeCode       = 0;
-        this.idType           = "";
-        this.idNumber         = "";
-        this.firstName        = "";
-        this.middleName       = "";
-        this.lastName         = "";
+        this.personCode           = 0;
+        this.idTypeCode           = 0;
+        this.idType               = "";
+        this.idNumber             = "";
+        this.firstName            = "";
+        this.middleName           = "";
+        this.lastName             = "";
+        this.socialSecurityNumber = "";
+        this.birthdate            = LocalDate.MIN;
+    }
+    
+    public int getAge ( ) {
+        int age = 0;
+        
+        LocalDate today = LocalDate.now ( );
+        
+        LocalDate birthday = LocalDate.of ( 1965, Month.MARCH, 3 );
+
+        Period p = Period.between ( birthday, today );
+
+        //   Now access the values as below
+        System.out.println ( p.getDays   ( ) );
+        System.out.println ( p.getMonths ( ) );
+        System.out.println ( p.getYears  ( ) );
+
+        return p.getYears  ( );
     }
 
     /**
@@ -160,6 +182,34 @@ public class  PersonBaseRec {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**
+     * @return the birthdate
+     */
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    /**
+     * @param birthdate the birthdate to set
+     */
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    /**
+     * @return the socialSecurityNumber
+     */
+    public String getSocialSecurityNumber() {
+        return socialSecurityNumber;
+    }
+
+    /**
+     * @param socialSecurityNumber the socialSecurityNumber to set
+     */
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        this.socialSecurityNumber = socialSecurityNumber;
     }
 
 }
