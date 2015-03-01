@@ -1,13 +1,15 @@
 # PERSONA-HRM (CODE NAME)
- Human Resources Management for the 21st Century
+Human Resources Management for the 21st Century
+
+I need to write a better README. This one is just the result of trying to translate into English a bunch of twisted lines connecting boxes that I drew on a piece of paper when I was trying to establish a starting point for this project. 
+
+So read on at your own risk.
 
 PERSONA has been conceived as an HRM platform that emphasizes the HUMAN part of the HRM.
 
 Now, since github is for code, I will briefly describe a few of the design goals and technical elements that will be a part of the platform.
 
-SOME DESIRED GOALS 100% decoupling between server and clients. 100% componentized [web client, web components]. 100% API access to back end. TOP% APIS for inter-module comm (Microservices).
-
-Decoupling between the clients and the server is achieved by channeling all communication via APIs, making sure that mobile clients can be first class citizens in this brave new world.
+Some desired goals are: complete decoupling between server and clients. Webcomponents on the client side. APIs, Microservices where they make sense (and sometimes where they do not! :) ).
 
 MODULES
 
