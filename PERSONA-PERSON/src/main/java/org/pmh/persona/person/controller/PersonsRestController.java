@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
-import org.pmh.util.HtmlListElement;
 import org.pmh.util.ListWrapper;
 
 //   Application Domain Imports
@@ -74,19 +73,4 @@ public class PersonsRestController {
         return r;
     }
         
-//    @RequestMapping ( value = "pharmaAPI/1.0/viashtml/{vcc}", method = RequestMethod.GET )
-//    public String gendersListHtml ( @PathVariable int vcc, HttpServletRequest request ) {
-//  
-//        String selectHTMLStr = "<option value=\"0\">Seleccione una vía de aplicación...</option>";
-//        
-//        List<HtmlListElement> genders = PersonsModel.retrieveActiveViasForCategory ( vcc, ds );
-//
-//        for ( int idx = 0; idx < vias.size ( ); idx++ ) {
-//            HtmlListElement r = vias.get ( idx );
-//            selectHTMLStr += "<option value=" + r.getKey ( ) + ">" + r.getValue ( ) + "</option>";
-//        }
-//        
-//        return selectHTMLStr;
-//    }
-
 }
