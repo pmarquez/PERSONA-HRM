@@ -51,7 +51,7 @@ public class CompaniesRestController {
     @Autowired
     private DataSource ds;
     
-    @RequestMapping ( value = "/companuesAPI/1.0/companies", method = RequestMethod.GET )
+    @RequestMapping ( value = "/companiesAPI/1.0/companies", method = RequestMethod.GET )
     public ListWrapper baseItems ( HttpServletRequest request ) {
 
     //    HttpSession session = request.getSession ( );
@@ -64,7 +64,7 @@ public class CompaniesRestController {
         return lw;
     }
     
-    @RequestMapping ( value = "/companuesAPI/1.0/companies/{companyCode}", method = RequestMethod.GET )
+    @RequestMapping ( value = "/companiesAPI/1.0/companies/{companyCode}", method = RequestMethod.GET )
     public CompanyRec retrievePerson ( @PathVariable int companyCode, HttpServletRequest request ) {
 
     //    HttpSession session = request.getSession ( );
