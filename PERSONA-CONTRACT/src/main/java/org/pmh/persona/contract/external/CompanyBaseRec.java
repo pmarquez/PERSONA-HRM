@@ -1,5 +1,5 @@
 
-package org.pmg.persona.contract.external;
+package org.pmh.persona.contract.external;
 
 //   Standard Libraries Imports
 import java.time.LocalDateTime;
@@ -229,9 +229,9 @@ public class CompanyBaseRec {
     /**
      * @param creationDate the creationDate to set
      */
-    public void setCreationDate ( LocalDateTime creationDate ) {
-        this.creationDate = creationDate;
-    }
+//    public void setCreationDate ( LocalDateTime creationDate ) {
+//        this.creationDate = creationDate;
+//    }
     
     public void setCreationDate ( String creationDate ) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );

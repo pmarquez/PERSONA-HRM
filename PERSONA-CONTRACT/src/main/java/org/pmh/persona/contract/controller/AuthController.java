@@ -3,6 +3,7 @@ package org.pmh.persona.contract.controller;
 
 //   Standard Libraries Imports
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 //   Third Party Libraries Imports
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 //   Application Domain Imports
 
+
 /**
- * ContractsController.java<br/><br/>
- * Creation Date 2015-03-25 19:06<br/><br/>
+ * AuthController.java<br/><br/>
+ * Creation Date 2015-03-23 16:19<br/><br/>
  * <b>DESCRIPTION:</b><br/><br/>
  * <p></p>
  *
@@ -27,23 +29,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  *<tr>
  *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-25 19:06<br/>
+ * Version Date: 2015-03-23 16:19<br/>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
  *</table>
  *</PRE>
  * @author Paulo Márquez
- * @version 1.0 - 2015-03-25 19:06
+ * @version 1.0 - 2015-03-23 16:19
  */
 @Controller
-public class ContractsController {
-//    @Autowired
-//    private DataSource ds;
-//
-//    @RequestMapping ( value = "/contracts", method = RequestMethod.GET )
-//    public String retrieveContracts ( HttpServletRequest request ) {
-//        
-//        return "landing";
-//    }
+public class AuthController {
+
+    @RequestMapping ( value = "/", method = RequestMethod.GET )
+    public String homeSimple ( HttpServletRequest request ) {
+        
+        return "landing";
+    }
+    
+    @RequestMapping ( value = "/signout", method = RequestMethod.GET )
+    public String signOut ( HttpServletRequest request ) {
+        HttpSession session = request.getSession ( );
+        session.invalidate ( );
+        
+        return "landing";
+    }
+
 }

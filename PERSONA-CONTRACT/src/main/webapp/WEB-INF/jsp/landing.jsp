@@ -10,7 +10,7 @@
         <meta name="author" content="">
         <link rel="icon" href="images/fav.png">
 
-        <title>::: PERSON :::</title>
+        <title>::: CONTRACTS :::</title>
 
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap/bootstrap.css" rel="stylesheet">
@@ -39,10 +39,10 @@
         <div class="cover-container">
 
           <div class="inner cover">
-            <img src="images/person.jpg" alt="Persona - PERSON"/>
+            <img src="images/company.jpg" alt="Persona - CONTRACT"/>
             <div class="hr-blue-bar">
-                <h1 class="cover-heading">Persona - PERSON</h1>
-                <p class="lead">Human Resources - Person Manager</p>
+                <h1 class="cover-heading">Persona - CONTRACT</h1>
+                <p class="lead">Human Resources - Contract Manager</p>
             </div>
             <p class="lead">
               <a href="home" class="btn btn-lg btn-default">Login</a>

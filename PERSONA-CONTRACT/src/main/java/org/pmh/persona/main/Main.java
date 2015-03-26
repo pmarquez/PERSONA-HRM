@@ -1,9 +1,9 @@
 package org.pmh.persona.main;
 
 //   Standard Libraries Imports
+import javax.sql.DataSource;
 
 //   Third Party Libraries Imports
-import javax.sql.DataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -21,7 +21,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 /**
  * Main.java<br/><br/>
- * Creation Date 2015-02-17 21:51<br/><br/>
+ * Creation Date 2015-03-24 21:24<br/><br/>
  * <b>DESCRIPTION:</b><br/><br/>
  * <p></p>
  *
@@ -31,14 +31,14 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
  *
  *<tr>
  *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-02-17 21:51<br/>
+ * Version Date: 2015-03-24 21:24<br/>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
  *</table>
  *</PRE>
  * @author Paulo Márquez
- * @version 1.0 - 2015-02-17 21:51
+ * @version 1.0 - 2015-03-24 21:24
  */
 @EnableAutoConfiguration                                                    // This annotation tells Spring to auto-wire your application
 @ComponentScan ( basePackages = { "org.pmh.persona.contract.controller" } ) // This annotation tells Spring to look for controllers, etc. starting in the current package
@@ -52,10 +52,10 @@ public class Main extends SpringBootServletInitializer {
     public DataSource personaDataSource ( ) {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource ( );
 
-        dataSource.setDriverClass ( com.mysql.jdbc.Driver.class                  );
-        dataSource.setUsername    ( "personauser"                                );
-        dataSource.setUrl         ( "jdbc:mysql://localhost:3306/persona_person" );
-        dataSource.setPassword    ( "p3r50n4"                                    );
+        dataSource.setDriverClass ( com.mysql.jdbc.Driver.class                    );
+        dataSource.setUsername    ( "personauser"                                  );
+        dataSource.setUrl         ( "jdbc:mysql://localhost:3306/persona_contract" );
+        dataSource.setPassword    ( "p3r50n4"                                      );
 
         return dataSource;
     }

@@ -13,8 +13,8 @@ import java.time.format.DateTimeParseException;
 //   FENIX Framework Imports
 
 //   Application Domain Imports
-import org.pmg.persona.contract.external.CompanyBaseRec;
-import org.pmg.persona.contract.external.PersonBaseRec;
+import org.pmh.persona.contract.external.CompanyRec;
+import org.pmh.persona.contract.external.PersonRec;
 
 /**
  * ContractsBaseRec.java<br/><br/>
@@ -42,9 +42,9 @@ public class ContractBaseRec {
     private int            contractTypeCode;
     private String         contractType;
     private int            personCode;
-    private PersonBaseRec  person;
+    private PersonRec      person;
     private int            companyCode;
-    private CompanyBaseRec company;
+    private CompanyRec     company;
     private LocalDateTime  creationDate;
     private LocalDate      activationDate;
     private LocalDate      terminationDate;
@@ -237,28 +237,28 @@ public class ContractBaseRec {
     /**
      * @return the person
      */
-    public PersonBaseRec getPerson() {
+    public PersonRec getPerson ( ) {
         return person;
     }
 
     /**
      * @param person the person to set
      */
-    public void setPerson(PersonBaseRec person) {
+    public void setPerson( PersonRec person ) {
         this.person = person;
     }
 
     /**
      * @return the company
      */
-    public CompanyBaseRec getCompany() {
+    public CompanyRec getCompany ( ) {
         return company;
     }
 
     /**
      * @param company the company to set
      */
-    public void setCompany(CompanyBaseRec company) {
+    public void setCompany ( CompanyRec company ) {
         this.company = company;
     }
 
