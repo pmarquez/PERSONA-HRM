@@ -2,14 +2,15 @@
 package org.pmh.persona.contract.contract;
 
 //   Standard Libraries Imports
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 //   Third Party Libraries Imports
 
 //   FENIX Framework Imports
 
 //   Application Domain Imports
+import org.pmh.persona.contract.post.ContractPostRec;
 
 /**
  * ContractsRec.java<br/><br/>
@@ -33,9 +34,27 @@ import java.time.LocalDateTime;
  * @version 1.0 - 2015-03-25 19:33
  */
 public class ContractRec extends ContractBaseRec {
-
+    
+    private List<ContractPostRec> posts;
+    
     public ContractRec ( ) {
-        super ( );        
+        super ( );  
+        
+        posts = new ArrayList<> ( );
+    }
+
+    /**
+     * @return the posts
+     */
+    public List<ContractPostRec> getPosts ( ) {
+        return posts;
+    }
+
+    /**
+     * @param posts the posts to set
+     */
+    public void setPosts ( List<ContractPostRec> posts ) {
+        this.posts = posts;
     }
 
 }

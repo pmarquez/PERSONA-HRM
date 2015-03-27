@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
 import org.pmh.util.ListWrapper;
@@ -20,7 +21,6 @@ import org.pmh.util.ListWrapper;
 import org.pmh.persona.contract.contract.ContractBaseRec;
 import org.pmh.persona.contract.contract.ContractRec;
 import org.pmh.persona.contract.model.ContractsModel;
-import org.springframework.web.client.RestTemplate;
 import org.pmh.persona.contract.external.CompanyRec;
 import org.pmh.persona.contract.external.PersonRec;
 
@@ -79,16 +79,12 @@ public class ContractsRestController {
         String       personUri    = personBaseURI  + "/" + r.getPersonCode  ( );
         String       companyUri   = companyBaseURI + "/" + r.getCompanyCode ( );
 
-//        System.out.println ( restTemplate.getForEntity ( personUri,  String.class ) );
-//        System.out.println ( restTemplate.getForEntity ( companyUri, String.class ) );
-        
         PersonRec  person  = new PersonRec  ( );
         CompanyRec company = new CompanyRec ( );
         
         try {
             company = restTemplate.getForObject ( companyUri, CompanyRec.class );
             person  = restTemplate.getForObject ( personUri,  PersonRec.class  );
-
         } catch ( org.springframework.web.client.RestClientException ex ) {
             System.err.print ( ex.getMessage ( ) );
         }

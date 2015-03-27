@@ -229,9 +229,10 @@ public class CompanyBaseRec {
     /**
      * @param creationDate the creationDate to set
      */
-//    public void setCreationDate ( LocalDateTime creationDate ) {
-//        this.creationDate = creationDate;
-//    }
+    @JsonIgnore
+    public void setCreationDate ( LocalDateTime creationDate ) {
+        this.creationDate = creationDate;
+    }
     
     public void setCreationDate ( String creationDate ) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );

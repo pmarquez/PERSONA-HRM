@@ -1,5 +1,5 @@
 
-package org.pmh.persona.contract.contract;
+package org.pmh.persona.contract.post;
 
 //   Standard Libraries Imports
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,13 +12,11 @@ import java.time.format.DateTimeParseException;
 
 //   FENIX Framework Imports
 
-//   Application Domain Imports
-import org.pmh.persona.contract.external.CompanyRec;
-import org.pmh.persona.contract.external.PersonRec;
+//   VidaPlena Analysis Domain Imports
 
 /**
- * ContractsBaseRec.java<br/><br/>
- * Creation Date 2015-03-25 19:07<br/><br/>
+ * ContractPostRec.java<br/><br/>
+ * Creation Date 2015-03-26 12:50<br/><br/>
  * <b>DESCRIPTION:</b><br/><br/>
  * <p></p>
  *
@@ -28,40 +26,58 @@ import org.pmh.persona.contract.external.PersonRec;
  *
  *<tr>
  *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-25 19:07<br/>
+ * Version Date: 2015-03-26 12:50<br/>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
  *</table>
  *</PRE>
  * @author Paulo Márquez
- * @version 1.0 - 2015-03-25 19:07
+ * @version 1.0 - 2015-03-26 12:50
  */
-public class ContractBaseRec {
-    private int            contractCode; 
-    private int            contractTypeCode;
-    private String         contractType;
-    private int            personCode;
-    private PersonRec      person;
-    private int            companyCode;
-    private CompanyRec     company;
-    private LocalDateTime  creationDate;
-    private LocalDate      activationDate;
-    private LocalDate      terminationDate;
-    private boolean        active; 
+public class ContractPostRec {
+    private int           contractPostCode;
+    private int           contractCode;
+    private int           departmentCode;
+    private String        departmentName;
+    private int           postCode;
+    private String        postName;
+    private int           supervisorPostCode;
+    private String        supervisorPostName;
+    private int           supervisorPersonCode;   //  Future Expansion
+    private LocalDateTime creationDate;
+    private LocalDate     activationDate;
+    private LocalDate     terminationDate;
+    private boolean       active;
+    
+    public ContractPostRec ( ) {
+        this.contractPostCode     = 0;
+        this.contractCode         = 0;
+        this.departmentCode       = 0;
+        this.departmentName       = "";
+        this.postCode             = 0;
+        this.postName             = "";
+        this.supervisorPostCode   = 0;
+        this.supervisorPostName   = "";
+        this.supervisorPersonCode = 0;
+        this.creationDate         = LocalDateTime.now ( );
+        this.activationDate       = LocalDate.MIN;
+        this.terminationDate      = LocalDate.MAX;
+        this.active               = false;
+    }
 
-    public ContractBaseRec ( ) {
-        super ( );
-        
-        this.contractCode     = 0;
-        this.contractTypeCode = 0;
-        this.contractType     = "";
-        this.personCode       = 0;
-        this.companyCode      = 0;
-        this.creationDate     = LocalDateTime.now();
-        this.activationDate   = LocalDate.MIN;
-        this.terminationDate  = LocalDate.MAX;
-        this.active           = false;
+    /**
+     * @return the contractPostCode
+     */
+    public int getContractPostCode ( ) {
+        return contractPostCode;
+    }
+
+    /**
+     * @param contractPostCode the contractPostCode to set
+     */
+    public void setContractPostCode(int contractPostCode) {
+        this.contractPostCode = contractPostCode;
     }
 
     /**
@@ -79,59 +95,59 @@ public class ContractBaseRec {
     }
 
     /**
-     * @return the contractTypeCode
+     * @return the departmentCode
      */
-    public int getContractTypeCode() {
-        return contractTypeCode;
+    public int getDepartmentCode() {
+        return departmentCode;
     }
 
     /**
-     * @param contractTypeCode the contractTypeCode to set
+     * @param departmentCode the departmentCode to set
      */
-    public void setContractTypeCode(int contractTypeCode) {
-        this.contractTypeCode = contractTypeCode;
+    public void setDepartmentCode(int departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     /**
-     * @return the contractType
+     * @return the departmentName
      */
-    public String getContractType() {
-        return contractType;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
     /**
-     * @param contractType the contractType to set
+     * @param departmentName the departmentName to set
      */
-    public void setContractType(String contractType) {
-        this.contractType = contractType;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     /**
-     * @return the personCode
+     * @return the postCode
      */
-    public int getPersonCode() {
-        return personCode;
+    public int getPostCode() {
+        return postCode;
     }
 
     /**
-     * @param personCode the personCode to set
+     * @param postCode the postCode to set
      */
-    public void setPersonCode(int personCode) {
-        this.personCode = personCode;
+    public void setPostCode(int postCode) {
+        this.postCode = postCode;
     }
 
     /**
-     * @return the companyCode
+     * @return the postName
      */
-    public int getCompanyCode() {
-        return companyCode;
+    public String getPostName() {
+        return postName;
     }
 
     /**
-     * @param companyCode the companyCode to set
+     * @param postName the postName to set
      */
-    public void setCompanyCode(int companyCode) {
-        this.companyCode = companyCode;
+    public void setPostName(String postName) {
+        this.postName = postName;
     }
 
     /**
@@ -150,6 +166,7 @@ public class ContractBaseRec {
     /**
      * @param creationDate the creationDate to set
      */
+    @JsonIgnore
     public void setCreationDate ( LocalDateTime creationDate ) {
         this.creationDate = creationDate;
     }
@@ -178,6 +195,7 @@ public class ContractBaseRec {
     /**
      * @param activationDate the activationDate to set
      */
+    @JsonIgnore
     public void setActivationDate ( LocalDate activationDate ) {
         this.activationDate = activationDate;
     }
@@ -206,6 +224,7 @@ public class ContractBaseRec {
     /**
      * @param terminationDate the terminationDate to set
      */
+    @JsonIgnore
     public void setTerminationDate ( LocalDate terminationDate ) {
         this.terminationDate = terminationDate;
     }
@@ -217,6 +236,34 @@ public class ContractBaseRec {
         } catch ( DateTimeParseException dtpe ) {            
             this.terminationDate = LocalDate.MIN;
         }
+    }
+
+    /**
+     * @return the supervisorPostCode
+     */
+    public int getSupervisorPostCode() {
+        return supervisorPostCode;
+    }
+
+    /**
+     * @param supervisorPostCode the supervisorPostCode to set
+     */
+    public void setSupervisorPostCode(int supervisorPostCode) {
+        this.supervisorPostCode = supervisorPostCode;
+    }
+
+    /**
+     * @return the supervisorPostName
+     */
+    public String getSupervisorPostName() {
+        return supervisorPostName;
+    }
+
+    /**
+     * @param supervisorPostName the supervisorPostName to set
+     */
+    public void setSupervisorPostName(String supervisorPostName) {
+        this.supervisorPostName = supervisorPostName;
     }
 
     /**
@@ -234,31 +281,16 @@ public class ContractBaseRec {
     }
 
     /**
-     * @return the person
+     * @return the supervisorPersonCode
      */
-    public PersonRec getPerson ( ) {
-        return person;
+    public int getSupervisorPersonCode() {
+        return supervisorPersonCode;
     }
 
     /**
-     * @param person the person to set
+     * @param supervisorPersonCode the supervisorPersonCode to set
      */
-    public void setPerson( PersonRec person ) {
-        this.person = person;
+    public void setSupervisorPersonCode(int supervisorPersonCode) {
+        this.supervisorPersonCode = supervisorPersonCode;
     }
-
-    /**
-     * @return the company
-     */
-    public CompanyRec getCompany ( ) {
-        return company;
-    }
-
-    /**
-     * @param company the company to set
-     */
-    public void setCompany ( CompanyRec company ) {
-        this.company = company;
-    }
-
 }

@@ -17,6 +17,8 @@ import org.springframework.jdbc.core.RowMapper;
 //   Application Domain Imports
 import org.pmh.persona.contract.contract.ContractBaseRec;
 import org.pmh.persona.contract.contract.ContractRec;
+import org.pmh.persona.contract.post.ContractPostRec;
+import org.pmh.persona.contract.post.PostBaseRec;
 
 /**
  * ContractsModel.java<br/><br/>
@@ -129,6 +131,8 @@ public class ContractsModel {
                                                             r.setTerminationDate         ( rs.getString  ( "TERMINATION_DATE"       ) );
                                                             r.setActive                  ( rs.getBoolean ( "active"                 ) );
                                                            
+                                                            r.setPosts ( ContractsModel.retrievePosts ( contractCode, ds ) );
+
                                                         return r;
                                                     }
                                                 } );
@@ -137,6 +141,99 @@ public class ContractsModel {
         }
 
         return r;
+    }
+    
+    static private List<ContractPostRec> retrievePosts ( int contractCode, DataSource ds ) {
+        
+        String SQLQuery = "SELECT per_contractpostentity.contractPostCode, "                                                             +
+                                 "IFNULL(per_contractpostentity.contractCode,0) AS CONTRACT_CODE, "                                      +
+                                 "IFNULL(per_contractpostentity.creationDate,'') AS CREATION_DATE, "                                     +
+                                 "IFNULL(per_contractpostentity.activationDate,'') AS ACTIVATION_DATE, "                                 +
+                                 "IFNULL(per_contractpostentity.terminationDate,'') AS TERMINATION_DATE, "                               +
+                                 "IFNULL(per_postentity.departmentCode,0) AS DEPARTMENT_CODE, "                                          +
+                                 "IFNULL(per_departmententity.departmentName,'') AS DEPARTMENT_NAME, "                                   +
+                                 "IFNULL(per_contractpostentity.postCode,0) AS POST_CODE, "                                              +
+                                 "IFNULL(per_postentity.postName,'') AS POST_NAME, "                                                     +
+                                 "IFNULL(per_postentity.supervisorPostCode,'') AS SUPERVISOR_POST_CODE, "                                +
+                                 "per_postentity.active "                                                                                +
+
+                          "FROM per_contractpostentity "                                                                                 +
+
+                          "LEFT OUTER JOIN per_postentity ON per_postentity.postCode = per_contractpostentity.postCode "                 +
+                          "LEFT OUTER JOIN per_departmententity ON per_departmententity.departmentCode = per_postentity.departmentCode " +
+
+                          "WHERE per_contractpostentity.contractCode = " + contractCode;
+        
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<ContractPostRec> l = new ArrayList<> ( );
+
+        try {
+            l = jdbcTemplate.query ( SQLQuery,
+                                        new RowMapper<ContractPostRec> ( ) {
+                                            @Override
+                                            public ContractPostRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                ContractPostRec r = new ContractPostRec ( );
+
+                                                   r.setContractPostCode        ( rs.getInt     ( "contractPostCode"       ) );
+                                                   r.setContractCode            ( rs.getInt     ( "CONTRACT_CODE"          ) );
+                                                   r.setDepartmentCode          ( rs.getInt     ( "DEPARTMENT_CODE"        ) );
+                                                   r.setDepartmentName          ( rs.getString  ( "DEPARTMENT_NAME"        ) );
+                                                   r.setPostCode                ( rs.getInt     ( "POST_CODE"              ) );
+                                                   r.setPostName                ( rs.getString  ( "POST_NAME"              ) );
+                                                   r.setSupervisorPostCode      ( rs.getInt     ( "SUPERVISOR_POST_CODE"   ) );
+//                                                   r.setSupervisorPostName      ( rs.getString  ( "SUPERVISOR_POST_NAME"   ) );
+                                                   r.setCreationDate            ( rs.getString  ( "CREATION_DATE"          ) );
+                                                   r.setActivationDate          ( rs.getString  ( "ACTIVATION_DATE"        ) );
+                                                   r.setTerminationDate         ( rs.getString  ( "TERMINATION_DATE"       ) );
+                                                   r.setActive                  ( rs.getBoolean ( "active"                 ) );
+
+                                                   r.setSupervisorPostName      ( ContractsModel.retrieveSupervisorPostName ( r.getSupervisorPostCode ( ), ds ) );
+
+                                                return r;
+
+                                            }
+
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ ContractsModel.retrievePosts: " + ex.getMessage ( ) );
+        }
+
+        return l;
+    }
+
+    static public String retrieveSupervisorPostName ( int postCode, final DataSource ds ) {
+
+        String SQLQuery = "SELECT IFNULL(per_postentity.postCode,0) AS SUPERVISOR_POST_CODE, "  +
+                                 "IFNULL(per_postentity.postName,'') AS SUPERVISOR_POST_NAME "  +
+
+                          "FROM per_postentity "                                                +
+
+                          "WHERE per_postentity.postCode = " + postCode;
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        String s = new String ( );
+
+        try {
+            s  =  jdbcTemplate.queryForObject  ( SQLQuery,
+                                                 new RowMapper<String> ( ) {
+                                                    @Override
+                                                    public String mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                        String s = "";
+
+                                                            s = rs.getString  ( "SUPERVISOR_POST_NAME" );
+                                                           
+                                                        return s;
+                                                    }
+                                                } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ ContractsModel.retrieveSupervisorPostName: " + ex.getMessage ( ) );
+        }
+
+        return s;
     }
 
 }
