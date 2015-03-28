@@ -189,7 +189,7 @@ public class ContractPostRec {
     }
     
     public String getActivationDate ( ) {
-        return ( activationDate.equals ( LocalDateTime.MIN ) ) ? "" : ( activationDate.getYear ( ) + "-" + activationDate.getMonthValue ( ) + "-" + activationDate.getDayOfMonth ( ) );
+        return ( activationDate.equals ( LocalDate.MIN ) ) ? "" : ( activationDate.getYear ( ) + "-" + activationDate.getMonthValue ( ) + "-" + activationDate.getDayOfMonth ( ) );
     }
 
     /**
@@ -218,7 +218,7 @@ public class ContractPostRec {
     }
     
     public String getTerminationDate ( ) {
-        return ( terminationDate.equals ( LocalDateTime.MIN ) ) ? "" : ( terminationDate.getYear ( ) + "-" + terminationDate.getMonthValue ( ) + "-" + terminationDate.getDayOfMonth ( ) );
+        return ( terminationDate.equals ( LocalDate.MIN ) ) ? "" : ( terminationDate.getYear ( ) + "-" + terminationDate.getMonthValue ( ) + "-" + terminationDate.getDayOfMonth ( ) );
     }
 
     /**
