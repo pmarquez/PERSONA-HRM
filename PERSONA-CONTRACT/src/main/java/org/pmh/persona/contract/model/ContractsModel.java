@@ -19,6 +19,7 @@ import org.pmh.persona.contract.contract.ContractBaseRec;
 import org.pmh.persona.contract.contract.ContractRec;
 import org.pmh.persona.contract.post.ContractPostRec;
 import org.pmh.persona.contract.post.PostBaseRec;
+import org.pmh.persona.contract.salary.SalaryBaseRec;
 
 /**
  * ContractsModel.java<br/><br/>
@@ -131,7 +132,8 @@ public class ContractsModel {
                                                             r.setTerminationDate         ( rs.getString  ( "TERMINATION_DATE"       ) );
                                                             r.setActive                  ( rs.getBoolean ( "active"                 ) );
                                                            
-                                                            r.setPosts ( ContractsModel.retrievePosts ( contractCode, ds ) );
+                                                            r.setPosts    ( ContractsModel.retrievePosts    ( contractCode, ds ) );
+                                                            r.setSalaries ( ContractsModel.retrieveSalaries ( contractCode, ds ) );
 
                                                         return r;
                                                     }
@@ -162,7 +164,9 @@ public class ContractsModel {
                           "LEFT OUTER JOIN per_postentity ON per_postentity.postCode = per_contractpostentity.postCode "                 +
                           "LEFT OUTER JOIN per_departmententity ON per_departmententity.departmentCode = per_postentity.departmentCode " +
 
-                          "WHERE per_contractpostentity.contractCode = " + contractCode;
+                          "WHERE per_contractpostentity.contractCode = " + contractCode + " "                                            +
+
+                          "ORDER BY per_contractpostentity.activationDate DESC";
         
         JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
 
@@ -222,9 +226,7 @@ public class ContractsModel {
                                                     @Override
                                                     public String mapRow ( ResultSet rs, int rowNum ) throws SQLException {
 
-                                                        String s = "";
-
-                                                            s = rs.getString  ( "SUPERVISOR_POST_NAME" );
+                                                        String s = rs.getString  ( "SUPERVISOR_POST_NAME" );
                                                            
                                                         return s;
                                                     }
@@ -234,6 +236,64 @@ public class ContractsModel {
         }
 
         return s;
+    }
+
+    static private List<SalaryBaseRec> retrieveSalaries ( int contractCode, DataSource ds ) {
+        
+        String SQLQuery = "SELECT IFNULL(per_contractentity.contractCode,0) AS CONTRACT_CODE, "                    +
+                                 "IFNULL(per_contractpostsalaryentity.salaryCode,0) AS SALARY_CODE, "              +
+                                 "IFNULL(per_contractpostsalaryentity.contractPostCode,0) AS CONTRACT_POST_CODE, " +
+                                 "IFNULL(per_contractpostentity.postCode,0) AS POST_CODE, "                        +
+                                 "IFNULL(per_postentity.postName,'') AS POST_NAME, "                               +
+                                 "IFNULL(per_contractpostsalaryentity.baseSalary,0) AS BASE_SALARY, "              +
+                                 "IFNULL(per_contractpostsalaryentity.creationDate,'') AS CREATION_DATE, "         +
+                                 "IFNULL(per_contractpostsalaryentity.activationDate,'') AS ACTIVATION_DATE, "     +
+                                 "IFNULL(per_contractpostsalaryentity.terminationDate,'') AS TERMINATION_DATE, "   +
+                                 "per_contractpostsalaryentity.active "                                            +
+
+                          "FROM per_contractpostsalaryentity "                                                     +
+
+                          "LEFT OUTER JOIN per_contractpostentity ON per_contractpostentity.contractPostCode = per_contractpostsalaryentity.contractPostCode " +
+                          "LEFT OUTER JOIN per_postentity ON per_postentity.postCode = per_contractpostentity.postCode "                                       +
+                          "LEFT OUTER JOIN per_contractentity ON per_contractentity.contractCode = per_contractpostentity.contractCode "                       +
+
+                          "WHERE per_contractentity.contractCode = " + contractCode + " "                                                                      +
+
+                          "ORDER BY per_contractpostsalaryentity.activationDate DESC";
+        
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<SalaryBaseRec> l = new ArrayList<> ( );
+
+        try {
+            l = jdbcTemplate.query    ( SQLQuery,
+                                        new RowMapper<SalaryBaseRec> ( ) {
+                                            @Override
+                                            public SalaryBaseRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                SalaryBaseRec r = new SalaryBaseRec ( );
+
+                                                   r.setContractCode            ( rs.getInt     ( "CONTRACT_CODE"      ) );
+                                                   r.setContractPostCode        ( rs.getInt     ( "CONTRACT_POST_CODE" ) );
+                                                   r.setPostCode                ( rs.getInt     ( "POST_CODE"          ) );
+                                                   r.setPostName                ( rs.getString  ( "POST_NAME"          ) );
+                                                   r.setSalaryCode              ( rs.getInt     ( "SALARY_CODE"        ) );
+                                                   r.setBaseSalary              ( rs.getDouble  ( "BASE_SALARY"        ) );
+                                                   r.setCreationDate            ( rs.getString  ( "CREATION_DATE"      ) );
+                                                   r.setActivationDate          ( rs.getString  ( "ACTIVATION_DATE"    ) );
+                                                   r.setTerminationDate         ( rs.getString  ( "TERMINATION_DATE"   ) );
+                                                   r.setActive                  ( rs.getBoolean ( "active"             ) );
+
+                                                return r;
+
+                                            }
+
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ ContractsModel.retrieveSalaries: " + ex.getMessage ( ) );
+        }
+
+        return l;
     }
 
 }

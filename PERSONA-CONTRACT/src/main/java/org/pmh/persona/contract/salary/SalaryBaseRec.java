@@ -1,5 +1,5 @@
 
-package org.pmh.persona.contract.post;
+package org.pmh.persona.contract.salary;
 
 //   Standard Libraries Imports
 import java.time.LocalDate;
@@ -15,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //   Application Domain Imports
 
 /**
- * ContractPostRec.java<br/><br/>
- * Creation Date 2015-03-26 12:50<br/><br/>
+ * SalaryBaseRec.java<br/><br/>
+ * Creation Date 2015-03-28 16:57<br/><br/>
  * <b>DESCRIPTION:</b><br/><br/>
  * <p></p>
  *
@@ -26,50 +26,72 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  *<tr>
  *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-26 12:50<br/>
+ * Version Date: 2015-03-28 16:57<br/>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
  *</table>
  *</PRE>
  * @author Paulo Márquez
- * @version 1.0 - 2015-03-26 12:50
+ * @version 1.0 - 2015-03-28 16:57
  */
-public class ContractPostRec {
-    private int           contractPostCode;
-    private int           contractCode;
-    private int           departmentCode;
-    private String        departmentName;
+public class SalaryBaseRec {
     private int           postCode;
     private String        postName;
-    private int           supervisorPostCode;
-    private String        supervisorPostName;
-    private int           supervisorPersonCode;   //  Future Expansion
+    private int           salaryCode;
+    private int           contractCode;
+    private int           contractPostCode;
+    private double        baseSalary;
     private LocalDateTime creationDate;
     private LocalDate     activationDate;
     private LocalDate     terminationDate;
     private boolean       active;
-    
-    public ContractPostRec ( ) {
-        this.contractPostCode     = 0;
-        this.contractCode         = 0;
-        this.departmentCode       = 0;
-        this.departmentName       = "";
-        this.postCode             = 0;
-        this.postName             = "";
-        this.supervisorPostCode   = 0;
-        this.supervisorPostName   = "";
-        this.supervisorPersonCode = 0;
-        this.creationDate         = LocalDateTime.now ( );
-        this.activationDate       = LocalDate.MIN;
-        this.terminationDate      = LocalDate.MAX;
-        this.active               = false;
+
+    public SalaryBaseRec ( ) {
+        this.postCode         = 0;
+        this.postName         = "";
+        this.salaryCode       = 0;
+        this.contractCode     = 0;
+        this.contractPostCode = 0;
+        this.baseSalary       = 0.0;
+        this.creationDate     = LocalDateTime.now();
+        this.activationDate   = LocalDate.MIN;
+        this.terminationDate  = LocalDate.MAX;
+        this.active           = false;
+    }
+
+    /**
+     * @return the salaryCode
+     */
+    public int getSalaryCode() {
+        return salaryCode;
+    }
+
+    /**
+     * @param salaryCode the salaryCode to set
+     */
+    public void setSalaryCode(int salaryCode) {
+        this.salaryCode = salaryCode;
+    }
+
+    /**
+     * @return the contractCode
+     */
+    public int getContractCode ( ) {
+        return contractCode;
+    }
+
+    /**
+     * @param contractCode the contractCode to set
+     */
+    public void setContractCode ( int contractCode ) {
+        this.contractCode = contractCode;
     }
 
     /**
      * @return the contractPostCode
      */
-    public int getContractPostCode ( ) {
+    public int getContractPostCode() {
         return contractPostCode;
     }
 
@@ -81,73 +103,17 @@ public class ContractPostRec {
     }
 
     /**
-     * @return the contractCode
+     * @return the baseSalary
      */
-    public int getContractCode() {
-        return contractCode;
+    public double getBaseSalary() {
+        return baseSalary;
     }
 
     /**
-     * @param contractCode the contractCode to set
+     * @param baseSalary the baseSalary to set
      */
-    public void setContractCode(int contractCode) {
-        this.contractCode = contractCode;
-    }
-
-    /**
-     * @return the departmentCode
-     */
-    public int getDepartmentCode() {
-        return departmentCode;
-    }
-
-    /**
-     * @param departmentCode the departmentCode to set
-     */
-    public void setDepartmentCode(int departmentCode) {
-        this.departmentCode = departmentCode;
-    }
-
-    /**
-     * @return the departmentName
-     */
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    /**
-     * @param departmentName the departmentName to set
-     */
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
-    /**
-     * @return the postCode
-     */
-    public int getPostCode() {
-        return postCode;
-    }
-
-    /**
-     * @param postCode the postCode to set
-     */
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
-    }
-
-    /**
-     * @return the postName
-     */
-    public String getPostName() {
-        return postName;
-    }
-
-    /**
-     * @param postName the postName to set
-     */
-    public void setPostName(String postName) {
-        this.postName = postName;
+    public void setBaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
     }
 
     /**
@@ -239,34 +205,6 @@ public class ContractPostRec {
     }
 
     /**
-     * @return the supervisorPostCode
-     */
-    public int getSupervisorPostCode() {
-        return supervisorPostCode;
-    }
-
-    /**
-     * @param supervisorPostCode the supervisorPostCode to set
-     */
-    public void setSupervisorPostCode(int supervisorPostCode) {
-        this.supervisorPostCode = supervisorPostCode;
-    }
-
-    /**
-     * @return the supervisorPostName
-     */
-    public String getSupervisorPostName() {
-        return supervisorPostName;
-    }
-
-    /**
-     * @param supervisorPostName the supervisorPostName to set
-     */
-    public void setSupervisorPostName(String supervisorPostName) {
-        this.supervisorPostName = supervisorPostName;
-    }
-
-    /**
      * @return the active
      */
     public boolean isActive() {
@@ -281,16 +219,31 @@ public class ContractPostRec {
     }
 
     /**
-     * @return the supervisorPersonCode
+     * @return the postCode
      */
-    public int getSupervisorPersonCode() {
-        return supervisorPersonCode;
+    public int getPostCode() {
+        return postCode;
     }
 
     /**
-     * @param supervisorPersonCode the supervisorPersonCode to set
+     * @param postCode the postCode to set
      */
-    public void setSupervisorPersonCode(int supervisorPersonCode) {
-        this.supervisorPersonCode = supervisorPersonCode;
+    public void setPostCode(int postCode) {
+        this.postCode = postCode;
     }
+
+    /**
+     * @return the postName
+     */
+    public String getPostName() {
+        return postName;
+    }
+
+    /**
+     * @param postName the postName to set
+     */
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
+
 }

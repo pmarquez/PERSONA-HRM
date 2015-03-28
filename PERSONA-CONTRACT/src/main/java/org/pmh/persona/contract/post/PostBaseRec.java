@@ -7,7 +7,7 @@ package org.pmh.persona.contract.post;
 
 //   FENIX Framework Imports
 
-//   VidaPlena Analysis Domain Imports
+//   Application Domain Imports
 
 /**
  * PostBaseRec.java<br/><br/>
@@ -31,7 +31,7 @@ package org.pmh.persona.contract.post;
  * @version 1.0 - 2015-03-26 12:43
  */
 public class PostBaseRec {
-    private int     postCode;              //   Post AutoIncrement Code
+    private int     postCode;              //   AutoIncrement Post Code
     private String  postId;                //   Internal Post Code
     private String  postName;
     private int     companyCode;

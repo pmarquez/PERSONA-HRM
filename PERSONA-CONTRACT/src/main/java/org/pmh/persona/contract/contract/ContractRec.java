@@ -11,6 +11,7 @@ import java.util.List;
 
 //   Application Domain Imports
 import org.pmh.persona.contract.post.ContractPostRec;
+import org.pmh.persona.contract.salary.SalaryBaseRec;
 
 /**
  * ContractsRec.java<br/><br/>
@@ -36,11 +37,13 @@ import org.pmh.persona.contract.post.ContractPostRec;
 public class ContractRec extends ContractBaseRec {
     
     private List<ContractPostRec> posts;
+    private List<SalaryBaseRec>   salaries;
     
     public ContractRec ( ) {
         super ( );  
         
-        posts = new ArrayList<> ( );
+        posts    = new ArrayList<> ( );
+        salaries = new ArrayList<> ( );
     }
 
     /**
@@ -55,6 +58,20 @@ public class ContractRec extends ContractBaseRec {
      */
     public void setPosts ( List<ContractPostRec> posts ) {
         this.posts = posts;
+    }
+
+    /**
+     * @return the salaries
+     */
+    public List<SalaryBaseRec> getSalaries() {
+        return salaries;
+    }
+
+    /**
+     * @param salaries the salaries to set
+     */
+    public void setSalaries(List<SalaryBaseRec> salaries) {
+        this.salaries = salaries;
     }
 
 }
