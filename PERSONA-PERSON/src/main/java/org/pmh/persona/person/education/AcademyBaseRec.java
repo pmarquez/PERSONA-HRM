@@ -43,32 +43,27 @@ public class AcademyBaseRec {
     private boolean       ongoing;
     private String        degreeName;
     private String        institution;      //   Educational Institution
+    private String        institutionCity;
+    private String        institutionState;
+    private String        institutionCountry;
     private String        achievements;
     private LocalDateTime creationDate;
 
     public AcademyBaseRec ( ) {
-        this.academyCode    = 0;
-        this.personCode     = 0;
-        this.startDate      = LocalDate.MIN;
-        this.endDate        = LocalDate.MAX;
-        this.ongoing        = false;
-        this.degreeName     = "";
-        this.institution    = "";
-        this.achievements   = "";
-        this.creationDate   = LocalDateTime.now ( );
+        this.academyCode        = 0;
+        this.personCode         = 0;
+        this.startDate          = LocalDate.MIN;
+        this.endDate            = LocalDate.MAX;
+        this.ongoing            = false;
+        this.degreeName         = "";
+        this.institution        = "";
+        this.institutionCity    = "";
+        this.institutionState   = "";
+        this.institutionCountry = "";
+        this.achievements       = "";
+        this.creationDate       = LocalDateTime.now ( );
     }
     
-    
-/*
-School*
-Dates Attended
-Degree
-Field of Study
-Grade
-Activities and Societies
-Description
- */
-
     /**
      * @return the academyCode
      */
@@ -239,6 +234,48 @@ Description
      */
     public void setOngoing(boolean ongoing) {
         this.ongoing = ongoing;
+    }
+
+    /**
+     * @return the institutionCity
+     */
+    public String getInstitutionCity() {
+        return institutionCity;
+    }
+
+    /**
+     * @param institutionCity the institutionCity to set
+     */
+    public void setInstitutionCity(String institutionCity) {
+        this.institutionCity = institutionCity;
+    }
+
+    /**
+     * @return the institutionState
+     */
+    public String getInstitutionState() {
+        return institutionState;
+    }
+
+    /**
+     * @param institutionState the institutionState to set
+     */
+    public void setInstitutionState(String institutionState) {
+        this.institutionState = institutionState;
+    }
+
+    /**
+     * @return the institutionCountry
+     */
+    public String getInstitutionCountry() {
+        return institutionCountry;
+    }
+
+    /**
+     * @param institutionCountry the institutionCountry to set
+     */
+    public void setInstitutionCountry(String institutionCountry) {
+        this.institutionCountry = institutionCountry;
     }
 
 }
