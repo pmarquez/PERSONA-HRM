@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 import java.util.List;
+import org.pmh.persona.person.education.AcademiaBaseRec;
 
 //   Third Party Libraries Imports
 import org.springframework.dao.DataAccessException;
@@ -149,6 +150,8 @@ public class PersonsModel {
                                                             r.setCreationDate            ( rs.getString  ( "CREATION_DATE"          ) );
                                                             r.setActive                  ( rs.getBoolean ( "active"                 ) );
                                                            
+                                                            r.setAcademia ( PersonsModel.retrievePersonAcademia ( personCode, ds ) );
+                                                            
                                                         return r;
                                                     }
                                                 } );
@@ -157,6 +160,60 @@ public class PersonsModel {
         }
 
         return r;
+    }
+
+    static public List<AcademiaBaseRec> retrievePersonAcademia( int personCode, DataSource ds ) {
+        
+        String SQLQuery = "SELECT per_academiaentity.academiaCode, "                                         +
+                                 "per_academiaentity.personCode, "                                           +
+                                 "IFNULL(per_academiaentity.startDate,'') AS START_DATE, "                   +
+                                 "IFNULL(per_academiaentity.endDate,'') AS END_DATE, "                       +
+                                 "per_academiaentity.ongoing, "                                              +
+                                 "IFNULL(per_academiaentity.degreeName,'') AS DEGREE_NAME, "                 +
+                                 "IFNULL(per_academiaentity.institution,'') AS INSTITUTION_NAME, "           +
+                                 "IFNULL(per_academiaentity.institutionCity,'') AS INSTITUTION_CITY, "       +
+                                 "IFNULL(per_academiaentity.institutionState,'') AS INSTITUTION_STATE, "     +
+                                 "IFNULL(per_academiaentity.institutionCountry,'') AS INSTITUTION_COUNTRY, " +
+                                 "IFNULL(per_academiaentity.creationDate,'') AS CREATION_DATE "              +
+
+                          "FROM per_academiaentity "                                                         +
+
+                          "WHERE personCode = " + personCode + " "                                           +
+
+                          "ORDER BY per_academiaentity.startDate DESC";
+        
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<AcademiaBaseRec> l = new ArrayList<> ( );
+
+        try {
+            l = jdbcTemplate.query ( SQLQuery,
+                                        new RowMapper<AcademiaBaseRec> ( ) {
+                                            @Override
+                                            public AcademiaBaseRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                AcademiaBaseRec r = new AcademiaBaseRec ( );
+
+                                                   r.setAcademiaCode            ( rs.getInt     ( "academiaCode"        ) );
+                                                   r.setPersonCode              ( rs.getInt     ( "personCode"          ) );
+                                                   r.setDegreeName              ( rs.getString  ( "DEGREE_NAME"         ) );
+                                                   r.setInstitution             ( rs.getString  ( "INSTITUTION_NAME"    ) );
+                                                   r.setInstitutionCity         ( rs.getString  ( "INSTITUTION_CITY"    ) );
+                                                   r.setInstitutionState        ( rs.getString  ( "INSTITUTION_STATE"   ) );
+                                                   r.setInstitutionCountry      ( rs.getString  ( "INSTITUTION_COUNTRY" ) );
+                                                   r.setStartDate               ( rs.getString  ( "START_DATE"          ) );
+                                                   r.setEndDate                 ( rs.getString  ( "END_DATE"            ) );
+                                                   r.setOngoing                 ( rs.getBoolean ( "ongoing"             ) );
+                                                   r.setCreationDate            ( rs.getString  ( "CREATION_DATE"       ) );
+
+                                                return r;
+                                            }
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ PersonsModel.retrievePersonAcademia: " + ex.getMessage ( ) );
+        }
+
+        return l;
     }
 
 }

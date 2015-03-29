@@ -2,12 +2,15 @@
 package org.pmh.persona.person.person;
 
 //   Standard Libraries Imports
+import java.util.ArrayList;
+import java.util.List;
 
 //   Third Party Libraries Imports
 
 //   FENIX Framework Imports
 
 //   Application Domain Imports
+import org.pmh.persona.person.education.AcademiaBaseRec;
 
 
 /**
@@ -32,5 +35,25 @@ package org.pmh.persona.person.person;
  * @version 1.0 - 2015-03-23 17:27
  */
 public class PersonRec extends PersonBaseRec {
-    
+
+    private List<AcademiaBaseRec> academia;
+
+    public PersonRec ( ) {
+        this.academia = new ArrayList<> ( );
+    }
+
+    /**
+     * @return the academia
+     */
+    public List<AcademiaBaseRec> getAcademia() {
+        return academia;
+    }
+
+    /**
+     * @param academia the academia to set
+     */
+    public void setAcademia(List<AcademiaBaseRec> academia) {
+        this.academia = academia;
+    }
+
 }

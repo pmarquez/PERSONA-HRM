@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //   Application Domain Imports
 
 /**
- * AcademyBaseRec.java<br/><br/>
+ * AcademiaBaseRec.java<br/><br/>
  * Creation Date 2015-03-28 21:22<br/><br/>
  * <b>DESCRIPTION:</b><br/><br/>
  * <p>Keeps track of academic achievements.</p>
@@ -35,8 +35,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Paulo Márquez
  * @version 1.0 - 2015-03-28 21:22
  */
-public class AcademyBaseRec {
-    private int           academyCode;
+public class AcademiaBaseRec {
+    private int           academiaCode;
     private int           personCode;
     private LocalDate     startDate;
     private LocalDate     endDate;
@@ -49,8 +49,8 @@ public class AcademyBaseRec {
     private String        achievements;
     private LocalDateTime creationDate;
 
-    public AcademyBaseRec ( ) {
-        this.academyCode        = 0;
+    public AcademiaBaseRec ( ) {
+        this.academiaCode       = 0;
         this.personCode         = 0;
         this.startDate          = LocalDate.MIN;
         this.endDate            = LocalDate.MAX;
@@ -65,17 +65,17 @@ public class AcademyBaseRec {
     }
     
     /**
-     * @return the academyCode
+     * @return the academiaCode
      */
-    public int getAcademyCode() {
-        return academyCode;
+    public int getAcademiaCode ( ) {
+        return academiaCode;
     }
 
     /**
-     * @param academyCode the academyCode to set
+     * @param academiaCode the academiaCode to set
      */
-    public void setAcademyCode(int academyCode) {
-        this.academyCode = academyCode;
+    public void setAcademiaCode ( int academiaCode ) {
+        this.academiaCode = academiaCode;
     }
 
     /**
@@ -185,7 +185,7 @@ public class AcademyBaseRec {
     }
     
     public void setStartDate ( String startDate ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.startDate = LocalDate.parse ( startDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
@@ -202,7 +202,7 @@ public class AcademyBaseRec {
     }
     
     public String getEndDate ( ) {
-        return ( endDate.equals ( LocalDate.MIN ) ) ? "" : ( endDate.getYear ( ) + "-" + endDate.getMonthValue ( ) + "-" + endDate.getDayOfMonth ( ) );
+        return ( endDate.equals ( LocalDate.MAX ) ) ? "" : ( endDate.getYear ( ) + "-" + endDate.getMonthValue ( ) + "-" + endDate.getDayOfMonth ( ) );
     }
 
     /**
@@ -214,7 +214,7 @@ public class AcademyBaseRec {
     }
     
     public void setEndDate ( String endDate ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.endDate = LocalDate.parse ( endDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
