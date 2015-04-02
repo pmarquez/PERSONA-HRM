@@ -142,16 +142,17 @@ public class AcademiaBaseRec {
         return creationDate;
     }
     
-    public String getCretionDate ( ) {
+    public String getCreationDate ( ) {
         return ( creationDate.equals ( LocalDateTime.MIN ) ) ? "" : ( creationDate.getYear ( ) + "-" + creationDate.getMonthValue ( ) + "-" + creationDate.getDayOfMonth ( ) + " " + 
                creationDate.getHour ( ) + ":" + creationDate.getMinute ( ) + ":" + creationDate.getSecond ( ) );
+//        return ( creationDate.equals ( LocalDateTime.MIN ) ) ? "" : creationDate.toString ( );
     }
 
     /**
      * @param creationDate the creationDate to set
      */
     @JsonIgnore
-    public void setCreationDate ( LocalDateTime creationDate ) {
+    public void setCreationDateLDT ( LocalDateTime creationDate ) {
         this.creationDate = creationDate;
     }
     
@@ -167,20 +168,20 @@ public class AcademiaBaseRec {
     /**
      * @return the startDate
      */
+    public String getStartDate ( ) {
+        return ( startDate.equals ( LocalDate.MIN ) ) ? "" : startDate.toString ( );
+    }
+
     @JsonIgnore
     public LocalDate getStartDateLD ( ) {
         return startDate;
-    }
-    
-    public String getStartDate ( ) {
-        return ( startDate.equals ( LocalDate.MIN ) ) ? "" : ( startDate.getYear ( ) + "-" + startDate.getMonthValue ( ) + "-" + startDate.getDayOfMonth ( ) );
     }
 
     /**
      * @param startDate the startDate to set
      */
     @JsonIgnore
-    public void setStartDate ( LocalDate startDate ) {
+    public void setStartDateLD ( LocalDate startDate ) {
         this.startDate = startDate;
     }
     
@@ -202,14 +203,16 @@ public class AcademiaBaseRec {
     }
     
     public String getEndDate ( ) {
-        return ( endDate.equals ( LocalDate.MAX ) ) ? "" : ( endDate.getYear ( ) + "-" + endDate.getMonthValue ( ) + "-" + endDate.getDayOfMonth ( ) );
+        String theEndDate = ( endDate.equals ( LocalDate.MAX ) ) ? "" : ( endDate.getYear ( ) + "-" + endDate.getMonthValue ( ) + "-" + endDate.getDayOfMonth ( ) );
+
+        return theEndDate;
     }
 
     /**
      * @param endDate the endDate to set
      */
     @JsonIgnore
-    public void setEndDate ( LocalDate endDate ) {
+    public void setEndDateLD ( LocalDate endDate ) {
         this.endDate = endDate;
     }
     
@@ -218,7 +221,7 @@ public class AcademiaBaseRec {
         try {
             this.endDate = LocalDate.parse ( endDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
-            this.endDate = LocalDate.MIN;
+            this.endDate = LocalDate.MAX;
         }
     }
 

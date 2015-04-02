@@ -284,7 +284,7 @@ public class  PersonBaseRec {
         return creationDate;
     }
     
-    public String getCretionDate ( ) {
+    public String getCreationDate ( ) {
         return ( creationDate.equals ( LocalDateTime.MIN ) ) ? "" : ( creationDate.getYear ( ) + "-" + creationDate.getMonthValue ( ) + "-" + creationDate.getDayOfMonth ( ) + " " + 
                creationDate.getHour ( ) + ":" + creationDate.getMinute ( ) + ":" + creationDate.getSecond ( ) );
     }
@@ -292,6 +292,7 @@ public class  PersonBaseRec {
     /**
      * @param creationDate the creationDate to set
      */
+    @JsonIgnore
     public void setCreationDate ( LocalDateTime creationDate ) {
         this.creationDate = creationDate;
     }

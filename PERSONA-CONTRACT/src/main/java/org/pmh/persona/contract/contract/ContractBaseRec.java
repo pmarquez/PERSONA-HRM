@@ -150,7 +150,8 @@ public class ContractBaseRec {
     /**
      * @param creationDate the creationDate to set
      */
-    public void setCreationDate ( LocalDateTime creationDate ) {
+    @JsonIgnore
+    public void setCreationDateLDT ( LocalDateTime creationDate ) {
         this.creationDate = creationDate;
     }
     
@@ -178,12 +179,13 @@ public class ContractBaseRec {
     /**
      * @param activationDate the activationDate to set
      */
-    public void setActivationDate ( LocalDate activationDate ) {
+    @JsonIgnore
+    public void setActivationDateLD ( LocalDate activationDate ) {
         this.activationDate = activationDate;
     }
     
     public void setActivationDate ( String activationDate ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.activationDate = LocalDate.parse ( activationDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
@@ -200,22 +202,23 @@ public class ContractBaseRec {
     }
     
     public String getTerminationDate ( ) {
-        return ( terminationDate.equals ( LocalDateTime.MIN ) ) ? "" : ( terminationDate.getYear ( ) + "-" + terminationDate.getMonthValue ( ) + "-" + terminationDate.getDayOfMonth ( ) );
+        return ( terminationDate.equals ( LocalDateTime.MAX ) ) ? "" : ( terminationDate.getYear ( ) + "-" + terminationDate.getMonthValue ( ) + "-" + terminationDate.getDayOfMonth ( ) );
     }
 
     /**
      * @param terminationDate the terminationDate to set
      */
-    public void setTerminationDate ( LocalDate terminationDate ) {
+    @JsonIgnore
+    public void setTerminationDateLD ( LocalDate terminationDate ) {
         this.terminationDate = terminationDate;
     }
     
     public void setTerminationDate ( String terminationDate ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.terminationDate = LocalDate.parse ( terminationDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
-            this.terminationDate = LocalDate.MIN;
+            this.terminationDate = LocalDate.MAX;
         }
     }
 

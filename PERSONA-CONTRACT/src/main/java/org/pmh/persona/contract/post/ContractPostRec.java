@@ -167,7 +167,7 @@ public class ContractPostRec {
      * @param creationDate the creationDate to set
      */
     @JsonIgnore
-    public void setCreationDate ( LocalDateTime creationDate ) {
+    public void setCreationDateLDT ( LocalDateTime creationDate ) {
         this.creationDate = creationDate;
     }
     
@@ -189,23 +189,23 @@ public class ContractPostRec {
     }
     
     public String getActivationDate ( ) {
-        return ( activationDate.equals ( LocalDate.MIN ) ) ? "" : ( activationDate.getYear ( ) + "-" + activationDate.getMonthValue ( ) + "-" + activationDate.getDayOfMonth ( ) );
+        return ( activationDate.equals ( LocalDate.MAX ) ) ? "" : ( activationDate.getYear ( ) + "-" + activationDate.getMonthValue ( ) + "-" + activationDate.getDayOfMonth ( ) );
     }
 
     /**
      * @param activationDate the activationDate to set
      */
     @JsonIgnore
-    public void setActivationDate ( LocalDate activationDate ) {
+    public void setActivationDateLD ( LocalDate activationDate ) {
         this.activationDate = activationDate;
     }
     
     public void setActivationDate ( String activationDate ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.activationDate = LocalDate.parse ( activationDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
-            this.activationDate = LocalDate.MIN;
+            this.activationDate = LocalDate.MAX;
         }
     }
 
@@ -225,12 +225,12 @@ public class ContractPostRec {
      * @param terminationDate the terminationDate to set
      */
     @JsonIgnore
-    public void setTerminationDate ( LocalDate terminationDate ) {
+    public void setTerminationDateLD ( LocalDate terminationDate ) {
         this.terminationDate = terminationDate;
     }
     
     public void setTerminationDate ( String terminationDate ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.terminationDate = LocalDate.parse ( terminationDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            

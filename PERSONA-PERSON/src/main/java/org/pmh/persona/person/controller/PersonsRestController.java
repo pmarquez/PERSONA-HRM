@@ -69,6 +69,11 @@ public class PersonsRestController {
     //    HttpSession session = request.getSession ( );
         
         PersonRec r = PersonsModel.retrievePerson ( personCode, ds );
+
+        org.pmh.persona.person.education.AcademiaBaseRec abr = r.getAcademia().get ( 0 );
+        
+        System.out.println ( "Start Date: " + abr.getStartDate ( ) );
+        System.out.println ( "End Date  : " + abr.getEndDate   ( ) );
         
         return r;
     }

@@ -182,6 +182,10 @@ public class PersonsModel {
 
                           "ORDER BY per_academiaentity.startDate DESC";
         
+        
+        System.out.println ( SQLQuery );        
+        
+        
         JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
 
         List<AcademiaBaseRec> l = new ArrayList<> ( );
