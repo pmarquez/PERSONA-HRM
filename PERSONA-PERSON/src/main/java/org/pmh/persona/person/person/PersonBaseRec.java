@@ -207,7 +207,8 @@ public class  PersonBaseRec {
     /**
      * @param birthDate the birthDate to set
      */
-    public void setBirthDate ( LocalDate birthDate ) {
+    @JsonIgnore
+    public void setBirthDateLD ( LocalDate birthDate ) {
         this.birthDate = birthDate;
     }
 
@@ -215,7 +216,8 @@ public class  PersonBaseRec {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd" );
         try {
             this.birthDate = LocalDate.parse ( birthDate, dtf );
-        } catch ( DateTimeParseException dtpe ) {            
+        } catch ( DateTimeParseException dtpe ) { 
+            System.err.println ( dtpe.getCause ( ) );
             this.birthDate = LocalDate.MIN;
         }
     }

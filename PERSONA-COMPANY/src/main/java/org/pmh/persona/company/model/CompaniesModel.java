@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.sql.DataSource;
-import java.util.List;
+import java.util.List;  
 
 //   Third Party Libraries Imports
 import org.springframework.dao.DataAccessException;
@@ -18,13 +18,14 @@ import org.springframework.jdbc.core.RowMapper;
 //   Application Domain Imports
 import org.pmh.persona.company.company.CompanyBaseRec;
 import org.pmh.persona.company.company.CompanyRec;
+import org.pmh.persona.company.organization.CompanyOrgRec;
 
 
 /**
- * PersonsModel.java<br/><br/>
+ * CompaniesModel.java<br/><br/>
  * Creation Date 2015-03-23 17:45<br/><br/>
  * <b>DESCRIPTION:</b><br/><br/>
- * <p>Manage all the interactions with persistent Items data.</p>
+ * <p>Manage all the interactions with persistent Company data.</p>
  *
  *<PRE>
  *<table width="90%" border="1" cellpadding="3" cellspacing="2">
@@ -153,6 +154,60 @@ public class CompaniesModel {
         }
 
         return r;
+    }
+    
+    static public List<CompanyOrgRec> retrieveCompanyOrganization ( int companyCode, final DataSource ds ) {
+      
+        String SQLQuery = "SELECT IFNULL(per_companyentity.companyCode,0) AS COMPANY_CODE, "                                             +
+                                 "IFNULL(per_companyentity.name,'') AS COMPANY_NAME, "                                                   +
+                                 "IFNULL(per_postentity.departmentCode,0) AS DEPARTMENT_CODE, "                                          +
+                                 "IFNULL(per_departmententity.departmentName,'') AS DEPARTMENT_NAME, "                                   +
+                                 "per_postentity.postCode, "                                                                             +
+                                 "IFNULL(per_postentity.postId,'') AS POST_ID, "                                                         +
+                                 "IFNULL(per_postentity.postName,'') AS POST_NAME, "                                                     +
+                                 "IFNULL(per_postentity.numPostOpenings,0) AS NUM_POST_OPENINGS, "                                       +
+                                 "IFNULL(per_postentity.supervisorPostCode,0) AS SUPERVISOR_POST_CODE, "                                 +
+                                 "per_postentity.active "                                                                                +
+
+                          "FROM per_postentity "                                                                                         +
+
+                          "LEFT OUTER JOIN per_departmententity ON per_departmententity.departmentCode = per_postentity.departmentCode " +
+                          "LEFT OUTER JOIN per_companyentity ON per_companyentity.companyCode = per_departmententity.companyCode "       +
+
+                          "WHERE per_companyentity.companyCode = " + companyCode;
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<CompanyOrgRec> l = new ArrayList<> ( );
+
+        try {
+            l = jdbcTemplate.query ( SQLQuery,
+                                        new RowMapper<CompanyOrgRec> ( ) {
+                                            @Override
+                                            public CompanyOrgRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                CompanyOrgRec r = new CompanyOrgRec ( );
+
+                                                   r.setCompanyCode                 ( rs.getInt     ( "COMPANY_CODE"          ) );
+                                                   r.setCompanyName                 ( rs.getString  ( "COMPANY_NAME"          ) );
+                                                   r.setDepartmentCode              ( rs.getInt     ( "DEPARTMENT_CODE"       ) );
+                                                   r.setDepartmentName              ( rs.getString  ( "DEPARTMENT_NAME"       ) );
+                                                   r.setPostCode                    ( rs.getInt     ( "postCode"              ) );
+                                                   r.setPostId                      ( rs.getString  ( "POST_ID"               ) );
+                                                   r.setPostName                    ( rs.getString  ( "POST_NAME"             ) );
+                                                   r.setNumPostOpenings             ( rs.getInt     ( "NUM_POST_OPENINGS"     ) );
+                                                   r.setSupervisorPostCode          ( rs.getInt     ( "SUPERVISOR_POST_CODE"  ) );
+                                                   r.setActive                      ( rs.getBoolean ( "ACTIVE"                ) );
+
+                                                return r;
+                                            }
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ CompaniesModel.retrieveCompanyOrganization: " + ex.getMessage ( ) );
+        }
+
+        return l;
+
     }
 
 }

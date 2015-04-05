@@ -6,9 +6,6 @@ package org.pmh.persona.company.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.util.List;
-import org.pmh.persona.company.company.CompanyBaseRec;
-import org.pmh.persona.company.company.CompanyRec;
-import org.pmh.persona.company.model.CompaniesModel;
 
 //   Third Party Libraries Imports
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.pmh.util.ListWrapper;
 
 //   Application Domain Imports
+import org.pmh.persona.company.company.CompanyBaseRec;
+import org.pmh.persona.company.company.CompanyRec;
+import org.pmh.persona.company.model.CompaniesModel;
+import org.pmh.persona.company.organization.CompanyOrgRec;
 
 
 /**
@@ -72,6 +73,16 @@ public class CompaniesRestController {
         CompanyRec r = CompaniesModel.retrieveCompany ( companyCode, ds );
         
         return r;
+    }
+        
+    @RequestMapping ( value = "/companiesAPI/1.0/organization/{companyCode}", method = RequestMethod.GET )
+    public List<CompanyOrgRec> retrieveCompanyOrganization ( @PathVariable int companyCode, HttpServletRequest request ) {
+
+    //    HttpSession session = request.getSession ( );
+        
+        List<CompanyOrgRec> l = CompaniesModel.retrieveCompanyOrganization ( companyCode, ds );
+        
+        return l;
     }
         
 }

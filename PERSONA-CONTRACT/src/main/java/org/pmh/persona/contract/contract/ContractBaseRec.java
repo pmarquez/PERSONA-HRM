@@ -202,7 +202,7 @@ public class ContractBaseRec {
     }
     
     public String getTerminationDate ( ) {
-        return ( terminationDate.equals ( LocalDateTime.MAX ) ) ? "" : ( terminationDate.getYear ( ) + "-" + terminationDate.getMonthValue ( ) + "-" + terminationDate.getDayOfMonth ( ) );
+        return ( terminationDate.equals ( LocalDate.MAX ) ) ? "" : ( terminationDate.getYear ( ) + "-" + terminationDate.getMonthValue ( ) + "-" + terminationDate.getDayOfMonth ( ) );
     }
 
     /**

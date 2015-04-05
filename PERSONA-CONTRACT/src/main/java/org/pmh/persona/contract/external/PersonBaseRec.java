@@ -207,7 +207,7 @@ public class  PersonBaseRec {
      * @param birthDate the birthDate to set
      */
     @JsonIgnore
-    public void setBirthDate ( LocalDate birthDate ) {
+    public void setBirthDateLD ( LocalDate birthDate ) {
         this.birthDate = birthDate;
     }
 
@@ -216,6 +216,7 @@ public class  PersonBaseRec {
         try {
             this.birthDate = LocalDate.parse ( birthDate, dtf );
         } catch ( DateTimeParseException dtpe ) {            
+            System.err.println ( dtpe.getCause ( ) );            
             this.birthDate = LocalDate.MIN;
         }
     }
