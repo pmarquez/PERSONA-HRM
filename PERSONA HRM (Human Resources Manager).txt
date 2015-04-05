@@ -1,0 +1,36 @@
+PERSONA HRM (Human Resources Manager)
+
+Gestión de Recursos Humanos para el Siglo XXI
+
+Un software de Gestión Recursos Humanos es bastante más que un simple programa de nómina, de hecho, un sistema de este tipo consta de muchas partes, entre ellas:
+
+* Personas
+* Compañías
+* Contratos
+* Nómina
+* Control de Acceso y Asistencia
+* Evaluaciones de Desempeño
+* etc.
+
+PERSONA HRM surge de la detección de la necesidad de manejar todas estas áreas con un software capaz de no solo llevar el control de una forma rápida, segura y sencilla, que ya muchos lo hacen hoy en día, sino que tambien permita que los diferentes actores del proceso puedan interactuar con el mismo de formas hasta ahora restringidas o imposibles, por ejemplo:
+
+* Un empleado debe poder tener acceso a sus datos personales para poder consultarlos, modificarlos, cambiarlos o eliminarlos (inclusive remitirlos a su próximo empleador), enviar solicitudes y recibir requisiciones y respuestas en línea.
+
+* Si una nomina es llevada de forma externalizada, el empleado debe poder tener acceso a toda la información de esta que se encuentre relacionada con su persona (Pagos, retenciones, bonificaciones, IPRF, etc.)
+
+* Un Gerente de Recursos Humanos debe poder tener acceso a la información de toda la organización de forma oportuna y confiable, indicadores, vacaciones y ausencias, nuevas habilidades del personal, evaluaciones de desempeño, recomendaciones, etc. sea la nómina un proceso externalizado o no.
+
+* Cuando la gestión sea externa, las empresas de externas de gestión de nómina deben poder tener acceso a los ingresos y egresos de personal, cambios de cargo, sueldos y salarios, especializaciones, etc. que sucedan dentro de las organizaciones, tambien de forma oportuna y confiable.
+
+* La dirección de la empresa debe tener acceso a indicadores de gestión de RRHH, inteligencia de negocios, y otros elementos vitales de la operación, todo en tiempo real.
+
+Todo esto y mucho más sin que la directiva necesite solicitar préstamos bancarios tres veces al año para la adquisición y mantenimiento de los servicios de una plataforma como la aqui descrita.
+
+PALABRAS CLAVE:
+
+* BAJO COSTO DE TENENCIA
+* PLATAFORMA CON TECNOLOGÍAS DE PUNTA
+* COMPUTACIÓN EN LA NUBE
+* INTELIGENCIA DE NEGOCIOS
+* COMPUTACIÓN MÓVIL
+* AUTOGESTIÓN
