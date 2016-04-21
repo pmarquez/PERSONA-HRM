@@ -1,0 +1,85 @@
+{
+  "contractCode": 1,
+  "contractTypeCode": 1,
+  "contractType": "Tiempo Indefinido",
+  "personCode": 1,
+  "person": {
+    "personCode": 1,
+    "idTypeCode": 1,
+    "idType": "D.N.I",
+    "idNumber": "AAA456987XX",
+    "firstName": "Horatio",
+    "middleName": "J",
+    "lastName": "Nelson",
+    "genderCode": 2,
+    "gender": "M",
+    "socialSecurityNumber": "123456789",
+    "birthDate": "1984-12-17",
+    "active": true,
+    "age": 30,
+    "personFullName": "Horatio J Nelson",
+    "cretionDate": "2015-4-4 17:54:40"
+  },
+  "companyCode": 1,
+  "company": {
+    "companyCode": 1,
+    "taxId": "B78945612",
+    "name": "OM Soluciones Empresariales, S.L.",
+    "companyTypeCode": 5,
+    "companyType": "Sociedad de Responsabilidad Limitada",
+    "companySocialSecurityNumber": "123654789321456987",
+    "email": "info@FICTITIOUS_omse.com",
+    "web": "http://www.FICTITIOUS_omse.com",
+    "phone": "+34 922 555 555",
+    "fax": "+34 922 666 666",
+    "active": true,
+    "cretionDate": "2015-4-4 17:54:40"
+  },
+  "activationDate": "2015-4-1",
+  "terminationDate": "",
+  "active": true,
+  "posts": [
+    {
+      "contractPostCode": 1,
+      "contractCode": 1,
+      "departmentCode": 3,
+      "departmentName": "Mercadeo",
+      "postCode": 4,
+      "postName": "Dirección de Mercadeo",
+      "supervisorPostCode": 2,
+      "supervisorPostName": "Vice-Presidencia Ejecutiva",
+      "supervisorPersonCode": 0,
+      "activationDate": "2015-3-31",
+      "terminationDate": "",
+      "active": true,
+      "cretionDate": "2015-3-26 13:49:7"
+    }
+  ],
+  "salaries": [
+    {
+      "postCode": 4,
+      "postName": "Dirección de Mercadeo",
+      "salaryCode": 3,
+      "contractCode": 1,
+      "contractPostCode": 1,
+      "baseSalary": 1450,
+      "activationDate": "2015-6-1",
+      "terminationDate": "",
+      "active": true,
+      "cretionDate": "2015-3-28 17:46:27"
+    },
+    {
+      "postCode": 4,
+      "postName": "Dirección de Mercadeo",
+      "salaryCode": 1,
+      "contractCode": 1,
+      "contractPostCode": 1,
+      "baseSalary": 1250,
+      "activationDate": "2015-3-31",
+      "terminationDate": "",
+      "active": true,
+      "cretionDate": "2015-3-28 17:31:1"
+    }
+  ],
+  "cretionDate": "2015-3-24 17:8:5"
+}

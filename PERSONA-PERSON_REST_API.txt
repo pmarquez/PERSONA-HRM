@@ -1,0 +1,88 @@
+PERSONS
+
+    Description:
+        Returns a list of persons in persistent storage. The list consists of basic personal data.
+    
+    URI:
+        http://<server_name>:<server_port>/PERSONA-PERSON/personsAPI/1.0/persons
+
+    Sample data from actual invocation:
+
+		[
+		    {
+		        "personCode": 2,
+		        "idTypeCode": 1,
+		        "idType": "DNI",
+		        "idNumber": "RAD000001UP",
+		        "firstName": "Marie",
+		        "middleName": "F",
+		        "lastName": "Curie",
+		        "genderCode": 1,
+		        "gender": "F",
+		        "socialSecurityNumber": "234567890",
+		        "birthDate": "1976-7-19",
+		        "active": true,
+		        "age": 38,
+		        "personFullName": "Marie F Curie"
+		    },
+		    {
+		        "personCode": 1,
+		        "idTypeCode": 1,
+		        "idType": "DNI",
+		        "idNumber": "AAA456987XX",
+		        "firstName": "Horatio",
+		        "middleName": "J",
+		        "lastName": "Nelson",
+		        "genderCode": 2,
+		        "gender": "M",
+		        "socialSecurityNumber": "123456789",
+		        "birthDate": "1984-12-17",
+		        "active": true,
+		        "age": 30,
+		        "personFullName": "Horatio J Nelson"
+		    }
+		]
+
+PERSONS/{personCode}
+    
+    Description:
+        Returns the data for the person identified by personCode (a positive integer number) with a little bit more of detail, including the academic degrees obtained by the person.
+
+    URI:
+        http://<server_name>:<server_port>/PERSONA-PERSON/personsAPI/1.0/persons/{personCode}
+
+    Sample data from actual invocation:
+
+		{
+		    "personCode": 2,
+		    "idTypeCode": 1,
+		    "idType": "DNI",
+		    "idNumber": "RAD000001UP",
+		    "firstName": "Marie",
+		    "middleName": "F",
+		    "lastName": "Curie",
+		    "genderCode": 1,
+		    "gender": "F",
+		    "socialSecurityNumber": "234567890",
+		    "birthDate": "1976-07-19",
+		    "active": true,
+		    "academia": [
+		        {
+			        "academiaCode": 3,
+			        "personCode": 2,
+			        "startDate": "2001-02-08",
+			        "endDate": "2005-03-12",
+			        "ongoing": false,
+			        "degreeName": "BS in Mechanical Engineering",
+			        "institution": "Stanford University",
+			        "institutionCity": "Stanford",
+			        "institutionState": "California",
+			        "institutionCountry": "USA",
+			        "achievements": "",
+			        "creationDate": "2015-03-29 11:32:0"
+		        }
+		    ],
+		    "age": 38,
+		    "personFullName": "Marie F Curie"
+		}
+

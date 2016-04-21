@@ -1,9 +1,10 @@
 package org.pmh.persona.main;
 
 //   Standard Libraries Imports
+import javax.sql.DataSource;
 
 //   Third Party Libraries Imports
-import javax.sql.DataSource;
+import org.jsondoc.spring.boot.starter.EnableJSONDoc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -20,9 +21,9 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 
 /**
- * Main.java<br/><br/>
- * Creation Date 2015-02-17 21:51<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * Main.java<br><br>
+ * Creation Date 2015-02-17 21:51<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -30,8 +31,8 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-02-17 21:51<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-02-17 21:51<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
@@ -43,6 +44,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 @EnableAutoConfiguration                                                   // This annotation tells Spring to auto-wire your application
 @ComponentScan ( basePackages = { "org.pmh.persona.company.controller" } ) // This annotation tells Spring to look for controllers, etc. starting in the current package
 @Configuration                                                             // This annotation tells Spring that this class contains configuration information for the application.
+@EnableJSONDoc
 public class Main extends SpringBootServletInitializer {
     
     private static final String MAX_REQUEST_SIZE = "10MB";

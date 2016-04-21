@@ -173,7 +173,7 @@ public class ContractBaseRec {
     }
     
     public String getActivationDate ( ) {
-        return ( activationDate.equals ( LocalDateTime.MIN ) ) ? "" : ( activationDate.getYear ( ) + "-" + activationDate.getMonthValue ( ) + "-" + activationDate.getDayOfMonth ( ) );
+        return ( activationDate.equals ( LocalDate.MIN ) ) ? "" : ( activationDate.getYear ( ) + "-" + activationDate.getMonthValue ( ) + "-" + activationDate.getDayOfMonth ( ) );
     }
 
     /**

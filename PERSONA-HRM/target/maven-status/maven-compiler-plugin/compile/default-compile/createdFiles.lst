@@ -3,9 +3,9 @@ org\pmh\hrm\persona\company\CompanyBaseRec.class
 com\pmh\hrm\persona\controller\AuthRestController.class
 org\pmh\hrm\persona\controller\AuthRestController.class
 com\pmh\hrm\persona\model\AuthModel$2.class
-com\pmh\hrm\persona\controller\ContractRestController.class
 org\pmh\hrm\persona\contract\ContractBaseRec.class
 org\pmh\hrm\persona\controller\AuthController.class
+org\pmh\hrm\persona\controller\ContractRestController.class
 org\pmh\hrm\persona\id\IdTypeRec.class
 org\pmh\hrm\persona\model\ContractModel$2.class
 com\pmh\hrm\persona\user\UserRec.class

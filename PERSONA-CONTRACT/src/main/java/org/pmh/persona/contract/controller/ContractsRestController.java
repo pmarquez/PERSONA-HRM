@@ -32,26 +32,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 
 /**
- * ContractsRestController.java<br/><br/>
- * Creation Date 2015-03-25 19:04<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
- * <p></p>
+ * ContractsRestController.java<br><br>
+ * Creation Date 2015-03-25 19:04<br><br>
+ * <b>DESCRIPTION:</b><br><br>
+ * <p>Rest Controller for all things CONTRACT</p>
  *
  *<PRE>
  *<table width="90%" border="1" cellpadding="3" cellspacing="2">
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-25 19:04<br/>
+ *<td width="20%">Version 1.1<br>
+ * Version Date: 2016-04-21 22:51<br>
+ * Version Creator: Paulo Márquez</td>
+ *<td width="80%"><p>Updated RestController to use a <code>ResponseRec<></code> for handling the return values.</p></td>
+ *</tr>
+ *<tr>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-03-25 19:04<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
  *</table>
  *</PRE>
  * @author Paulo Márquez
- * @version 1.0 - 2015-03-25 19:04
+ * @version 1.1 - 2016-04-21 22:51
  */
+//TODO Token Authorization
+//TODO Handle User Profiles
+//TODO MultiTenancy - Create Account-Contracts Hierarchy.
 @RestController
 public class ContractsRestController {
     
@@ -61,7 +70,7 @@ public class ContractsRestController {
     @Autowired
     private DataSource ds;
     
-    @RequestMapping ( value = "/contractsAPI/1.0/contracts", method = RequestMethod.GET )
+    @RequestMapping ( value = "/contractsAPI/1.0/contracts/contracts", method = RequestMethod.GET )
     public ListWrapper baseContracts ( HttpServletRequest request ) {
 
     //    HttpSession session = request.getSession ( );
@@ -74,7 +83,7 @@ public class ContractsRestController {
         return lw;
     }
     
-    @RequestMapping ( value = "/contractsAPI/1.0/contracts/{contractCode}", method = RequestMethod.GET )
+    @RequestMapping ( value = "/contractsAPI/1.0/contracts/contracts/{contractCode}", method = RequestMethod.GET )
     public ContractRec retrieveContract ( @PathVariable int contractCode, HttpServletRequest request ) {
 
     //    HttpSession session = request.getSession ( );
@@ -155,6 +164,7 @@ public class ContractsRestController {
      * We will be using this list as a cache of organizational information and will be placing in in the session.
      * @param companyCode
      * @param request
+     * @deprecated Use a RestTemplate to get this data from COMPANY
      */
     @RequestMapping ( value = "/contractsAPI/1.0/organization/{companyCode}", method = RequestMethod.GET )
     public void retrieveOrganization ( @PathVariable int companyCode, HttpServletRequest request ) {

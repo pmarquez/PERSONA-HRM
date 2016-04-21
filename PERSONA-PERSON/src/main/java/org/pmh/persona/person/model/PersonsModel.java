@@ -162,7 +162,7 @@ public class PersonsModel {
         return r;
     }
 
-    static public List<AcademiaBaseRec> retrievePersonAcademia( int personCode, DataSource ds ) {
+    static private List<AcademiaBaseRec> retrievePersonAcademia ( int personCode, DataSource ds ) {
         
         String SQLQuery = "SELECT per_academiaentity.academiaCode, "                                         +
                                  "per_academiaentity.personCode, "                                           +
@@ -180,11 +180,7 @@ public class PersonsModel {
 
                           "WHERE personCode = " + personCode + " "                                           +
 
-                          "ORDER BY per_academiaentity.startDate DESC";
-        
-        
-        System.out.println ( SQLQuery );        
-        
+                          "ORDER BY per_academiaentity.startDate DESC";        
         
         JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
 

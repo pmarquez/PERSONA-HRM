@@ -1,24 +1,70 @@
 COMPANIES
 
-    http://<server_name>:<server_port>/PERSONA-COMPANY/companiesAPI/1.0/companies
+    Description:
+        Lists all companies in storage
 
-    Lists all companies in storage
+    URI:
+        http://<server_name>:<server_port>/PERSONA-COMPANY/companiesAPI/1.0/companies
 
 
 COMPANIES/{companyCode}
 
-    http://<server_name>:<server_port>/companiesAPI/1.0/companies/{companyCode}
+    Description:
+        Retrieves a single company identified by integer companyCode from storage
 
-    Retrieves a single company identified by integer companyCode from storage
+    URI:
+        http://<server_name>:<server_port>/PERSONA-COMPANY/companiesAPI/1.0/companies/{companyCode}
 
 
 ORGANIZATION/{companyCode}
 
-    http://<server_name>:<server_port>/companiesAPI/1.0/organization/{companyCode}
-
-    Retrieves the ingormation regarding the internal organization of the company identified by integer companyCode: 
+    Description: 
+        Retrieves the ingormation regarding the internal organization of the company identified by integer companyCode: 
 
         * Company
             * Departments
                 * Posts per Department
 
+    URI: 
+        http://<server_name>:<server_port>/PERSONA-COMPANY/companiesAPI/1.0/organization/{companyCode}
+
+    Sample data from an actual invocation:
+
+		[
+		  {
+		    "companyCode": 1,
+		    "companyName": "Fictitious Enterprises Amalgamated, LLC",
+		    "departmentCode": 1,
+		    "departmentName": "Procurement",
+		    "postCode": 1,
+		    "postId": "PRE-001",
+		    "postName": "Procurement Senior Analyst",
+		    "numPostOpenings": 4,
+		    "supervisorPostCode": 0,
+		    "active": true
+		  },
+		  {
+		    "companyCode": 1,
+		    "companyName": "Fictitious Enterprises Amalgamated, LLC",
+		    "departmentCode": 1,
+		    "departmentName": "Information Technologies",
+		    "postCode": 2,
+		    "postId": "PRE-002",
+		    "postName": "IT Manager",
+		    "numPostOpenings": 1,
+		    "supervisorPostCode": 1,
+		    "active": true
+		  },
+		  {
+		    "companyCode": 1,
+		    "companyName": "Fictitious Enterprises Amalgamated, LLC",
+		    "departmentCode": 2,
+		    "departmentName": "Sales",
+		    "postCode": 3,
+		    "postId": "FIN-001",
+		    "postName": "Sales Manager",
+		    "numPostOpenings": 1,
+		    "supervisorPostCode": 2,
+		    "active": true
+		  }
+		]
