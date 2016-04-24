@@ -11,9 +11,9 @@ package org.pmh.persona.contract.external;
 
 
 /**
- * CompanyOrganizationalRec.java<br/><br/>
- * Creation Date 2015-04-05 15:53<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * CompanyOrganizationalRec.java<br><br>
+ * Creation Date 2015-04-05 15:53<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -21,8 +21,8 @@ package org.pmh.persona.contract.external;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-04-05 15:53<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-04-05 15:53<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>

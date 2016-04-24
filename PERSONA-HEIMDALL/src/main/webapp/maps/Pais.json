@@ -1,0 +1,6 @@
+{ "payloadType": "Pais",
+  "tableName":   "am_countryentity",
+  "mapRules": [ { "incomingName":"idPais", "localName":"countryCode", "keyType":"P", "required":true },
+                { "incomingName":"Nombre", "localName":"countryName", "required":true }
+              ]
+}

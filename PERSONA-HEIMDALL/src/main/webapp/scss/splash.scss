@@ -1,0 +1,122 @@
+
+@import "_new_constants.scss";
+
+//   FIDELITAS STUFF - BEGIN
+
+body {
+    font-family: $base-font-family;
+    font-size: 12px;
+    line-height: 20px;
+    color: $white;
+}
+
+@media (max-width: 700px) {
+    .splash-apply-btn, .splash-benefits-btn {
+      display:               block;
+      border-radius:         8px;
+      width:                 160px;
+      color:                 $white;
+      font-size:             18px;
+      padding:               4px 8px;
+      text-decoration:       none;
+      box-shadow:            3px 3px 2px 0px rgba(50, 50, 50, 0.75);
+    }
+
+    .splash-apply-btn {
+      background:            #df3b3b;
+      border:                solid #df3b3b 4px;
+    }
+
+    .splash-benefits-btn {
+      background:            #004a8f;
+      border:                solid #004a8f 4px;
+      margin-bottom:         15px;
+    }
+
+    .splash-apply-btn:hover, .splash-apply-btn:hover {
+      text-decoration: none;
+    }
+
+    .splash-apply-btn:hover {
+      background: #9c2525;
+      border:     solid #9c2525 4px;
+    }
+
+    .splash-benefits-btn:hover {
+      background: #003252;
+      border:     solid #003252 4px;
+    }
+
+    .action-buttons {
+        z-index:        3;
+        left:           50%;
+        bottom:         20px;
+        margin-left:    -80px;
+        position:       absolute;
+    }
+}
+
+@media (min-width: 701px) {
+    .splash-apply-btn, .splash-benefits-btn {
+      border-radius:         10px;
+      width:                 250px;
+      color:                 $white;
+      font-size:             32px;
+      padding:               16px 28px;
+      text-decoration:       none;
+      box-shadow:            7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    }
+
+    .splash-apply-btn {
+      background:            $apply_button_color;
+      border:                solid $apply_button_color 8px;
+    }
+
+    .splash-benefits-btn {
+      background:            $benefits_button_color;
+      border:                solid $benefits_button_color 8px;
+      margin-right:          100px;
+    }
+
+    .splash-apply-btn:hover, .splash-apply-btn:hover {
+      text-decoration: none;
+    }
+
+    .splash-apply-btn:hover {
+      background: $apply_button_color_hover;
+      border:     solid $apply_button_color_hover 8px;
+    }
+
+    .splash-benefits-btn:hover {
+      background: $benefits_button_color_hover;
+      border:     solid $benefits_button_color_hover 8px;
+    }
+
+    .action-buttons {
+        decoration:     none;
+        z-index:        3;
+        left:           50%;
+        bottom:         60px;
+        margin-left:    -300px;
+        position:       absolute;
+    }
+}
+.bottomShadow {
+  box-shadow: -15px 5px 5px 0px rgba(50, 50, 50, 0.75) inset;
+}
+
+#benefitsPane {
+    display: none;
+}
+
+.notice {
+    background: #d7d7d7 none repeat scroll 0% 0%;
+    color: #333;
+}
+
+.widget {
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+
+//   FIDELITAS STUFF - END

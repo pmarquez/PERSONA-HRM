@@ -1,0 +1,138 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic,500,500italic,700,700italic,900,900italic);
+
+/* Theme Fonts */
+/*  $base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+$base-font-family:Roboto, sans-serif;
+$secondary-font-family:Arial, sans-serif;
+
+/* Theme Variables */
+$canvas-color: #e5eefb;     //Can change this variable color
+$canvas-font-color: #eee;   //Can change this variable color
+$primary-color: #3693cf;    //Can change this variable color
+$primary-font-color: #fff;  //Can change this variable color
+
+/* nexads logo colors */
+$nexads-red: #e53f2e;       //Red hue of the nexads logo
+$nexads-grey: #89878c;      //Grey hue of the nexads logo
+
+
+/* Optional Variables  Ex- Success, Error, Info, Warning */
+$goGreen: #74b749;        //Can change this variable color
+$lemonYellow: #ffb400;    //Can change this variable color
+$nagpurOrange: #ed6d49;   //Can change this variable color
+$jetBlue: #3693cf;        //Can change this variable color
+$rubyRed: #f63131;        //Can change this variable color
+
+
+
+$info: #47759e;
+$danger: #eb4343;
+$warning: #b5799e;
+$success: #1e825e;
+$brown: #926546;
+$teal: #008080;
+$orange: #EC7343;
+$yellow: #F5B544;
+
+
+
+//Social Colors
+$facebook: #3b5999;
+$twitter: #00acee;
+$linkedin: #1a85bd;
+$gplus: #dc4937;
+
+
+/* Default Black and White Colors */
+$white: #fff;               //White Color - Should not change
+$black: #000;               //Black Color - Should not change
+
+
+
+/*   Mixins  */
+
+/*  Gradients  */
+@mixin linear-gradient($fromColor, $toColor) {
+  background-color: $toColor; /* Fallback Color */
+  background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, $fromColor, $toColor); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image: -moz-linear-gradient(top, $fromColor, $toColor); /* FF3.6 */
+  background-image: -ms-linear-gradient(top, $fromColor, $toColor); /* IE10 */
+  background-image: -o-linear-gradient(top, $fromColor, $toColor); /* Opera 11.10+ */
+  background-image: linear-gradient(top, $fromColor, $toColor);
+}
+@mixin gradient-ver-three-colors($startColor: #00b3ee, $midColor: #7a43b6, $colorStop: 50%, $endColor: #c3325f) {
+  background-color: mix($midColor, $endColor, 80%);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($startColor), color-stop($colorStop, $midColor), to($endColor));
+  background-image: -webkit-linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-image: -moz-linear-gradient(top, $startColor, $midColor $colorStop, $endColor);
+  background-image: -o-linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-image: linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-repeat: no-repeat;
+}
+@mixin gradient-radial($innerColor: #555, $outerColor: #333)  {
+  background-color: $outerColor;
+  background-image: -webkit-gradient(radial, center center, 0, center center, 460, from($innerColor), to($outerColor));
+  background-image: -webkit-radial-gradient(circle, $innerColor, $outerColor);
+  background-image: -moz-radial-gradient(circle, $innerColor, $outerColor);
+  background-image: -o-radial-gradient(circle, $innerColor, $outerColor);
+  background-repeat: no-repeat;
+}
+
+/*  Transition  */
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition: $transition-property $transition-time $method;
+  -ms-transition: $transition-property $transition-time $method;
+  -o-transition: $transition-property $transition-time $method;
+  transition: $transition-property $transition-time $method;
+}
+@mixin transition-twice($transition-property, $transition-time, $method, $transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method, $transition-property $transition-time $method ;
+  -moz-transition: $transition-property $transition-time $method, $transition-property $transition-time $method ;
+  -ms-transition: $transition-property $transition-time $method, $transition-property $transition-time $method ;
+  -o-transition: $transition-property $transition-time $method, $transition-property $transition-time $method ;
+  transition: $transition-property $transition-time $method, $transition-property $transition-time $method ;
+}
+
+/*  Box Sizing  */
+@mixin box-sizing($string){
+  -webkit-box-sizing: $string;
+  -moz-box-sizing: $string;
+  box-sizing: $string;
+}
+
+/*  Box Shadow  */
+@mixin box-shadow($off-y, $off-x, $blur, $color){
+  -moz-box-shadow: $off-y $off-x $blur $color; /* FF3.5+ */
+  -webkit-box-shadow: $off-y $off-x $blur $color; /* Saf3.0+, Chrome */
+  box-shadow: $off-y $off-x $blur $color; /* Opera 10.5, IE9 */
+}
+@mixin box-shadow-inset($top, $left, $blur, $color, $inset:"") {
+  -webkit-box-shadow: $top $left $blur $color $inset;
+  -moz-box-shadow: $top $left $blur $color $inset;
+  box-shadow: $top $left $blur $color $inset;
+}
+@mixin box-shadow-twice($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8, $val9) {
+  -webkit-box-shadow: $val1 $val2 $val3 $val4 $val5 $val6 $val7 $val8 $val9;
+  -moz-box-shadow: $val1 $val2 $val3 $val4 $val5 $val6 $val7 $val8 $val9;
+  box-shadow: $val1 $val2 $val3 $val4 $val5 $val6 $val7 $val8 $val9;
+}
+
+/*  Border Radius  */
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin border-radius-all-val($radius1, $radius2, $radius3, $radius4) {
+  -webkit-border-radius: $radius1 $radius2 $radius3 $radius4;
+  -moz-border-radius: $radius1 $radius2 $radius3 $radius4;
+  border-radius: $radius1 $radius2 $radius3 $radius4;
+}
+
+/*  Opacity  */
+@mixin opacity($opacity) {
+  opacity: $opacity / 100;
+  filter: alpha(opacity=$opacity);
+}

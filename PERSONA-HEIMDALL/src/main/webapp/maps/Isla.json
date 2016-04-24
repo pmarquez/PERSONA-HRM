@@ -1,0 +1,6 @@
+{ "payloadType": "Isla",
+  "tableName":   "am_islandentity",
+  "mapRules": [ { "incomingName":"idIsla", "localName":"islandCode", "keyType":"P", "required":true },
+                { "incomingName":"Nombre", "localName":"islandName", "required":true }
+              ]
+}

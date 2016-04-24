@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EMAIL TEMPLATE</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            html { 
+                padding: 0; 
+                margin: 12px;
+            }
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 14px;
+            }
+            
+            .internal_table_placeholder {
+                padding: 24px;
+            }
+            
+            .internal_table_header {
+                text-align: center;
+                font-size: 1.5em;
+                font-weight: 700;
+            }
+            
+            .internal_table_paragraph {
+                line-height: 1.6em;
+            }
+            
+            .red_text {
+                color: #990000;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <center>
+            <table width="650" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <img src="http://fidelitas.nexglobal.es/images/logo_.png" width="277" height="37" vspace="10" alt="NexFidelitas"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="9" bgcolor="#ce5300">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="9" bgcolor="#ffffff">
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ededed" class="internal_table_placeholder">
+                        <table border="0">
+                            <tr>
+                                <td class="internal_table_header">
+                                    Regeneraci&oacute;n de Contrase&ntilde;a
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="internal_table_paragraph">
+
+                                    <p>Usted, o alguien en su nombre, ha solicitado la regeneraci&oacute;n de su contrase&ntilde;a de acceso a nexfidelitas.</p>
+                                    <p>En caso de no haber sido usted la persona que solicit&oacute; este cambio, simplemente ignore este mensaje y su contrase&ntilde;a no ser&aacute; regenerada.</p>
+                                    <p>De lo contrario, utilice al enlace que aparece a continuaci&oacute;n para proceder a regenerar su contrase&ntilde;a.</p>
+                                    <p><b>El enlace incluido en este mensaje ser&aacute; v&aacute;lido por <span class="red_text">$_EXPIRATION_TIME;</span> horas contadas a partir del momento en que se realiz&oacute; la solicitud.</b></p>        
+                                    <p>Para iniciar el proceso de regeneraci&oacute;n, <a href="$_RECOVERY_URL;">haga cl&iacute;ck aqu&iacute;</a>, o si le es m&aacute;s c&oacute;modo o no le funcione &eacute;ste m&eacute;todo, sobre en enlace que se presenta a continuaci&oacute;n:</p>
+                                    <a href="$_RECOVERY_URL;">$_RECOVERY_URL;</a>
+                                    <p>Si tiene alguna duda o comentario, por favor cont&aacute;ctenos respondiendo a este mensaje o escribiendonos a <a href="mailto:fidelitas@nexglobal.es">fidelitas@nexglobal.es</a>.</p>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                <tr>
+                    <td height="9" bgcolor="#bebebe">
+                    </td>
+                </tr>                
+                <tr>
+                    <td height="9" bgcolor="#ffffff">
+                    </td>
+                </tr>                
+                <tr>
+                    <td height="9" bgcolor="#ffffff">
+                        <img src="http://fidelitas.nexglobal.es/images/by.jpg" width="278" height="35" alt="by NexGlobal"/>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

@@ -1,0 +1,112 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic,500,500italic,700,700italic,900,900italic);
+/* Theme Fonts */
+/*  $base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+/* Theme Variables */
+/*$canvas-color: #ffffff;     //Can change this variable color*/
+/* nexads logo colors */
+/* nexfidelitas ADEJE SALUD colors */
+/* Optional Variables  Ex- Success, Error, Info, Warning */
+/*  NexFidelitas Splash Button Clors   */
+/* Default Black and White Colors */
+/*   Mixins  */
+/*  Gradients  */
+/*  Transition  */
+/*  Box Sizing  */
+/*  Box Shadow  */
+/*  Border Radius  */
+/*  Opacity  */
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  color: #fff; }
+
+@media (max-width: 700px) {
+  .splash-apply-btn, .splash-benefits-btn {
+    display: block;
+    border-radius: 8px;
+    width: 160px;
+    color: #fff;
+    font-size: 18px;
+    padding: 4px 8px;
+    text-decoration: none;
+    box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.75); }
+
+  .splash-apply-btn {
+    background: #df3b3b;
+    border: solid #df3b3b 4px; }
+
+  .splash-benefits-btn {
+    background: #004a8f;
+    border: solid #004a8f 4px;
+    margin-bottom: 15px; }
+
+  .splash-apply-btn:hover, .splash-apply-btn:hover {
+    text-decoration: none; }
+
+  .splash-apply-btn:hover {
+    background: #9c2525;
+    border: solid #9c2525 4px; }
+
+  .splash-benefits-btn:hover {
+    background: #003252;
+    border: solid #003252 4px; }
+
+  .action-buttons {
+    z-index: 3;
+    left: 50%;
+    bottom: 20px;
+    margin-left: -80px;
+    position: absolute; } }
+@media (min-width: 701px) {
+  .splash-apply-btn, .splash-benefits-btn {
+    border-radius: 10px;
+    width: 250px;
+    color: #fff;
+    font-size: 32px;
+    padding: 16px 28px;
+    text-decoration: none;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); }
+
+  .splash-apply-btn {
+    background: #df3b3b;
+    border: solid #df3b3b 8px; }
+
+  .splash-benefits-btn {
+    background: #004a8f;
+    border: solid #004a8f 8px;
+    margin-right: 100px; }
+
+  .splash-apply-btn:hover, .splash-apply-btn:hover {
+    text-decoration: none; }
+
+  .splash-apply-btn:hover {
+    background: #9c2525;
+    border: solid #9c2525 8px; }
+
+  .splash-benefits-btn:hover {
+    background: #003252;
+    border: solid #003252 8px; }
+
+  .action-buttons {
+    decoration: none;
+    z-index: 3;
+    left: 50%;
+    bottom: 60px;
+    margin-left: -300px;
+    position: absolute; } }
+.bottomShadow {
+  box-shadow: -15px 5px 5px 0px rgba(50, 50, 50, 0.75) inset; }
+
+#benefitsPane {
+  display: none; }
+
+.notice {
+  background: #d7d7d7 none repeat scroll 0% 0%;
+  color: #333; }
+
+.widget {
+  margin-bottom: 0px;
+  border-radius: 0px; }
+
+/*# sourceMappingURL=splash.css.map */

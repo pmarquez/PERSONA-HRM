@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;;;;;;;;AAcA,wBAAyB;EACrB,gBAAgB,EAAE,kBAAkB",
+"sources": ["../scss/cli_person.scss"],
+"names": [],
+"file": "cli_person.css"
+}

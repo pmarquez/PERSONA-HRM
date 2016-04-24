@@ -1,0 +1,10 @@
+{ "payloadType": "Telefono",
+  "tableName":   "am_telephoneentity",
+  "mapRules": [ { "incomingName":"idTelefono",    "localName":"telephoneCode", "keyType":"P", "required":true },
+                { "incomingName":"idPersona",     "localName":"personCode",    "keyType":"R", "relatedTable":"am_personentity", "relatedField": "personCode", "required":true },
+                { "incomingName":"Numero",        "localName":"phoneNumber",   "required":true  },
+                { "incomingName":"Orden",         "localName":"cardinality",   "required":true  },
+                { "incomingName":"AptoSMS",       "localName":"acceptSMS",     "required":true  },
+                { "incomingName":"Observaciones", "localName":"observations",  "required":false }
+              ]
+}

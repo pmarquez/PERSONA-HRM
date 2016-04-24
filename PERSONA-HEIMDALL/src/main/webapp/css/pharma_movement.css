@@ -1,0 +1,16 @@
+/* 
+    Created on : 11-mar-2015, 9:59:18
+    Author     : pmarquez
+*/
+
+#internal_order_block {
+    display: none;    
+} 
+
+#purchase_order_block {
+    display: none;
+}
+
+#miscellaneous_block {
+    display: none;
+}

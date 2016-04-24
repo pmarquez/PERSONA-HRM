@@ -1,0 +1,6 @@
+{ "payloadType": "Genero",
+  "tableName":   "am_genderentity",
+  "mapRules": [ { "incomingName":"idGenero", "localName":"genderCode", "keyType":"P", "required":true },
+                { "incomingName":"Nombre",   "localName":"genderName", "required":true }
+              ]
+}

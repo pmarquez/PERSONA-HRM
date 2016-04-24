@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;;;;;;;;AAUA,WAAY;EACR,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI",
+"sources": ["../scss/cli_persons.scss"],
+"names": [],
+"file": "cli_persons.css"
+}

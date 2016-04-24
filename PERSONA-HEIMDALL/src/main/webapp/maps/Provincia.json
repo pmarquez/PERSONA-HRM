@@ -1,0 +1,6 @@
+{ "payloadType": "Provincia",
+  "tableName":   "am_provinceentity",
+  "mapRules": [ { "incomingName":"idProvincia", "localName":"provinceCode", "keyType":"P", "required":true },
+                { "incomingName":"Nombre",      "localName":"provinceName", "required":true }
+              ]
+}

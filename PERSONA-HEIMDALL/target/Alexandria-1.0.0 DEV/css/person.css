@@ -1,0 +1,37 @@
+/* 
+    Created on : 19-jul-2015, 14:27:49
+    Author     : pmarquez
+*/
+#authonomyDropdown, #provinceDropdown, #addressGroup {
+  display: none; }
+
+.tncAnchor {
+  color: blue; }
+
+#idDocument_issues,
+#firstName_issues,
+#lastName_issues,
+#birthdate_issues,
+#email_issues,
+#phone_issues {
+  display: none; }
+
+#country_issues,
+#authonomy_issues,
+#province_issues,
+#address_issues,
+#city_issues,
+#postalCode_issues {
+  display: none; }
+
+/* Important part 
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 500px;
+    overflow-y: auto;
+}
+*/
+
+/*# sourceMappingURL=person.css.map */

@@ -1,0 +1,18 @@
+{ "payloadType": "Persona",
+  "tableName":   "am_personentity",
+  "mapRules": [ { "incomingName":"idPersona",       "localName":"personCode",        "keyType":"P", "required":true },
+                { "incomingName":"idVivienda",      "localName":"postalAddressCode", "keyType":"F", "relatedTable":"am_postaladdressentity", "relatedField": "postalAddressCode", "required":false },
+                { "incomingName":"idEstadoCivil",   "localName":"maritalStatusCode", "keyType":"F", "relatedTable":"am_countryentity",       "relatedField": "countryCode",       "required":true  },
+                { "incomingName":"idProfesion",     "localName":"occupationCode",    "keyType":"F", "relatedTable":"am_provinceentity",      "relatedField": "provinceCode",      "required":false },
+                { "incomingName":"idNacionalidad",  "localName":"nationalityCode",   "keyType":"F", "relatedTable":"am_islandentity",        "relatedField": "islandCode",        "required":true  },
+                { "incomingName":"idGenero",        "localName":"genderCode",        "keyType":"F", "relatedTable":"am_countyentity",        "relatedField": "countyCode",        "required":true  },
+                { "incomingName":"Nombre",          "localName":"name",              "required":true  },
+                { "incomingName":"Apellido1",       "localName":"surname1",          "required":true  },
+                { "incomingName":"Apellido2",       "localName":"surname2",          "required":false },
+                { "incomingName":"NIF",             "localName":"idDocNumber",       "required":true  },
+                { "incomingName":"FechaNacimiento", "localName":"birthDate",         "required":true  },
+                { "incomingName":"Email",           "localName":"email",             "required":true  },
+                { "incomingName":"EsAntiguoAlumno", "localName":"isAlumni",          "required":false },
+                { "incomingName":"Observaciones",   "localName":"observations",      "required":false }
+              ]
+}

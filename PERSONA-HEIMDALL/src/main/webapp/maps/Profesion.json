@@ -1,0 +1,6 @@
+{ "payloadType": "Occupation",
+  "tableName":   "am_occupationentity",
+  "mapRules": [ { "incomingName":"idProfesion", "localName":"occupationCode", "keyType":"P", "required":true },
+                { "incomingName":"Nombre",      "localName":"occupationName", "required":true }
+              ]
+}

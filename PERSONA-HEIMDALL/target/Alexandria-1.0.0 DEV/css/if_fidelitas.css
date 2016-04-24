@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07-ago-2015, 8:04:50
+    Author     : pmarquez
+*/
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic,500,500italic,700,700italic,900,900italic);
+/* Theme Fonts */
+/*  $base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+/* Theme Variables */
+/*$canvas-color: #ffffff;     //Can change this variable color*/
+/* nexads logo colors */
+/* nexfidelitas ADEJE SALUD colors */
+/* Optional Variables  Ex- Success, Error, Info, Warning */
+/*  NexFidelitas Splash Button Clors   */
+/* Default Black and White Colors */
+/*   Mixins  */
+/*  Gradients  */
+/*  Transition  */
+/*  Box Sizing  */
+/*  Box Shadow  */
+/*  Border Radius  */
+/*  Opacity  */
+body {
+  max-width: 920px;
+  margin: auto;
+  background: #002a40;
+  color: #333 !important; }
+
+.header_if_fidelitas {
+  max-width: 920px;
+  margin: auto;
+  margin-top: 0px;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative; }
+
+img {
+  width: 100%; }
+
+/*# sourceMappingURL=if_fidelitas.css.map */

@@ -17,9 +17,9 @@ import java.time.format.DateTimeParseException;
 
 
 /**
- * PersonBaseRec.java<br/><br/>
- * Creation Date 2015-02-09 07:19<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * PersonBaseRec.java<br><br>
+ * Creation Date 2015-02-09 07:19<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -27,8 +27,8 @@ import java.time.format.DateTimeParseException;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-02-09 07:19<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-02-09 07:19<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>

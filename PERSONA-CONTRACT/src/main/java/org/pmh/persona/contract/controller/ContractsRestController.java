@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 
 //   FENIX Framework Imports
-import org.pmh.util.ListWrapper;
+import com.fxt.process.ResponseRec;
 
 //   Application Domain Imports
 import org.pmh.persona.contract.contract.ContractBaseRec;
@@ -28,8 +30,6 @@ import org.pmh.persona.contract.external.CompanyRec;
 import org.pmh.persona.contract.external.PersonRec;
 import org.pmh.persona.contract.post.ContractPostRec;
 import org.pmh.persona.contract.salary.SalaryBaseRec;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestClientException;
 
 /**
  * ContractsRestController.java<br><br>
@@ -63,87 +63,164 @@ import org.springframework.web.client.RestClientException;
 //TODO MultiTenancy - Create Account-Contracts Hierarchy.
 @RestController
 public class ContractsRestController {
+
+//   Controller Constants
+    private static final int EMPTY_CONTRACT_LIST      = 0;
+    private static final int EMPTY_CONTRACT_REC       = 0;
     
-    String personBaseURI  = "http://localhost:8084/PERSONA-PERSON/personsAPI/1.0/";
-    String companyBaseURI = "http://localhost:8084/PERSONA-COMPANY/companiesAPI/1.0/";
+//   Response Status
+    private static final String OPERATION_SUCCESSFUL                            = "CONTRACTS_001";   //   The requested operation was succesfully completed.
+    private static final String NO_CONTRACT_FOUND                               = "CONTRACTS_002";   //   Could not find requested contract.
+    private static final String NO_CONTRACTS_FOUND                              = "CONTRACTS_003";   //   The requested list of contracts is empty.
+    private static final String INVALID_USER_PRIVILLEGES                        = "CONTRACTS_004";   //   User does not have the required privilleges for this call.
+    private static final String INVALID_AUTHORIZATION_TOKEN                     = "CONTRACTS_005";   //   Authorization token received is not valid.
+    private static final String INTERNAL_ERROR_ENCOUNTERED                      = "CONTRACTS_006";   //   An internal error was encountered.
+    private static final String REQUESTED_CONTRACT_EXISTS                       = "CONTRACTS_007";   //   The requested contract exists.
+    private static final String REQUESTED_CONTRACT_DOES_NOT_EXIST               = "CONTRACTS_008";   //   The requested contract does not exist.
+    
+    
+    //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
+    String serverBaseURI  = "http://localhost:8084";
+    String personBaseURI  = "/PERSONA-PERSON/personsAPI/1.0/";
+    String companyBaseURI = "/PERSONA-COMPANY/companiesAPI/1.0/";
+    //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
     
     @Autowired
     private DataSource ds;
     
+    /**
+     * 
+     * @param request
+     * @return 
+     */
     @RequestMapping ( value = "/contractsAPI/1.0/contracts/contracts", method = RequestMethod.GET )
-    public ListWrapper baseContracts ( HttpServletRequest request ) {
+    public ResponseRec<List<ContractBaseRec>> contractList ( HttpServletRequest request ) {
 
-    //    HttpSession session = request.getSession ( );
+        HttpSession session = request.getSession ( );
         
+        ResponseRec<List<ContractBaseRec>> rr = new ResponseRec<> ( );
+
         List<ContractBaseRec> l = ContractsModel.retrieveBaseContracts ( ds );
         
-        ListWrapper lw = new ListWrapper ( );
-        lw.setAaData ( l );
+        if ( l.size ( ) > ContractsRestController.EMPTY_CONTRACT_LIST ) {
+            rr.setPayload       ( l );
+            rr.setResultCode    ( ContractsRestController.OPERATION_SUCCESSFUL );
+            rr.setResultMessage ( "The requested operation was succesfully completed." );   //TODO use the database based ISSUE_MESSAGE_ENTITY scheme. 
+            
+        } else {
+            rr.setResultCode    ( ContractsRestController.NO_CONTRACTS_FOUND );
+            rr.setResultMessage ( "The requested list of contracts is empty." );            //TODO use the database based ISSUE_MESSAGE_ENTITY scheme. 
 
-        return lw;
+        }
+        
+        return rr;
     }
     
+    /**
+     * 
+     * @param contractCode
+     * @param request
+     * @return 
+     */
+    //TODO - Work it!!!, finish the job!!!
     @RequestMapping ( value = "/contractsAPI/1.0/contracts/contracts/{contractCode}", method = RequestMethod.GET )
-    public ContractRec retrieveContract ( @PathVariable int contractCode, HttpServletRequest request ) {
+    public ResponseRec<ContractRec> retrieveContract ( @PathVariable int contractCode, HttpServletRequest request ) {
 
-    //    HttpSession session = request.getSession ( );
+        HttpSession session = request.getSession ( );
 
+        ResponseRec<ContractRec> rr = new ResponseRec<> ( );
+
+//   INTERNAL STUFF - BEGIN
+        
         ContractRec r = ContractsModel.retrieveContract ( contractCode, ds );
-        
-        fillPostsInfo    ( r, request );
-        fillSalariesInfo ( r, request );
-        
-        RestTemplate restTemplate = new RestTemplate ( );
-        
-        String       personUri    = personBaseURI  + "persons/"   + r.getPersonCode  ( );
-        String       companyUri   = companyBaseURI + "companies/" + r.getCompanyCode ( );
+System.out.println ( "Contract Code: " + r.getContractCode ( ) );
 
-        PersonRec  person  = new PersonRec  ( );
-        CompanyRec company = new CompanyRec ( );
-        
-        try {
-            company = restTemplate.getForObject ( companyUri, CompanyRec.class );
-            person  = restTemplate.getForObject ( personUri,  PersonRec.class  );
+        //   Retrieve this contract's post history
+        retrievePostsInfo    ( r, request );
+        System.out.println ( "N° of Posts: " + r.getPosts ( ).size ( ) );
 
-        } catch ( RestClientException ex ) {
-            System.err.print ( ex.getMessage ( ) );
+        //   Retrieve this contract's salary history
+//        retrieveSalariesInfo ( r, request );
+        System.out.println ( "N° of Salaries: " + r.getSalaries ( ).size ( ) );
+                
+//   INTERNAL STUFF - END
+
+//   EXTERNAL STUFF - BEGIN
         
+                //        RestTemplate restTemplate = new RestTemplate ( );
+                //        
+                //        ResponseRec<PersonRec>  person  = new ResponseRec<> ( );
+                //        ResponseRec<CompanyRec> company = new ResponseRec<> ( );
+                //
+                //        String       personUri    = serverBaseURI + personBaseURI  + "persons/persons/"   + r.getPersonCode  ( );
+                //        String       companyUri   = serverBaseURI + companyBaseURI + "companies/companies/" + r.getCompanyCode ( );
+                //        
+                //        try {
+                //            company = restTemplate.getForObject ( companyUri, ResponseRec.class );
+                //            person  = restTemplate.getForObject ( personUri,  ResponseRec.class );
+                //
+                //        } catch ( RestClientException ex ) {
+                //            System.err.print ( ex.getMessage ( ) );
+                //        
+                //        }
+                //
+                //        r.setPerson  ( person.getPayload  ( ) );
+                //        r.setCompany ( company.getPayload ( ) );
+
+//   EXTERNAL STUFF - END
+
+        if ( r.getContractCode ( ) > ContractsRestController.EMPTY_CONTRACT_REC ) {
+            rr.setPayload       ( r );
+            rr.setResultCode    ( ContractsRestController.OPERATION_SUCCESSFUL );
+            rr.setResultMessage ( "The requested operation was succesfully completed." );   //TODO use the database based ISSUE_MESSAGE_ENTITY scheme. 
+            
+        } else {
+            rr.setResultCode    ( ContractsRestController.NO_CONTRACT_FOUND );
+            rr.setResultMessage ( "The requested contract could not be found." );           //TODO use the database based ISSUE_MESSAGE_ENTITY scheme. 
+
         }
-
-        r.setPerson  ( person  );
-        r.setCompany ( company );
-
-        return r;
+        
+        return rr;
     }
 
-    private void fillPostsInfo ( ContractRec cr, HttpServletRequest request ) {
+    /**
+     * Retrieves post history for a given contract
+     * @param cr
+     * @param request
+     */
+    private void retrievePostsInfo ( ContractRec cr, HttpServletRequest request ) {
  
-        retrieveOrganization ( cr.getCompanyCode ( ), request );   //TODO  Jack Sparrow [JACK_SPARROW_001] - Do something about this ASAP!!!
+        retrieveOrganization ( cr.getCompanyCode ( ), request );
        
         HttpSession session = request.getSession ( );
         
         List<ContractPostRec> lpbr = cr.getPosts ( );
-        List<CompanyOrganizationalRec> lorg = ( List<CompanyOrganizationalRec> ) session.getAttribute ( "companyOrganization" );
+//        List<CompanyOrganizationalRec> lorg = ( List<CompanyOrganizationalRec> ) session.getAttribute ( "companyOrganization" );
  
-        for ( ContractPostRec cpr : lpbr ) {
-            for ( CompanyOrganizationalRec cor : lorg ) {
-                if ( cor.getPostCode ( ) == cpr.getPostCode ( ) ) {
-                    cpr.setPostName           ( cor.getPostName           ( ) );
-                    cpr.setDepartmentCode     ( cor.getDepartmentCode     ( ) );
-                    cpr.setDepartmentName     ( cor.getDepartmentName     ( ) );
-                    cpr.setSupervisorPostCode ( cor.getSupervisorPostCode ( ) );
-
-                    for ( CompanyOrganizationalRec cor2 : lorg ) {
-                        if ( cor2.getPostCode ( ) == cpr.getSupervisorPostCode ( ) ) {
-                            cpr.setSupervisorPostName ( cor2.getPostName ( ) );
-                        }
-                    }
-                }
-            }
-        }
+//        for ( ContractPostRec cpr : lpbr ) {
+//            for ( CompanyOrganizationalRec cor : lorg ) {
+//                if ( cor.getPostCode ( ) == cpr.getPostCode ( ) ) {
+//                    cpr.setPostName           ( cor.getPostName           ( ) );
+//                    cpr.setDepartmentCode     ( cor.getDepartmentCode     ( ) );
+//                    cpr.setDepartmentName     ( cor.getDepartmentName     ( ) );
+//                    cpr.setSupervisorPostCode ( cor.getSupervisorPostCode ( ) );
+//
+//                    for ( CompanyOrganizationalRec cor2 : lorg ) {
+//                        if ( cor2.getPostCode ( ) == cpr.getSupervisorPostCode ( ) ) {
+//                            cpr.setSupervisorPostName ( cor2.getPostName ( ) );
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
-    private void fillSalariesInfo ( ContractRec cr, HttpServletRequest request ) {
+    /**
+     * 
+     * @param cr
+     * @param request 
+     */
+    private void retrieveSalariesInfo ( ContractRec cr, HttpServletRequest request ) {
  
         HttpSession session = request.getSession ( );
         
@@ -173,16 +250,19 @@ public class ContractsRestController {
 
         RestTemplate restTemplate = new RestTemplate ( );
         
-        String                         orgUri = companyBaseURI + "organization/" + companyCode;
-        List<CompanyOrganizationalRec> org = new ArrayList<> ( );
-        
-        try {
-            ResponseEntity<CompanyOrganizationalRec [ ]> orgArray = restTemplate.getForEntity ( orgUri, CompanyOrganizationalRec [ ].class );
+        String                         orgUri = serverBaseURI + companyBaseURI + "companies/organization/" + companyCode;
 
-            for ( int i = 0; i < orgArray.getBody ( ).length; i++ ) {
-                org.add ( ( orgArray.getBody ( ) ) [ i ] );
-                System.out.println ( org.get ( i ).getCompanyName ( ) + " - " + org.get ( i ).getDepartmentName ( ) + " - " + org.get ( i ).getPostName ( ) );
-            }
+        ResponseRec<List<CompanyOrganizationalRec>> org = new ResponseRec<> ( );
+//        List<CompanyOrganizationalRec> org = new ArrayList<> ( );
+
+        try {
+            ResponseEntity<ResponseRec> orgArray = restTemplate.getForEntity ( orgUri, ResponseRec.class );
+//            ResponseEntity<CompanyOrganizationalRec [ ]> orgArray = restTemplate.getForEntity ( orgUri, CompanyOrganizationalRec [ ].class );
+
+//            for ( int i = 0; i < orgArray.getBody ( ).length; i++ ) {
+//                org.add ( ( orgArray.getBody ( ) ) [ i ] );
+//                System.out.println ( org.get ( i ).getCompanyName ( ) + " - " + org.get ( i ).getDepartmentName ( ) + " - " + org.get ( i ).getPostName ( ) );
+//            }
 
         } catch ( org.springframework.web.client.RestClientException ex ) {
             System.err.print ( ex.getMessage ( ) );

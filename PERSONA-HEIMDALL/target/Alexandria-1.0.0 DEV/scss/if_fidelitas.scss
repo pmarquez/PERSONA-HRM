@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07-ago-2015, 8:04:50
+    Author     : pmarquez
+*/
+
+@import "_new_constants.scss";
+
+//   FIDELITAS STUFF - BEGIN
+
+body {
+    max-width:  920px;
+    margin: auto;
+    background: $splashBackground;
+    color: #333 !important;
+}
+
+.header_if_fidelitas {
+    max-width:  920px;
+    margin:     auto;
+    margin-top: 0px;
+    text-align: center;
+    box-sizing: border-box;
+    position:   relative;
+}
+
+img { width: 100%; }
+
+//   FIDELITAS STUFF - END

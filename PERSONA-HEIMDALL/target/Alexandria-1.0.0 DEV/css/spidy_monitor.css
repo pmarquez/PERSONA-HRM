@@ -1,0 +1,22 @@
+html { 
+    height: 100% 
+}
+
+body { 
+    height: 100%; 
+    background-color: #d7d7d7;
+    margin: 0; 
+    padding: 0 
+}
+
+#map{
+    width:  1500px;
+    height: 100%; 
+}
+
+#content {
+    position: fixed;
+    top:      0px;
+    left:     1500px;
+    margin:   10px;
+}

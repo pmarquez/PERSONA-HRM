@@ -22,9 +22,9 @@ import org.pmh.persona.company.organization.CompanyOrgRec;
 
 
 /**
- * CompaniesModel.java<br/><br/>
- * Creation Date 2015-03-23 17:45<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * CompaniesModel.java<br><br>
+ * Creation Date 2015-03-23 17:45<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p>Manage all the interactions with persistent Company data.</p>
  *
  *<PRE>
@@ -32,8 +32,8 @@ import org.pmh.persona.company.organization.CompanyOrgRec;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-23 17:45<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-03-23 17:45<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
