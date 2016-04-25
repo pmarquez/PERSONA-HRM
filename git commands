@@ -8,6 +8,9 @@ git remote add origin https://pmarquezh@bitbucket.org/nexdev/nexfidelitas.git
 
 git remote -v
 git add .
-git commit -m "2015-02-28 10:52 commit"
+git commit -m "2016-04-25 17:37 commit"
 //git remote add origin 
 git push origin master
+
+pm
+tf
