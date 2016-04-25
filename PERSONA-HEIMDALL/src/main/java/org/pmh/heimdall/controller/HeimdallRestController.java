@@ -3,14 +3,8 @@ package org.pmh.heimdall.controller;
 //   Standard Libraries Imports
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Arrays;
 import java.util.UUID;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Base64;
 
 //   Third Party Libraries Imports
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,17 +22,13 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
-
+import com.fxt.process.ResponseRec;
 
 //   Domain Imports
 import org.pmh.heimdall.model.EventsModel;
-import org.pmh.heimdall.document.DocumentRec;
-import com.fxt.process.ResponseRec;
 import org.pmh.heimdall.external.person.PersonRec;
 import org.pmh.heimdall.process.EventRec;
-import org.pmh.heimdall.process.EventShortRec;
 import org.pmh.heimdall.process.TokenConfirmationDataRec;
-//import com.ng.lk.brucke.process.TokenDataRec;
 
 /**
  * HeimdallRestController.java<br><br>
