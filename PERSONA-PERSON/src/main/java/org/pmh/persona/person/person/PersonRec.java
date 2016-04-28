@@ -14,9 +14,9 @@ import org.pmh.persona.person.education.AcademiaBaseRec;
 
 
 /**
- * PersonRec.java<br/><br/>
- * Creation Date 2015-03-23 17:27<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * PersonRec.java<br><br>
+ * Creation Date 2015-03-23 17:27<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -24,8 +24,8 @@ import org.pmh.persona.person.education.AcademiaBaseRec;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-23 17:27<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-03-23 17:27<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
@@ -39,20 +39,22 @@ public class PersonRec extends PersonBaseRec {
     private List<AcademiaBaseRec> academia;
 
     public PersonRec ( ) {
+        super ( );
+        
         this.academia = new ArrayList<> ( );
     }
 
     /**
      * @return the academia
      */
-    public List<AcademiaBaseRec> getAcademia() {
+    public List<AcademiaBaseRec> getAcademia ( ) {
         return academia;
     }
 
     /**
      * @param academia the academia to set
      */
-    public void setAcademia(List<AcademiaBaseRec> academia) {
+    public void setAcademia ( List<AcademiaBaseRec> academia ) {
         this.academia = academia;
     }
 

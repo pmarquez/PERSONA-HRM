@@ -2,6 +2,8 @@
 package org.pmh.persona.contract.external;
 
 //   Standard Libraries Imports
+import java.util.ArrayList;
+import java.util.List;
 
 //   Third Party Libraries Imports
 
@@ -11,9 +13,9 @@ package org.pmh.persona.contract.external;
 
 
 /**
- * PersonRec.java<br/><br/>
- * Creation Date 2015-03-23 17:27<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * PersonRec.java<br><br>
+ * Creation Date 2015-03-23 17:27<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -21,8 +23,8 @@ package org.pmh.persona.contract.external;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-03-23 17:27<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-03-23 17:27<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
@@ -33,4 +35,25 @@ package org.pmh.persona.contract.external;
  */
 public class PersonRec extends PersonBaseRec {
     
+    private List<AcademiaBaseRec> academia;
+
+    public PersonRec ( ) {
+        this.academia = new ArrayList<> ( );
+    }
+
+    /**
+     * @return the academia
+     */
+    public List<AcademiaBaseRec> getAcademia() {
+        return academia;
+    }
+
+    /**
+     * @param academia the academia to set
+     */
+    public void setAcademia(List<AcademiaBaseRec> academia) {
+        this.academia = academia;
+    }
+
+
 }

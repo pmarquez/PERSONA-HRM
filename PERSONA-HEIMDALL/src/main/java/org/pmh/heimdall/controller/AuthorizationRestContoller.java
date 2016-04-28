@@ -27,6 +27,7 @@ import org.pmh.heimdall.model.AuthModel;
 import com.fxt.auth.LoginRec;
 import org.pmh.heimdall.model.NavigationModel;
 import org.pmh.heimdall.model.UtilsModel;
+import org.pmh.heimdall.process.TempLoginData;
 import org.pmh.heimdall.validations.LoginValidations;
 
 /**
@@ -60,45 +61,15 @@ public class AuthorizationRestContoller {
     
     
     @RequestMapping ( value = "/heimdallAPI/1.0/login/login", method = RequestMethod.POST, consumes="application/json" )
-    public @ResponseBody ValidationResultsRec doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
+    public @ResponseBody TempLoginData doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
 
         HttpSession session = request.getSession ( );
 
-        ValidationResultsRec vrr = new ValidationResultsRec ( );        
+        TempLoginData tld = AuthModel.tempAuthorizeUser ( lr, ds );
 
-//TODO Clear PASSWORD!!? 
-        BCrypt.hashpw (lr.getPasswd ( ), BCrypt.gensalt (AuthorizationRestContoller.SALT_ROUNDS ) );
-        LoginRec logr = AuthModel.authorizeUser ( lr.getUserName ( ), ds );
-
-        if ( logr.isActive ( ) && ( BCrypt.checkpw ( lr.getPasswd ( ), logr.getPasswd ( ) ) ) ) {
-            
-            session.setAttribute ( "loginData",  logr );
-
-        //    Get Client
-            NavigationRec nav = new NavigationRec ( );
-            nav.setSections ( NavigationModel.retrieveNavigation ( logr.getRoleCode ( ), ds ) );   //   LOCALE?
-
-            session.setAttribute ( "nav",  nav );
-            
-            for ( int i = 0; i < nav.getSections ( ).size ( ); i++ ) {
-                NavSectionRec nsr = nav.getSections ( ).get ( i );
-                System.out.println ( nsr.getSectionName ( ) + " - " + nsr.getControllerCommand ( ) );
-                for ( int j = 0; j < nsr.getCommands ( ).size ( ); j++ ) {
-                    NavCommandRec ncr = nsr.getCommands ( ).get ( j );
-                    System.out.println ( "   " + ncr.getCommandName ( ) + " : " + ncr.getControllerCommand ( ) );
-                }
-            }
-            
-            //System.out.println ( "Section Controller Command: " + nav.getCurrentSection ( ).getControllerCommand ( ) );
-            vrr.setNavTo ( "sections?s=" + nav.getCurrentSection ( ).getControllerCommand ( ) );
-//            vrr.setNavTo ( "index" );
-
-        } else {
-            vrr.setStatus ( UtilsModel.retrieveIssueData ( LoginValidations.LOGIN_INCORRECT_USERNAME_OR_PASSWORD, "es-ES", ds ) );   //   JACK SPARROW WAS HERE - "es-ES cannot be hardwired"
-
-        }
+        tld.setCodStatus( 1 );
         
-        return vrr;
+        return tld;
 
     }
 

@@ -28,9 +28,9 @@ import com.fxt.auth.LoginRec;
 import com.fxt.auth.ChallengeWordRec;
 
 /**
- * AuthModel.java<br/><br/>
- * Created on 2014-07-27 15:33<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * AuthModel.java<br><br>
+ * Created on 2014-07-27 15:33<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -38,8 +38,8 @@ import com.fxt.auth.ChallengeWordRec;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * 2014-07-27 15:33<br/>
+ *<td width="20%">Version 1.0<br>
+ * 2014-07-27 15:33<br>
  *Paulo Márquez </td>
  *<td width="80%"><p>Creación</p></td>
  *</tr>
@@ -366,4 +366,5 @@ public class AuthModel {
         return r;
 
     }
+
 }

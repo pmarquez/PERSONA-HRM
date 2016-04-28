@@ -16,9 +16,9 @@ import com.fxt.user.UserRec;
 
 
 /**
- * LoginRec.java<br/><br/>
- * Creation Date 2015-08-18 19:37<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * LoginRec.java<br><br>
+ * Creation Date 2015-08-18 19:37<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -26,8 +26,8 @@ import com.fxt.user.UserRec;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-08-18 19:37<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-08-18 19:37<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>

@@ -2,7 +2,6 @@
 package org.pmh.persona.contract.controller;
 
 //   Standard Libraries Imports
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,9 +24,9 @@ import com.fxt.process.ResponseRec;
 import org.pmh.persona.contract.contract.ContractBaseRec;
 import org.pmh.persona.contract.contract.ContractRec;
 import org.pmh.persona.contract.external.CompanyOrganizationalRec;
+import org.pmh.persona.contract.external.CompanyResponseRec;
+import org.pmh.persona.contract.external.PersonResponseRec;
 import org.pmh.persona.contract.model.ContractsModel;
-import org.pmh.persona.contract.external.CompanyRec;
-import org.pmh.persona.contract.external.PersonRec;
 import org.pmh.persona.contract.post.ContractPostRec;
 import org.pmh.persona.contract.salary.SalaryBaseRec;
 
@@ -80,9 +79,11 @@ public class ContractsRestController {
     
     
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
-    String serverBaseURI  = "http://localhost:8084";
-    String personBaseURI  = "/PERSONA-PERSON/personsAPI/1.0/";
-    String companyBaseURI = "/PERSONA-COMPANY/companiesAPI/1.0/";
+    String serverBaseURI    = "http://localhost:8084";
+    String personBaseURI    = "/PERSONA-PERSON/personsAPI/1.0/";
+    String personAPIMethod  = "persons/persons/";
+    String companyBaseURI   = "/PERSONA-COMPANY/companiesAPI/1.0/";
+    String companyAPIMethod = "companies/companies/";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
     
     @Autowired
@@ -112,7 +113,7 @@ public class ContractsRestController {
             rr.setResultMessage ( "The requested list of contracts is empty." );            //TODO use the database based ISSUE_MESSAGE_ENTITY scheme. 
 
         }
-        
+
         return rr;
     }
     
@@ -147,25 +148,27 @@ System.out.println ( "Contract Code: " + r.getContractCode ( ) );
 
 //   EXTERNAL STUFF - BEGIN
         
-                //        RestTemplate restTemplate = new RestTemplate ( );
-                //        
+                        RestTemplate restTemplate = new RestTemplate ( );
+                        
                 //        ResponseRec<PersonRec>  person  = new ResponseRec<> ( );
                 //        ResponseRec<CompanyRec> company = new ResponseRec<> ( );
-                //
-                //        String       personUri    = serverBaseURI + personBaseURI  + "persons/persons/"   + r.getPersonCode  ( );
-                //        String       companyUri   = serverBaseURI + companyBaseURI + "companies/companies/" + r.getCompanyCode ( );
-                //        
-                //        try {
-                //            company = restTemplate.getForObject ( companyUri, ResponseRec.class );
-                //            person  = restTemplate.getForObject ( personUri,  ResponseRec.class );
-                //
-                //        } catch ( RestClientException ex ) {
-                //            System.err.print ( ex.getMessage ( ) );
-                //        
-                //        }
-                //
-                //        r.setPerson  ( person.getPayload  ( ) );
-                //        r.setCompany ( company.getPayload ( ) );
+                        PersonResponseRec  person  = new PersonResponseRec  ( );
+                        CompanyResponseRec company = new CompanyResponseRec ( );
+                
+                        String personUri  = serverBaseURI + personBaseURI  + personAPIMethod  + r.getPersonCode  ( );
+                        String companyUri = serverBaseURI + companyBaseURI + companyAPIMethod + r.getCompanyCode ( );
+                        
+                        try {
+                            person  = restTemplate.getForObject ( personUri,  PersonResponseRec.class  );
+                            company = restTemplate.getForObject ( companyUri, CompanyResponseRec.class );
+                
+                        } catch ( RestClientException ex ) {
+                            System.err.print ( ex.getMessage ( ) );
+                        
+                        }
+                
+                        r.setPerson  ( person.getPayload  ( ) );
+                        r.setCompany ( company.getPayload ( ) );
 
 //   EXTERNAL STUFF - END
 
