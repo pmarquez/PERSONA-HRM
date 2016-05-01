@@ -15,9 +15,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * UserRec.java<br/><br/>
- * Creation Date 2015-05-15 17:50<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * UserRec.java<br><br>
+ * Creation Date 2015-05-15 17:50<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -25,8 +25,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-05-15 17:50<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-05-15 17:50<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>

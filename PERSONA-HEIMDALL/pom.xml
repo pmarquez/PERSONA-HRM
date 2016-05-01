@@ -10,12 +10,12 @@
         <artifactId>Heimdall</artifactId>
 	<packaging>war</packaging>
 	<name>Heimdall</name>
-	<description>Document Manager Web App</description>
-	<url>http://alexandria.nexglobal.es/</url>
+	<description>Access Control Web App</description>
+	<url>http://heimdall.nordstar.io/</url>
 
         <organization>
-		<name>nexglobal</name>
-		<url>http://www.nexglobal.es</url>
+		<name>Nord Star</name>
+		<url>http://www.nordstar.io</url>
 	</organization>
 
 	<properties>

@@ -2,9 +2,6 @@
 package org.pmh.heimdall.controller;
 
 //   Standard Libraries Imports
-import com.fxt.cryptography.BCrypt;
-import com.fxt.navigation.NavCommandRec;
-import com.fxt.navigation.NavSectionRec;
 import javax.sql.DataSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,17 +14,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
 import com.fxt.navigation.NavigationRec;
 import com.fxt.validations.ValidationResultsRec;
+import com.fxt.auth.LoginRec;
+import com.fxt.cryptography.BCrypt;
+import com.fxt.navigation.NavCommandRec;
+import com.fxt.navigation.NavSectionRec;
 
 //   Domain Imports
 import org.pmh.heimdall.model.AuthModel;
-import com.fxt.auth.LoginRec;
 import org.pmh.heimdall.model.NavigationModel;
 import org.pmh.heimdall.model.UtilsModel;
-import org.pmh.heimdall.process.TempLoginData;
+import org.pmh.heimdall.process.AuthenticationResponseRec;
 import org.pmh.heimdall.validations.LoginValidations;
 
 /**
@@ -54,6 +60,13 @@ import org.pmh.heimdall.validations.LoginValidations;
 @RestController
 public class AuthorizationRestContoller {
 
+    //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
+    //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
+    String serverBaseURI       = "http://localhost:8084";
+    String cerberusBaseURI     = "/Cerberus/AuthenticationAPI/1.0/";
+    String loginAPIMethod      = "login/";
+    //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
+
     public static final int SALT_ROUNDS = 12;
     
     @Autowired
@@ -61,15 +74,48 @@ public class AuthorizationRestContoller {
     
     
     @RequestMapping ( value = "/heimdallAPI/1.0/login/login", method = RequestMethod.POST, consumes="application/json" )
-    public @ResponseBody TempLoginData doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
+    public @ResponseBody AuthenticationResponseRec doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
+//    public @ResponseBody TempLoginData doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
 
         HttpSession session = request.getSession ( );
 
-        TempLoginData tld = AuthModel.tempAuthorizeUser ( lr, ds );
+        AuthenticationResponseRec response = new AuthenticationResponseRec ( );
 
-        tld.setCodStatus( 1 );
+//   EXTERNAL STUFF - BEGIN
+
+            RestTemplate restTemplate = new RestTemplate ( );
+            
+            HttpHeaders headers = new HttpHeaders ( );
+            
+            headers.set ( "service-id", "heimdall" );
+
+            HttpEntity<String> entity = new HttpEntity<> ( "parameters", headers );
+
+            String loginUri  = serverBaseURI + cerberusBaseURI  + loginAPIMethod  + lr.getUserName ( ) + "/" + lr.getPasswd ( );
+
+            try {
+                ResponseEntity<AuthenticationResponseRec> resp = restTemplate.exchange ( loginUri, HttpMethod.GET, entity, AuthenticationResponseRec.class );
+                response = resp.getBody ( );
+
+                if ( response.getMessage ( ).equals ( "Login valid" ) ) {
+                    session.setAttribute ( "authToken", response.getData ( ).getToken ( ) );                
+                }
+
+            } catch ( RestClientException ex ) {
+                System.err.print ( ex.getMessage ( ) );
+
+            }
+
+//   EXTERNAL STUFF - END
+
+        System.out.println ( "Message   : " + response.getMessage ( ) );
+        System.out.println ( "Token     : " + response.getData    ( ).getToken      ( ) );
+        System.out.println ( "PersonCode: " + response.getData    ( ).getPersonCode ( ) );
+//        TempLoginData tld = AuthModel.tempAuthorizeUser ( lr, ds );
+
+//        tld.setCodStatus( 1 );
         
-        return tld;
+        return response;
 
     }
 

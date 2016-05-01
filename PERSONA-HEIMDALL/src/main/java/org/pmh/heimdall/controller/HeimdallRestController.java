@@ -66,7 +66,13 @@ public class HeimdallRestController {
     @Autowired
     private DataSource ds;
 
-    @RequestMapping ( value = "/heimdallAPI/1.0/events/events", method = RequestMethod.POST, consumes="application/json" )
+    /**
+     * 
+     * @param event
+     * @param request
+     * @return 
+     */
+    @RequestMapping ( value = "/heimdallAPI/1.0/events/events/{}", method = RequestMethod.POST, consumes="application/json" )
     public @ResponseBody ResponseRec<EventRec> postEvent ( @RequestBody EventRec event, HttpServletRequest request ) {
 
         ResponseRec<EventRec> response = new ResponseRec<> ( );

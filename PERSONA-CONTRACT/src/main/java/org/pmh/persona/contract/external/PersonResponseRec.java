@@ -104,11 +104,9 @@ public class PersonResponseRec {
         System.out.println ( "************************************************************************" );
         System.out.println ( "**** ResponseRec *******************************************************" );
         System.out.println ( "************************************************************************" );
-
         System.out.println ( "**** Result Code    : " + this.getResultCode                        ( ) );
         System.out.println ( "**** Result Message : " + this.getResultMessage                     ( ) );
         System.out.println ( "**** Op Timestamp   : " + this.getOpTimestamp                       ( ) );
-
         System.out.println ( "************************************************************************" );
         System.out.println ( "************************************************************************" );
         System.out.println ( "************************************************************************" );

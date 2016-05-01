@@ -23,6 +23,7 @@ import com.fxt.process.ResponseRec;
 //   Application Domain Imports
 import org.pmh.persona.contract.contract.ContractBaseRec;
 import org.pmh.persona.contract.contract.ContractRec;
+import org.pmh.persona.contract.external.CompanyOrgResponseRec;
 import org.pmh.persona.contract.external.CompanyOrganizationalRec;
 import org.pmh.persona.contract.external.CompanyResponseRec;
 import org.pmh.persona.contract.external.PersonResponseRec;
@@ -79,11 +80,12 @@ public class ContractsRestController {
     
     
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
-    String serverBaseURI    = "http://localhost:8084";
-    String personBaseURI    = "/PERSONA-PERSON/personsAPI/1.0/";
-    String personAPIMethod  = "persons/persons/";
-    String companyBaseURI   = "/PERSONA-COMPANY/companiesAPI/1.0/";
-    String companyAPIMethod = "companies/companies/";
+    String serverBaseURI       = "http://localhost:8084";
+    String personBaseURI       = "/PERSONA-PERSON/personsAPI/1.0/";
+    String personAPIMethod     = "persons/persons/";
+    String companyBaseURI      = "/PERSONA-COMPANY/companiesAPI/1.0/";
+    String companyAPIMethod    = "companies/companies/";
+    String companyOrgAPIMethod = "companies/organization/";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
     
     @Autowired
@@ -134,15 +136,12 @@ public class ContractsRestController {
 //   INTERNAL STUFF - BEGIN
         
         ContractRec r = ContractsModel.retrieveContract ( contractCode, ds );
-System.out.println ( "Contract Code: " + r.getContractCode ( ) );
 
         //   Retrieve this contract's post history
         retrievePostsInfo    ( r, request );
-        System.out.println ( "N° of Posts: " + r.getPosts ( ).size ( ) );
 
         //   Retrieve this contract's salary history
 //        retrieveSalariesInfo ( r, request );
-        System.out.println ( "N° of Salaries: " + r.getSalaries ( ).size ( ) );
                 
 //   INTERNAL STUFF - END
 
@@ -150,8 +149,6 @@ System.out.println ( "Contract Code: " + r.getContractCode ( ) );
         
                         RestTemplate restTemplate = new RestTemplate ( );
                         
-                //        ResponseRec<PersonRec>  person  = new ResponseRec<> ( );
-                //        ResponseRec<CompanyRec> company = new ResponseRec<> ( );
                         PersonResponseRec  person  = new PersonResponseRec  ( );
                         CompanyResponseRec company = new CompanyResponseRec ( );
                 
@@ -198,24 +195,24 @@ System.out.println ( "Contract Code: " + r.getContractCode ( ) );
         HttpSession session = request.getSession ( );
         
         List<ContractPostRec> lpbr = cr.getPosts ( );
-//        List<CompanyOrganizationalRec> lorg = ( List<CompanyOrganizationalRec> ) session.getAttribute ( "companyOrganization" );
+        List<CompanyOrganizationalRec> lorg = ( List<CompanyOrganizationalRec> ) session.getAttribute ( "companyOrganization" );
  
-//        for ( ContractPostRec cpr : lpbr ) {
-//            for ( CompanyOrganizationalRec cor : lorg ) {
-//                if ( cor.getPostCode ( ) == cpr.getPostCode ( ) ) {
-//                    cpr.setPostName           ( cor.getPostName           ( ) );
-//                    cpr.setDepartmentCode     ( cor.getDepartmentCode     ( ) );
-//                    cpr.setDepartmentName     ( cor.getDepartmentName     ( ) );
-//                    cpr.setSupervisorPostCode ( cor.getSupervisorPostCode ( ) );
-//
-//                    for ( CompanyOrganizationalRec cor2 : lorg ) {
-//                        if ( cor2.getPostCode ( ) == cpr.getSupervisorPostCode ( ) ) {
-//                            cpr.setSupervisorPostName ( cor2.getPostName ( ) );
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        for ( ContractPostRec cpr : lpbr ) {
+            for ( CompanyOrganizationalRec cor : lorg ) {
+                if ( cor.getPostCode ( ) == cpr.getPostCode ( ) ) {
+                    cpr.setPostName           ( cor.getPostName           ( ) );
+                    cpr.setDepartmentCode     ( cor.getDepartmentCode     ( ) );
+                    cpr.setDepartmentName     ( cor.getDepartmentName     ( ) );
+                    cpr.setSupervisorPostCode ( cor.getSupervisorPostCode ( ) );
+
+                    for ( CompanyOrganizationalRec cor2 : lorg ) {
+                        if ( cor2.getPostCode ( ) == cpr.getSupervisorPostCode ( ) ) {
+                            cpr.setSupervisorPostName ( cor2.getPostName ( ) );
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -244,34 +241,37 @@ System.out.println ( "Contract Code: " + r.getContractCode ( ) );
      * We will be using this list as a cache of organizational information and will be placing in in the session.
      * @param companyCode
      * @param request
+     * @return 
      * @deprecated Use a RestTemplate to get this data from COMPANY
      */
-    @RequestMapping ( value = "/contractsAPI/1.0/organization/{companyCode}", method = RequestMethod.GET )
-    public void retrieveOrganization ( @PathVariable int companyCode, HttpServletRequest request ) {
+    @RequestMapping ( value = "/contractsAPI/1.0/companies/organization/{companyCode}", method = RequestMethod.GET )
+    public CompanyOrgResponseRec retrieveOrganization ( @PathVariable int companyCode, HttpServletRequest request ) {
 
         HttpSession session = request.getSession ( );
 
         RestTemplate restTemplate = new RestTemplate ( );
         
-        String                         orgUri = serverBaseURI + companyBaseURI + "companies/organization/" + companyCode;
-
-        ResponseRec<List<CompanyOrganizationalRec>> org = new ResponseRec<> ( );
-//        List<CompanyOrganizationalRec> org = new ArrayList<> ( );
+        String orgUri = serverBaseURI + companyBaseURI + companyOrgAPIMethod + companyCode;
+        System.out.println ( "orgURI: " + orgUri );
+        CompanyOrgResponseRec org = new CompanyOrgResponseRec ( );
 
         try {
-            ResponseEntity<ResponseRec> orgArray = restTemplate.getForEntity ( orgUri, ResponseRec.class );
+            org = restTemplate.getForObject ( orgUri, CompanyOrgResponseRec.class );
+            System.out.println ( "OrgArray: " + org );
 //            ResponseEntity<CompanyOrganizationalRec [ ]> orgArray = restTemplate.getForEntity ( orgUri, CompanyOrganizationalRec [ ].class );
 
-//            for ( int i = 0; i < orgArray.getBody ( ).length; i++ ) {
+            for ( int i = 0; i < org.getPayload ( ).size ( ); i++ ) {
 //                org.add ( ( orgArray.getBody ( ) ) [ i ] );
-//                System.out.println ( org.get ( i ).getCompanyName ( ) + " - " + org.get ( i ).getDepartmentName ( ) + " - " + org.get ( i ).getPostName ( ) );
-//            }
+                System.out.println ( org.getPayload ( ).get ( i ).getCompanyName ( ) + " - " + org.getPayload ( ).get ( i ).getDepartmentName ( ) + " - " + org.getPayload ( ).get ( i ).getPostName ( ) );
+            }
 
         } catch ( org.springframework.web.client.RestClientException ex ) {
             System.err.print ( ex.getMessage ( ) );
         }
 
         session.setAttribute ( "companyOrganization", org );
+        
+        return org;
         
     }
 
