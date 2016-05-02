@@ -34,7 +34,7 @@ package org.pmh.heimdall.process;
  * @author Paulo Márquez
  * @version 1.0 - 2016-04-24 11:46
  */
-public class EventRec extends EventShortRec {
+public class EventRec {
     private String        personFirstName;
     private String        personLastName;
     private int           sensorCode;
@@ -117,15 +117,15 @@ public class EventRec extends EventShortRec {
         System.out.println ( "**** EventRec *******************************************************" );
         System.out.println ( "************************************************************************" );
 
-        System.out.println ( "**** EventCode       : " + this.getEventCode       ( ) );
-        System.out.println ( "**** Timestamp       : " + this.getTimestamp       ( ) );
+//        System.out.println ( "**** EventCode       : " + this.getEventCode       ( ) );
+//        System.out.println ( "**** Timestamp       : " + this.getTimestamp       ( ) );
         System.out.println ( "**** SensorCode      : " + this.getSensorCode      ( ) );
         System.out.println ( "**** SensorName      : " + this.getSensorName      ( ) );
-        System.out.println ( "**** SensorTagCode   : " + this.getSensorTagCode   ( ) );
-        System.out.println ( "**** CompanyCode     : " + this.getCompanyCode     ( ) );
-        System.out.println ( "**** CompanyName     : " + this.getCompanyName     ( ) );
+//        System.out.println ( "**** SensorTagCode   : " + this.getSensorTagCode   ( ) );
+//        System.out.println ( "**** CompanyCode     : " + this.getCompanyCode     ( ) );
+//        System.out.println ( "**** CompanyName     : " + this.getCompanyName     ( ) );
         System.out.println ( "**** PersonLastName  : " + this.getPersonLastName  ( ) );
-        System.out.println ( "**** PersonCode      : " + this.getPersonCode      ( ) );
+//        System.out.println ( "**** PersonCode      : " + this.getPersonCode      ( ) );
         System.out.println ( "**** PersonFirstName : " + this.getPersonFirstName ( ) );
         System.out.println ( "**** PersonLastName  : " + this.getPersonLastName  ( ) );
 

@@ -27,8 +27,12 @@ import com.fxt.process.ResponseRec;
 //   Domain Imports
 import org.pmh.heimdall.model.EventsModel;
 import org.pmh.heimdall.external.person.PersonRec;
+import org.pmh.heimdall.model.SensorsModel;
 import org.pmh.heimdall.process.EventRec;
+import org.pmh.heimdall.process.EventShortRec;
 import org.pmh.heimdall.process.TokenConfirmationDataRec;
+import org.pmh.heimdall.sensor.SensorRec;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  * HeimdallRestController.java<br><br>
@@ -54,14 +58,22 @@ import org.pmh.heimdall.process.TokenConfirmationDataRec;
 @RestController
 public class HeimdallRestController {
 
+    //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
+    //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
+    String serverBaseURI            = "http://localhost:8084";
+    String cerberusBaseURI          = "/Cerberus/AuthorizationAPI/1.0/";
+    String tokenValidationAPIMethod = "confirmToken";
+    //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
+
+    
     private static final String EVENT_REGISTERED_SUCCESSFULLY_CODE    = "EV-001";
     private static final String EVENT_REGISTERED_SUCCESSFULLY_MESSAGE = "Event registered successfully.";
 
-    private static final String PERSON_REGISTERED_SUCCESSFULLY_CODE    = "EV-002";
-    private static final String PERSON_REGISTERED_SUCCESSFULLY_MESSAGE = "Event registered successfully.";
+    private static final String AUTHORIZATION_TOKEN_NOT_VALID_CODE    = "EV-002";
+    private static final String AUTHORIZATION_TOKEN_NOT_VALID_MESSAGE = "AUTHENTICATION TOKEN NOT VALID.";
 
-    private static final String CONTRACT_REGISTERED_SUCCESSFULLY_CODE    = "EV-003";
-    private static final String CONTRACT_REGISTERED_SUCCESSFULLY_MESSAGE = "Event registered successfully.";
+    private static final String SENSOR_CODE_NOT_VALID_CODE            = "EV-003";
+    private static final String SENSOR_CODE_NOT_VALID_MESSAGE         = "SENSOR CODE NOT VALID.";
             
     @Autowired
     private DataSource ds;
@@ -70,23 +82,38 @@ public class HeimdallRestController {
      * 
      * @param event
      * @param request
+     * @param authToken
      * @return 
      */
-    @RequestMapping ( value = "/heimdallAPI/1.0/events/events/{}", method = RequestMethod.POST, consumes="application/json" )
-    public @ResponseBody ResponseRec<EventRec> postEvent ( @RequestBody EventRec event, HttpServletRequest request ) {
+    @RequestMapping ( value = "/heimdallAPI/1.0/events/events", method = RequestMethod.POST, consumes="application/json" )
+    public @ResponseBody ResponseRec<EventShortRec> postEvent ( @RequestBody EventShortRec event, HttpServletRequest request, @RequestHeader(value="authorization-token") String authToken ) {
 
-        ResponseRec<EventRec> response = new ResponseRec<> ( );
+        ResponseRec<EventShortRec> response = new ResponseRec<> ( );
+
+//   VALIDATE THE EVENT - BEGIN
         
-        event.spillYourGuts ( );
+        if ( this.isValidToken ( authToken ) ) {
 
-//   PERSISTS THE EVENT
-        
-        EventsModel.persistEvent ( event, ds );
-
-        response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
-        response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
+            event.setAuthToken  ( authToken );
+            response.setPayload ( event     );
+            
+            if ( this.isValidTag   ( event.getSensorTagCode ( ) ) ) {
+                
+//                EventsModel.persistEvent ( event, ds );
+                response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
+                response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
+            } else {
+                response.setResultCode    ( HeimdallRestController.SENSOR_CODE_NOT_VALID_CODE    );
+                response.setResultMessage ( HeimdallRestController.SENSOR_CODE_NOT_VALID_MESSAGE );
+            }
+        } else {
+            response.setResultCode    ( HeimdallRestController.AUTHORIZATION_TOKEN_NOT_VALID_CODE    );
+            response.setResultMessage ( HeimdallRestController.AUTHORIZATION_TOKEN_NOT_VALID_MESSAGE );
+        }
 
         response.setPayload ( event );
+
+//   VALIDATE THE EVENT - END        
         
         return response;
 
@@ -102,32 +129,44 @@ public class HeimdallRestController {
         return UUID.randomUUID ( ).toString ( );
     }
 
+    /**
+     * Validates that the token received is valid.
+     * @param authToken
+     * @return 
+     */
     private boolean isValidToken ( String authToken ) {
         
         RestTemplate restTemplate = new RestTemplate ( );
         HttpHeaders  headers      = new HttpHeaders  ( );
         
-        String authAPIUri    = "http://13.79.175.6:8080/Cerberus-1/AuthorizationAPI/1.0/confirmToken";
+        String tokenValidation  = serverBaseURI + cerberusBaseURI  + tokenValidationAPIMethod;
 
         headers.setAccept ( Arrays.asList ( MediaType.APPLICATION_JSON ) );
         headers.set ( "user-token", authToken );
-        headers.set ( "service-id", "brucke"  );
+        headers.set ( "service-id", "heimdall"  );
         
         HttpEntity<String> entity = new HttpEntity<> ( "parameters", headers );
 
         TokenConfirmationDataRec tcdr = new TokenConfirmationDataRec  ( );
         
         try {
-            ResponseEntity<TokenConfirmationDataRec> response = restTemplate.exchange ( authAPIUri, HttpMethod.GET, entity, TokenConfirmationDataRec.class );
-            //exchange ( authAPIUri, HttpMethod.GET, entity, TokenDataRec.class );
-            //tdr = restTemplate.getForObject ( authAPIUri, TokenDataRec.class );
+            ResponseEntity<TokenConfirmationDataRec> response = restTemplate.exchange ( tokenValidation, HttpMethod.GET, entity, TokenConfirmationDataRec.class );
             tcdr = response.getBody ( );
+            System.out.println("##### tcdr: " + tcdr);
         } catch ( RestClientException ex ) {
             System.err.print ( ex.getMessage ( ) );
         
         }
         
         return ( tcdr.getMessage ( ).equals ( "Token valid" ) );
+        
+    }
+
+    private boolean isValidTag ( String sensorTagCode ) {
+        
+        SensorRec sensor = SensorsModel.retrieveSensorData ( sensorTagCode, ds );
+        
+        return ( sensor.getSensorCode ( ) > 0 );
         
     }
 

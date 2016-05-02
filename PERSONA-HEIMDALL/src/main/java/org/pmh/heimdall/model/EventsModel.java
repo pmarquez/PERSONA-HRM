@@ -24,6 +24,7 @@ import java.util.List;
 
 //   Domain Imports
 import org.pmh.heimdall.process.EventRec;
+import org.pmh.heimdall.process.EventShortRec;
 
 /**
  * EventsModel.java<br><br>
@@ -52,7 +53,7 @@ public class EventsModel {
      * Retrieves a list of events (EventRec) identified by "companyCode" from storage.
      * @param ds
      * @param companyCode The code of the company we want events from (MULTITENANCY)
-     * @return an instance of PersonShortRec
+     * @return an instance of EventRec
      */
     public static List<EventRec> retrieveCompanyEvents ( int companyCode, DataSource ds ) {
 
@@ -87,15 +88,15 @@ public class EventsModel {
 
                                                 EventRec r = new EventRec ( );
 
-                                                   r.setEventCode                   ( rs.getInt     ( "eventCode"        ) );
-                                                   r.setCompanyCode                 ( rs.getInt     ( "companyCode"      ) );
-                                                   r.setPersonCode                  ( rs.getInt     ( "personCode"       ) );
+//                                                   r.setEventCode                   ( rs.getInt     ( "eventCode"        ) );
+//                                                   r.setCompanyCode                 ( rs.getInt     ( "companyCode"      ) );
+//                                                   r.setPersonCode                  ( rs.getInt     ( "personCode"       ) );
                                                    r.setSensorCode                  ( rs.getInt     ( "sensorCode"       ) );
                                                    r.setSensorName                  ( rs.getString  ( "SENSOR_NAME"      ) );
-                                                   r.setSensorTagCode               ( rs.getString  ( "SENSOR_TAG_CODE"  ) );
+//                                                   r.setSensorTagCode               ( rs.getString  ( "SENSOR_TAG_CODE"  ) );
                                                    r.setSensorTypeCode              ( rs.getInt     ( "sensorTypeCode"   ) );
                                                    r.setSensorTypeName              ( rs.getString  ( "SENSOR_TYPE_NAME" ) );
-                                                   r.setTimestamp                   ( rs.getString  ( "timestamp"        ) );
+//                                                   r.setTimestamp                   ( rs.getString  ( "timestamp"        ) );
 
                                                 return r;
                                             }
@@ -148,15 +149,15 @@ public class EventsModel {
 
                                                 EventRec r = new EventRec ( );
 
-                                                   r.setEventCode                   ( rs.getInt     ( "eventCode"        ) );
-                                                   r.setCompanyCode                 ( rs.getInt     ( "companyCode"      ) );
-                                                   r.setPersonCode                  ( rs.getInt     ( "personCode"       ) );
+//                                                   r.setEventCode                   ( rs.getInt     ( "eventCode"        ) );
+//                                                   r.setCompanyCode                 ( rs.getInt     ( "companyCode"      ) );
+//                                                   r.setPersonCode                  ( rs.getInt     ( "personCode"       ) );
                                                    r.setSensorCode                  ( rs.getInt     ( "sensorCode"       ) );
                                                    r.setSensorName                  ( rs.getString  ( "SENSOR_NAME"      ) );
-                                                   r.setSensorTagCode               ( rs.getString  ( "SENSOR_TAG_CODE"  ) );
+//                                                   r.setSensorTagCode               ( rs.getString  ( "SENSOR_TAG_CODE"  ) );
                                                    r.setSensorTypeCode              ( rs.getInt     ( "sensorTypeCode"   ) );
                                                    r.setSensorTypeName              ( rs.getString  ( "SENSOR_TYPE_NAME" ) );
-                                                   r.setTimestamp                   ( rs.getString  ( "timestamp"        ) );
+//                                                   r.setTimestamp                   ( rs.getString  ( "timestamp"        ) );
 
                                                 return r;
                                             }
@@ -189,8 +190,8 @@ public class EventsModel {
 
         Map<String,Object> bind = new HashMap<>( );
 
-                           bind.put ( "eventCode",  r.getEventCode    ( ) );
-                           bind.put ( "personCode", r.getPersonCode   ( ) );
+//                           bind.put ( "eventCode",  r.getEventCode    ( ) );
+//                           bind.put ( "personCode", r.getPersonCode   ( ) );
                            bind.put ( "sensorCode", r.getSensorCode   ( ) );
                            bind.put ( "timestamp",  LocalDateTime.now ( ) );
 

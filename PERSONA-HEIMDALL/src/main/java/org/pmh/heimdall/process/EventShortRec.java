@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * EventShortRec.java<br><br>
  * Creation Date 2016-04-24 11:46<br><br>
  * <b>DESCRIPTION:</b><br><br>
- * <p></p>
+ * <p>Minimal expression of what an event is. Carries the WHO (authToken), WHERE (sensorTagCode) and WHEN (timestamp) of an event.</p>
  *
  *<PRE>
  *<table width="90%" border="1" cellpadding="3" cellspacing="2">
@@ -37,76 +37,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @version 1.0 - 2016-04-24 11:46
  */
 public class EventShortRec {
-    private int           eventCode;
-    private int           companyCode;
-    private String        companyName;
-    private int           personCode;
-    private String        sensorTagCode;
-    private LocalDateTime timestamp;
+    private String authToken;
+    private String sensorTagCode;
+    private String timestamp;
 
     public EventShortRec ( ) {
-        this.eventCode     = 0;
-        this.companyCode   = 0;
-        this.companyName   = "";
-        this.personCode    = 0;
+        this.authToken     = "";
         this.sensorTagCode = "";
-        this.timestamp     = LocalDateTime.MAX;
+        this.timestamp     = "";
     }
 
     /**
-     * @return the eventCode
+     * @return the authToken
      */
-    public int getEventCode() {
-        return eventCode;
+    public String getAuthToken() {
+        return authToken;
     }
 
     /**
-     * @param eventCode the eventCode to set
+     * @param authToken the authToken to set
      */
-    public void setEventCode(int eventCode) {
-        this.eventCode = eventCode;
-    }
-
-    /**
-     * @return the companyCode
-     */
-    public int getCompanyCode() {
-        return companyCode;
-    }
-
-    /**
-     * @param companyCode the companyCode to set
-     */
-    public void setCompanyCode(int companyCode) {
-        this.companyCode = companyCode;
-    }
-
-    /**
-     * @return the companyName
-     */
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    /**
-     * @param companyName the companyName to set
-     */
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    /**
-     * @return the personCode
-     */
-    public int getPersonCode() {
-        return personCode;
-    }
-
-    /**
-     * @param personCode the personCode to set
-     */
-    public void setPersonCode(int personCode) {
-        this.personCode = personCode;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
     /**
@@ -126,40 +78,14 @@ public class EventShortRec {
     /**
      * @return the timestamp
      */
-    @JsonIgnore
-    public String getTimestampDate ( ) {
-        return timestamp.format ( DateTimeFormatter.ofPattern ( "dd-MM-yyyy" ) );
-    }
-
-    @JsonIgnore
-    public String getTimestampTime ( ) {
-        return timestamp.format ( DateTimeFormatter.ofPattern ( "HH:mm:ss" ) );
-    }
-
-    public String getTimestamp ( ) {
-        return timestamp.format ( DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" ) );
-    }
-
-    @JsonIgnore
-    public LocalDateTime getTimestampLDT ( ) {
+    public String getTimestamp() {
         return timestamp;
     }
 
     /**
      * @param timestamp the timestamp to set
      */
-//    @JsonIgnore
-    public void setTimestamp ( String timestamp ) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" );
-        try {
-            this.timestamp = LocalDateTime.parse ( timestamp, dtf );
-        } catch ( DateTimeParseException dtpe ) {            
-            this.timestamp = LocalDateTime.MIN;
-        }
-    }
-
-    @JsonIgnore
-    public void setTimestamp ( LocalDateTime timestamp ) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

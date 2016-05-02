@@ -1,6 +1,0 @@
-{ "payloadType": "EstadoCivil",
-  "tableName":   "am_maritalstatusentity",
-  "mapRules": [ { "incomingName":"idEstadoCivil", "localName":"maritalStatusCode", "keyType":"P", "required":true },
-                { "incomingName":"Nombre",        "localName":"maritalStatusName", "required":true }
-              ]
-}

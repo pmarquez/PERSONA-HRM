@@ -1,6 +1,0 @@
-{ "payloadType": "Municipio",
-  "tableName":   "am_countyentity",
-  "mapRules": [ { "incomingName":"idMunicipio", "localName":"countyCode", "keyType":"P", "required":true },
-                { "incomingName":"Nombre",      "localName":"countyName", "required":true }
-              ]
-}

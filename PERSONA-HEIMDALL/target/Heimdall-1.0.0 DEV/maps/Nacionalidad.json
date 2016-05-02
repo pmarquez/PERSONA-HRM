@@ -1,6 +1,0 @@
-{ "payloadType": "Nacionalidad",
-  "tableName":   "am_nationalityentity",
-  "mapRules": [ { "incomingName":"idNacionalidad", "localName":"nationalityCode", "keyType":"P", "required":true },
-                { "incomingName":"Nombre",         "localName":"nationalityName", "required":true }
-              ]
-}
