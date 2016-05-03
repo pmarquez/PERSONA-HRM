@@ -1,5 +1,5 @@
 
-package com.fxt.auth;
+package io.nordstar.heimdallmobile.process;
 
 //   Standard Libraries Imports
 
@@ -36,28 +36,29 @@ package com.fxt.auth;
  */
 public class LoginRec {
 //public class LoginRec extends UserRec {
-    
-    public static final int    NO_ERROR_CODE                      =  0;
-    public static final String NO_ERROR_MESSAGE                   =  "No error.";
-    public static final int    AUTHENTICATION_SUCCESSFUL_CODE     =  1;
-    public static final String AUTHENTICATION_SUCCESSFUL_MESSAGE  =  "Login successful";
-    
-    public static final int    AUTHENTICATION_FAILED_CODE         =  2;
-    public static final String AUTHENTICATION_FAILED_MESSAGE      =  "Login failed";
-    
-    public static final int    LDAP_AUTHENTICATION_FAILED_CODE    = 99;
+
+    public static final int    NO_ERROR_CODE = 0;
+    public static final String NO_ERROR_MESSAGE = "No error.";
+
+    public static final int    AUTHENTICATION_SUCCESSFUL_CODE = 1;
+    public static final String AUTHENTICATION_SUCCESSFUL_MESSAGE = "Login successful";
+
+    public static final int    AUTHENTICATION_FAILED_CODE = 2;
+    public static final String AUTHENTICATION_FAILED_MESSAGE = "Login failed";
+
+    public static final int    LDAP_AUTHENTICATION_FAILED_CODE = 99;
     public static final String LDAP_AUTHENTICATION_FAILED_MESSAGE = "LDAP Login Failed";
-    
+
 
     private int     statusCode;
     private String  message;
     private boolean userOK;
     private String  name;
-    private String  lastName;    
+    private String  lastName;
     private String  authorizationToken;
     private String  userName;
     private String  passwd;
-    
+
     public LoginRec ( ) {
         super ( );
 
@@ -65,7 +66,7 @@ public class LoginRec {
         this.message              = LoginRec.NO_ERROR_MESSAGE;
         this.userOK               = false;
         this.name                 = "";
-        this.lastName             = "";    
+        this.lastName             = "";
         this.authorizationToken   = "";
 
     }

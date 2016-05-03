@@ -67,14 +67,16 @@ public class AuthorizationRestContoller {
     String loginAPIMethod      = "login/";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
 
-    public static final int SALT_ROUNDS = 12;
     
+    
+    public static final int SALT_ROUNDS = 12;
+
     @Autowired
     private DataSource ds;
-    
-    
+
+
     @RequestMapping ( value = "/heimdallAPI/1.0/login/login", method = RequestMethod.POST, consumes="application/json" )
-    public @ResponseBody AuthenticationResponseRec doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
+    public @ResponseBody LoginRec doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
 //    public @ResponseBody TempLoginData doLogin ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
 
         HttpSession session = request.getSession ( );
@@ -85,20 +87,40 @@ public class AuthorizationRestContoller {
 
             RestTemplate restTemplate = new RestTemplate ( );
             
-            HttpHeaders headers = new HttpHeaders ( );
+            HttpHeaders  headers      = new HttpHeaders ( );
             
             headers.set ( "service-id", "heimdall" );
 
             HttpEntity<String> entity = new HttpEntity<> ( "parameters", headers );
 
             String loginUri  = serverBaseURI + cerberusBaseURI  + loginAPIMethod  + lr.getUserName ( ) + "/" + lr.getPasswd ( );
-
+            
             try {
                 ResponseEntity<AuthenticationResponseRec> resp = restTemplate.exchange ( loginUri, HttpMethod.GET, entity, AuthenticationResponseRec.class );
                 response = resp.getBody ( );
 
                 if ( response.getMessage ( ).equals ( "Login valid" ) ) {
-                    session.setAttribute ( "authToken", response.getData ( ).getToken ( ) );                
+                    lr.setAuthorizationToken ( response.getData ( ).getToken ( ) );
+                    lr.setUserOK             ( true );
+                    lr.setName               ( "Paulo" );
+                    lr.setLastName           ( "Marquez Herrero" );
+                    lr.setUserName           ( "" );
+                    lr.setPasswd             ( "" );
+                    
+                    lr.setStatusCode ( LoginRec.AUTHENTICATION_SUCCESSFUL_CODE    );
+                    lr.setMessage   ( LoginRec.AUTHENTICATION_SUCCESSFUL_MESSAGE );
+
+                } else {
+                    lr.setAuthorizationToken ( "" );
+                    lr.setUserOK             ( false );
+                    lr.setName               ( "" );
+                    lr.setLastName           ( "" );
+                    lr.setUserName           ( "" );
+                    lr.setPasswd             ( "" );
+                    
+                    lr.setStatusCode ( LoginRec.AUTHENTICATION_FAILED_CODE    );
+                    lr.setMessage   ( LoginRec.AUTHENTICATION_FAILED_MESSAGE );
+                    
                 }
 
             } catch ( RestClientException ex ) {
@@ -115,10 +137,11 @@ public class AuthorizationRestContoller {
 
 //        tld.setCodStatus( 1 );
         
-        return response;
+        return lr;
 
     }
 
+/*    
     @RequestMapping ( value = "/heimdallAPI/1.0/login/logout", method = RequestMethod.POST, consumes="application/json" )
     public @ResponseBody ValidationResultsRec doLogout ( @RequestBody LoginRec lr, Model model, HttpServletRequest request ) {
 
@@ -161,5 +184,5 @@ public class AuthorizationRestContoller {
         return vrr;
 
     }
-
+*/
 }

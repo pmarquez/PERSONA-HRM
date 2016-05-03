@@ -3,6 +3,9 @@ package io.nordstar.heimdallmobile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -19,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,9 +32,23 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import io.nordstar.heimdallmobile.process.LoginRec;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -184,10 +202,100 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            showProgress ( true );
+
+            this.doLogin ( email, password );   //   Let's go with Android Volley
+
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
+    }
+
+    /**
+     *
+     * @param email
+     * @param pwd
+     */
+    private void doLogin ( String email, String pwd ) {
+
+        RequestQueue queue = Volley.newRequestQueue ( this );
+        String url = "http://localhost:8084/Heimdall/heimdallAPI/1.0/login/login";
+
+        HashMap<String, String> params = new HashMap<> ( );
+        params.put ( "email",  email );
+        params.put ( "passwd", pwd   );
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest( Request.Method.POST, url, new JSONObject( params ), new Response.Listener<JSONObject> ( ) {
+
+            @Override
+            public void onResponse ( JSONObject response ) {
+                Log.v ( "doLogin",  response.toString ( ) );
+                try {
+                    LoginRec lr = new LoginRec( );
+                    lr.setStatusCode         ( Integer.parseInt ( response.getString ( "statusCode"    ) ) );
+                    lr.setMessage            ( response.getString ( "message"                            ) );
+                    lr.setName               ( response.getString ( "name"                               ) );
+                    lr.setLastName           ( response.getString ( "lastName"                           ) );
+                    lr.setAuthorizationToken ( response.getString ( "authorizationCode"                  ) );
+
+                    processLR ( lr );
+
+                } catch ( JSONException e ) {
+                    e.printStackTrace ( );
+                }
+            }
+        }, new Response.ErrorListener ( ) {
+
+            @Override
+            public void onErrorResponse ( VolleyError error ) {
+                Log.v ( "doLogin",  "That did not work." );
+
+            }
+        } );
+
+        queue.add ( jsonObjectRequest );
+
+    }
+
+    /**
+     *
+     * @param lr
+     */
+    private void processLR ( LoginRec lr ) {
+        if ( lr.getStatusCode ( ) == LoginRec.AUTHENTICATION_SUCCESSFUL_CODE ) {
+            insertSharedPreference ( lr.getAuthorizationToken ( ), lr.getName ( ), lr.getLastName ( ) );
+
+//            Intent i = new Intent( this, RecordListActivity.class );
+//            startActivity ( i );
+
+            // close this activity
+//			finish ( );
+
+        } else {
+            Toast.makeText ( getApplicationContext ( ), lr.getStatusCode ( ) + " - " + lr.getMessage ( ), Toast.LENGTH_LONG ).show ( );
+
+        }
+
+    }
+
+    /**
+     *
+     * @param authToken
+     * @param firstName
+     * @param lastName
+     */
+    private void insertSharedPreference ( String authToken, String firstName, String lastName ) {
+/*
+        SharedPreferences sharedPreferences = getSharedPreferences ( PernoctaUtils.pernoctaPrefs, Context.MODE_PRIVATE );
+
+        SharedPreferences.Editor editor = sharedPreferences.edit ( );
+
+        editor.putString ( PernoctaUtils.userAuthToken, authToken );
+        editor.putString ( PernoctaUtils.userFirstName, firstName );
+        editor.putString ( PernoctaUtils.userLastName,  lastName  );
+
+        editor.commit ( );
+ */
     }
 
     private boolean isEmailValid(String email) {
@@ -332,18 +440,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                finish();
+            if ( success ) {
+                finish ( );
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                mPasswordView.setError ( getString(R.string.error_incorrect_password) );
+                mPasswordView.requestFocus ( );
             }
         }
 
         @Override
-        protected void onCancelled() {
+        protected void onCancelled ( ) {
             mAuthTask = null;
-            showProgress(false);
+            showProgress ( false  );
         }
     }
 }
