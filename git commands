@@ -1,4 +1,4 @@
-cd /C/PROJECTS_ROOT/PERSONA-HRM/
+cd C:\PROJECTS_ROOT\PERSONA-HRM\
 cd /C/PROJECTS_ROOT/nexglobal/nexfidelitas/
 
 git remote rm origin

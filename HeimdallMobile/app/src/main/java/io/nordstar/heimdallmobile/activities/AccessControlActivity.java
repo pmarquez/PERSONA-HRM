@@ -1,7 +1,9 @@
-package io.nordstar.heimdallmobile;
+package io.nordstar.heimdallmobile.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import io.nordstar.heimdallmobile.R;
 
 public class AccessControlActivity extends AppCompatActivity {
 

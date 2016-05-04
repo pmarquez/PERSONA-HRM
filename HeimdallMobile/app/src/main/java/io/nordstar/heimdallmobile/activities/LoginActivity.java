@@ -1,4 +1,4 @@
-package io.nordstar.heimdallmobile;
+package io.nordstar.heimdallmobile.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.nordstar.heimdallmobile.R;
 import io.nordstar.heimdallmobile.prefs.HeimdallPrefs;
 import io.nordstar.heimdallmobile.process.LoginRec;
 
