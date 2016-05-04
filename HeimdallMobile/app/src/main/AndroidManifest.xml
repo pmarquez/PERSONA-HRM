@@ -2,17 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.nordstar.heimdallmobile">
 
+    <uses-sdk
+        android:maxSdkVersion="23"
+        android:minSdkVersion="10"
+        android:targetSdkVersion="21" />
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk android:minSdkVersion="10"
-              android:targetSdkVersion="21"
-              android:maxSdkVersion="23" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AccessControlActivity"></activity>
     </application>
 
 </manifest>

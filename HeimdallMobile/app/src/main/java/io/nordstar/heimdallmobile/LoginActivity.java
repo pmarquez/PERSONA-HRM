@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.nordstar.heimdallmobile.prefs.HeimdallPrefs;
 import io.nordstar.heimdallmobile.process.LoginRec;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -206,8 +207,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             this.doLogin ( email, password );   //   Let's go with Android Volley
 
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
         }
     }
 
@@ -218,25 +219,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void doLogin ( String email, String pwd ) {
 
+        Log.v ( "doLogin", email );
+        Log.v ( "doLogin", pwd   );
+
         RequestQueue queue = Volley.newRequestQueue ( this );
-        String url = "http://localhost:8084/Heimdall/heimdallAPI/1.0/login/login";
+        String url = HeimdallPrefs.BASE_URI + HeimdallPrefs.LOGIN_USER;
+
+        Log.v ( "doLogin", url );
 
         HashMap<String, String> params = new HashMap<> ( );
-        params.put ( "email",  email );
+        params.put ( "userName",  email );
         params.put ( "passwd", pwd   );
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest( Request.Method.POST, url, new JSONObject( params ), new Response.Listener<JSONObject> ( ) {
+        JSONObject jobj = new JSONObject ( params );
+        Log.v ( "doLogin", jobj.toString ( ) );
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest ( Request.Method.POST, url, jobj, new Response.Listener<JSONObject> ( ) {
 
             @Override
             public void onResponse ( JSONObject response ) {
-                Log.v ( "doLogin",  response.toString ( ) );
+                Log.v ( "doLogin", response.toString ( ) );
                 try {
                     LoginRec lr = new LoginRec( );
                     lr.setStatusCode         ( Integer.parseInt ( response.getString ( "statusCode"    ) ) );
                     lr.setMessage            ( response.getString ( "message"                            ) );
                     lr.setName               ( response.getString ( "name"                               ) );
                     lr.setLastName           ( response.getString ( "lastName"                           ) );
-                    lr.setAuthorizationToken ( response.getString ( "authorizationCode"                  ) );
+                    lr.setAuthorizationToken ( response.getString ( "authorizationToken"                 ) );
 
                     processLR ( lr );
 
@@ -248,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             @Override
             public void onErrorResponse ( VolleyError error ) {
-                Log.v ( "doLogin",  "That did not work." );
+                Log.v ( "doLogin", "That did not work." );
 
             }
         } );
@@ -265,8 +274,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if ( lr.getStatusCode ( ) == LoginRec.AUTHENTICATION_SUCCESSFUL_CODE ) {
             insertSharedPreference ( lr.getAuthorizationToken ( ), lr.getName ( ), lr.getLastName ( ) );
 
-//            Intent i = new Intent( this, RecordListActivity.class );
-//            startActivity ( i );
+
+            Intent i = new Intent( this, AccessControlActivity.class );
+
+            showProgress ( false );
+
+            startActivity ( i );
 
             // close this activity
 //			finish ( );
@@ -285,17 +298,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * @param lastName
      */
     private void insertSharedPreference ( String authToken, String firstName, String lastName ) {
-/*
-        SharedPreferences sharedPreferences = getSharedPreferences ( PernoctaUtils.pernoctaPrefs, Context.MODE_PRIVATE );
+
+        SharedPreferences sharedPreferences = getSharedPreferences ( HeimdallPrefs.heimdallPrefs, Context.MODE_PRIVATE );
 
         SharedPreferences.Editor editor = sharedPreferences.edit ( );
 
-        editor.putString ( PernoctaUtils.userAuthToken, authToken );
-        editor.putString ( PernoctaUtils.userFirstName, firstName );
-        editor.putString ( PernoctaUtils.userLastName,  lastName  );
+        editor.putString ( HeimdallPrefs.authorizationToken, authToken );
+        editor.putString ( HeimdallPrefs.userFirstName,      firstName );
+        editor.putString ( HeimdallPrefs.userLastName,       lastName  );
 
         editor.commit ( );
- */
+
     }
 
     private boolean isEmailValid(String email) {
