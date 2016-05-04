@@ -17,4 +17,11 @@
     <string name="title_activity_splash">Splash Activity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- NFC RELATED MESSAGES - BEGIN -->
+    <string name="nfc_error">Error</string>
+    <string name="no_nfc">No NFC found on this device</string>
+    <string name="nfc_disabled">NFC is not enabled. Please go to settings to enable it.</string>
+    <!-- NFC RELATED MESSAGES - END -->
+
 </resources>
