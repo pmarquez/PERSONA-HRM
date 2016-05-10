@@ -86,11 +86,16 @@ public class HeimdallRestController {
      * @return 
      */
     @RequestMapping ( value = "/heimdallAPI/1.0/events/events", method = RequestMethod.POST, consumes="application/json" )
-    public @ResponseBody ResponseRec<EventShortRec> postEvent ( @RequestBody EventShortRec event, HttpServletRequest request, @RequestHeader(value="authorization-token") String authToken ) {
+    public @ResponseBody ResponseRec<EventShortRec> postEvent ( @RequestBody EventShortRec event, HttpServletRequest request ) {
+    //public @ResponseBody ResponseRec<EventShortRec> postEvent ( @RequestBody EventShortRec event, HttpServletRequest request, @RequestHeader(value="authorization-token") String authToken ) {
 
         ResponseRec<EventShortRec> response = new ResponseRec<> ( );
 
 //   VALIDATE THE EVENT - BEGIN
+
+        //request.getHeader ( "authorization-token" );
+
+        String authToken = event.getAuthToken ( );   //   JACK SPARROW - This must be an HttpHeader.
         
         if ( this.isValidToken ( authToken ) ) {
 
@@ -99,7 +104,7 @@ public class HeimdallRestController {
             
             if ( this.isValidTag   ( event.getSensorTagCode ( ) ) ) {
                 
-//                EventsModel.persistEvent ( event, ds );
+                EventsModel.persistEvent ( event, ds );
                 response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
                 response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
             } else {

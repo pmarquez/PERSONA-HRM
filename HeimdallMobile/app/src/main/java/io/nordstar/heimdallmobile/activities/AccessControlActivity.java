@@ -1,8 +1,10 @@
 package io.nordstar.heimdallmobile.activities;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -16,13 +18,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.nio.charset.Charset;
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import io.nordstar.heimdallmobile.R;
 import io.nordstar.heimdallmobile.nfc.NdefMessageParser;
 import io.nordstar.heimdallmobile.nfc.ParsedNdefRecord;
+import io.nordstar.heimdallmobile.prefs.HeimdallPrefs;
+import io.nordstar.heimdallmobile.process.LoginRec;
+import io.nordstar.heimdallmobile.process.ResponseEventRec;
 
 public class AccessControlActivity extends AppCompatActivity {
 
@@ -39,6 +56,28 @@ public class AccessControlActivity extends AppCompatActivity {
         //   NFC
         nfcInitialSetup ( );
 
+    }
+
+    @Override
+    protected void onPause ( ) {
+        super.onPause ( );
+
+        if ( nfcAdapter != null ) {
+            nfcAdapter.disableForegroundDispatch ( this );
+            nfcAdapter.disableForegroundNdefPush ( this );
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (nfcAdapter != null) {
+            if (!nfcAdapter.isEnabled()) {
+                showWirelessSettingsDialog();
+            }
+            nfcAdapter.enableForegroundDispatch ( this, nfcPendingIntent, null, null );
+            nfcAdapter.enableForegroundNdefPush ( this, nfcNdefPushMessage );
+        }
     }
 
 //  *********************************************************************
@@ -61,11 +100,8 @@ public class AccessControlActivity extends AppCompatActivity {
             Log.v ( "NFC", "Yay, yes we have NFC!!!" );
         }
 
-        nfcPendingIntent = PendingIntent.getActivity ( this,
-                0,
-                new Intent( this,
-                        getClass ( ) ).addFlags ( Intent.FLAG_ACTIVITY_SINGLE_TOP ),
-                0 );
+        nfcPendingIntent = PendingIntent.getActivity ( this, 0, new Intent( this,
+                        getClass ( ) ).addFlags ( Intent.FLAG_ACTIVITY_SINGLE_TOP ), 0 );
 
         nfcNdefPushMessage = new NdefMessage ( new NdefRecord[ ] { newTextRecord ( "Message from NFC Reader...",
                 Locale.ENGLISH, true )
@@ -80,7 +116,7 @@ public class AccessControlActivity extends AppCompatActivity {
     }
 
     public void nfcActivityLauncher ( ) {
-//		Log.v ( "nfcActivityLauncher", "ENTRANDO" );
+		Log.v ( "nfcActivityLauncher", "ENTRANDO" );
     }
 
     private NdefRecord newTextRecord ( String text, Locale locale, boolean encodeInUtf8 ) {
@@ -124,7 +160,7 @@ public class AccessControlActivity extends AppCompatActivity {
 
     private void resolveIntent ( Intent intent ) {
 
-//    	Log.v ( "resolveIntent", "ENTRANDO" );
+    	Log.v ( "resolveIntent", "ENTRANDO" );
 
         String action = intent.getAction ( );
 
@@ -132,7 +168,7 @@ public class AccessControlActivity extends AppCompatActivity {
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals ( action )
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals ( action )    ) {
 
-//    		Log.v ( "resolveIntent ", action );
+    		Log.v ( "resolveIntent ", action );
 
             Parcelable[ ] rawMsgs = intent.getParcelableArrayExtra ( NfcAdapter.EXTRA_NDEF_MESSAGES );
             NdefMessage [ ] msgs;
@@ -289,9 +325,13 @@ public class AccessControlActivity extends AppCompatActivity {
         final int size = records.size ( );
 
         for ( int i = 0; i < size; i++ ) {
-            Log.v ( "NFC", records.get ( i ).getText ( ) ) ;
+            Log.v ( "NFC Content: ", records.get ( i ).getText ( ) ) ;
+
+            triggerEvent ( records.get ( i ).getText ( ) );
+
 //            EditText fv = ( EditText ) getWindow ( ).getCurrentFocus ( );
 //            fv.setText ( records.get ( i ).getText ( ) );
+
         }
     }
 
@@ -316,6 +356,72 @@ public class AccessControlActivity extends AppCompatActivity {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    /**
+     *
+     * @param sensorTagCode
+     */
+    private void triggerEvent ( String sensorTagCode ) {
+
+        //   AuthorizationToken
+        SharedPreferences sharedPreferences = getSharedPreferences ( HeimdallPrefs.heimdallPrefs, Context.MODE_PRIVATE );
+        String authorizationToken = sharedPreferences.getString( HeimdallPrefs.authorizationToken, "" );
+
+        //   timestamp
+        long time = ( System.currentTimeMillis ( ) );
+        Timestamp tsTemp = new Timestamp ( time );
+
+        RequestQueue queue = Volley.newRequestQueue ( this );
+        String url = HeimdallPrefs.BASE_URI + HeimdallPrefs.USER_EVENT;
+
+        Log.v ( "triggerEvent", url );
+
+        HashMap<String, String> params = new HashMap<> ( );
+                                params.put ( "authToken",     authorizationToken  );
+                                params.put ( "sensorTagCode", sensorTagCode       );
+                                params.put ( "timestamp",     tsTemp.toString ( ) );
+
+        JSONObject jobj = new JSONObject ( params );
+        Log.v ( "triggerEvent", jobj.toString ( ) );
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest ( Request.Method.POST, url, jobj, new Response.Listener<JSONObject> ( ) {
+
+            @Override
+            public void onResponse ( JSONObject response ) {
+                Log.v ( "triggerEvent", response.toString ( ) );
+                try {
+                    ResponseEventRec rer = new ResponseEventRec( );
+                    rer.setResultCode    ( response.getString ( "resultCode"            ) );
+                    rer.setResultMessage ( response.getString ( "resultMessage"         ) );
+//                    rer.setOpTimestamp   ( response.getString ( "opTimestamp"           ) );
+                    rer.setAuthToken     ( response.getJSONObject ( "payload" ).getString ( "authToken"     ) );
+                    rer.setAuthToken     ( response.getJSONObject ( "payload" ).getString ( "sensorTagCode" ) );
+                    rer.setAuthToken     ( response.getJSONObject ( "payload" ).getString ( "timestamp"     ) );
+
+//                    lr.setStatusCode         ( Integer.parseInt ( response.getString ( "statusCode"    ) ) );
+//                    lr.setMessage            ( response.getString ( "message"                            ) );
+//                    lr.setName               ( response.getString ( "name"                               ) );
+//                    lr.setLastName           ( response.getString ( "lastName"                           ) );
+//                    lr.setAuthorizationToken ( response.getString ( "authorizationToken"                 ) );
+
+//                    processLR ( lr );
+
+                } catch ( JSONException e ) {
+                    e.printStackTrace ( );
+                }
+            }
+        }, new Response.ErrorListener ( ) {
+
+            @Override
+            public void onErrorResponse ( VolleyError error ) {
+                Log.v ( "triggerEvent", "That did not work." );
+
+            }
+        } );
+
+        queue.add ( jsonObjectRequest );
+
     }
 
 }

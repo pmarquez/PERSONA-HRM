@@ -67,8 +67,6 @@ public class AuthorizationRestContoller {
     String loginAPIMethod      = "login/";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
 
-    
-    
     public static final int SALT_ROUNDS = 12;
 
     @Autowired

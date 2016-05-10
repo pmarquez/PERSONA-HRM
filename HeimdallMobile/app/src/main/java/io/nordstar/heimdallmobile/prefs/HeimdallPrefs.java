@@ -16,6 +16,7 @@ public class HeimdallPrefs {
 
     //   API CALLS
     public static final String LOGIN_USER     = "/heimdallAPI/1.0/login/login";
+    public static final String USER_EVENT     = "/heimdallAPI/1.0/events/events";
 
     //   SHARED PREFERENCES
     public static final String heimdallPrefs      = "HEIMDALL_PREFS" ;

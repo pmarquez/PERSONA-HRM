@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 //   Third Party Libraries Imports
 import org.springframework.dao.DataAccessException;
@@ -169,12 +170,10 @@ public class EventsModel {
         return l;
     }
 
-    static String SQLEventInsertQuery = "INSERT INTO hei_evententity ( eventCode, "                         +
-                                                                       "personCode, "                       +
-                                                                       "sensorCode, "                       +
-                                                                       "timestamp ) VALUES ( :eventCode, "  +
-                                                                                            ":personCode, " +
-                                                                                            ":sensorCode, " +
+    static String SQLEventInsertQuery = "INSERT INTO hei_evententity ( personCode, "                           +
+                                                                       "sensorTagCode, "                       +
+                                                                       "timestamp ) VALUES ( :personCode, "    +
+                                                                                            ":sensorTagCode, " +
                                                                                             ":timestamp );";
     
     /**
@@ -182,7 +181,7 @@ public class EventsModel {
      * @param ds The Data Source to use
      * @param r The EventRec to persist 
      */
-    public static void persistEvent ( EventRec r, DataSource ds ) {
+    public static void persistEvent ( EventShortRec r, DataSource ds ) {
 
         String SQLQuery = null;
         
@@ -191,9 +190,9 @@ public class EventsModel {
         Map<String,Object> bind = new HashMap<>( );
 
 //                           bind.put ( "eventCode",  r.getEventCode    ( ) );
-//                           bind.put ( "personCode", r.getPersonCode   ( ) );
-                           bind.put ( "sensorCode", r.getSensorCode   ( ) );
-                           bind.put ( "timestamp",  LocalDateTime.now ( ) );
+                           bind.put ( "personCode",    "1"                    );
+                           bind.put ( "sensorTagCode", r.getSensorTagCode ( ) );
+                           bind.put ( "timestamp",     LocalDateTime.now   ( ).format ( DateTimeFormatter.ofPattern ( "yyyy-MM-dd HH:mm:ss" ) ) );
 
         SqlParameterSource paramSource = new MapSqlParameterSource ( bind );
         NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate ( ds );
