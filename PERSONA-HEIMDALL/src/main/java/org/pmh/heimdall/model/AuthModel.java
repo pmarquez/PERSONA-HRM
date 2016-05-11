@@ -50,6 +50,12 @@ import com.fxt.auth.ChallengeWordRec;
  */
 public class AuthModel {
 
+    /**
+     * 
+     * @param email
+     * @param ds
+     * @return 
+     */
     public static boolean emailExists ( String email, DataSource ds ) {
         
         String SQLQuery = "SELECT COUNT(nf_userentity.email) AS OCCURRENCES " +
@@ -76,160 +82,6 @@ public class AuthModel {
         }
 
         return ( numOccurrences > 0 );
-
-    }
-
-    /**
-     * Determines the validity of a login attempt.
-     * @param username
-     * @param ds
-     * @return LoginRec, empty or otherwise.
-     */
-    public static LoginRec authorizeUser ( String username, DataSource ds ) {
-        
-        String SQLQuery =   "SELECT nf_userentity.userCode, "                                                               +
-                                   "IFNULL(nf_userentity.firstName,'') AS FIRST_NAME, "                                     +
-                                   "IFNULL(nf_userentity.lastName,'') AS LAST_NAME, "                                       +
-                                   "IFNULL(nf_userentity.email,'') AS EMAIL, "                                              +
-                                   "IFNULL(nf_userentity.passwd,'') AS PASSWD, "                                            +
-                                   "IFNULL(nf_userentity.roleCode,0) AS ROLE_CODE, "                                        +
-                                   "IFNULL(fxt_roleentity.roleName,'') AS ROLE_NAME, "                                      +
-                                   "nf_userentity.creationDate, "                                                           +
-                                   "nf_userentity.active "                                                                  +
-
-                            "FROM nf_userentity "                                                                           +
-
-                            "LEFT OUTER JOIN fxt_roleentity ON fxt_roleentity.roleCode = nf_userentity.roleCode "           +
-
-                            "WHERE EMAIL = '" + username + "'";
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
-
-        LoginRec lr = new LoginRec ( );
-        
-        System.out.println ( SQLQuery );
-        
-        try {
-            lr = jdbcTemplate.queryForObject ( SQLQuery,
-                                               new RowMapper<LoginRec> ( ) {
-                                               @Override
-                                               public LoginRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
-                                                   LoginRec lr = new LoginRec ( );
-                                  
-                                                   lr.setUserCode    ( rs.getInt    ( "userCode"     ) );
-                                                   lr.setFirstName   ( rs.getString ( "FIRST_NAME"   ) );
-                                                   lr.setLastName    ( rs.getString ( "LAST_NAME"    ) );
-                                                   lr.setEmail       ( rs.getString ( "EMAIL"        ) );
-                                                   lr.setPasswd      ( rs.getString ( "PASSWD"       ) );
-                                                   lr.setRoleCode    ( rs.getInt    ( "ROLE_CODE"    ) );
-                                                   lr.setRole        ( rs.getString ( "ROLE_NAME"    ) );
-                                                   lr.setActive      ( rs.getInt ( "active" ) == 1 );
-
-                                                   return lr;
-                                               }
-                                           } );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ AuthModel.authorizeUser: " + ex.getMessage ( ) );
-        }
-
-        return lr;
-    }
-   
-    /**
-     * Determines the validity of a login attempt.
-     * @param username
-     * @param passwd
-     * @param ds
-     * @return LoginRec, empty or otherwise.
-     */
-    public static LoginRec authorizeUser ( String username, String passwd, DataSource ds ) {
-        
-        String SQLQuery =   "SELECT nf_userentity.userCode, "                                                               +
-                                   "IFNULL(nf_userentity.firstName,'') AS FIRST_NAME, "                                     +
-                                   "IFNULL(nf_userentity.lastName,'') AS LAST_NAME, "                                       +
-                                   "IFNULL(nf_userentity.email,'') AS EMAIL, "                                              +
-                                   "IFNULL(nf_userentity.passwd,'') AS PASSWD, "                                            +
-                                   "IFNULL(nf_userentity.roleCode,0) AS ROLE_CODE, "                                        +
-                                   "IFNULL(fxt_roleentity.roleName,'') AS ROLE_NAME, "                                      +
-                                   "nf_userentity.creationDate, "                                                           +
-                                   "nf_userentity.active "                                                                  +
-
-                            "FROM nf_userentity "                                                                           +
-
-                            "LEFT OUTER JOIN fxt_roleentity ON fxt_roleentity.roleCode = nf_userentity.roleCode "           +
-
-                            "WHERE EMAIL = '" + username + "' AND "                                                         + 
-                                  "PASSWD = '" + passwd + "'";
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
-
-        LoginRec lr = new LoginRec ( );
-        
-        System.out.println ( SQLQuery );
-        
-        try {
-            lr = jdbcTemplate.queryForObject ( SQLQuery,
-                                               new RowMapper<LoginRec> ( ) {
-                                               @Override
-                                               public LoginRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
-                                                   LoginRec lr = new LoginRec ( );
-                                  
-                                                   lr.setUserCode    ( rs.getInt    ( "userCode"     ) );
-                                                   lr.setFirstName   ( rs.getString ( "FIRST_NAME"   ) );
-                                                   lr.setLastName    ( rs.getString ( "LAST_NAME"    ) );
-                                                   lr.setEmail       ( rs.getString ( "EMAIL"        ) );
-                                                   lr.setPasswd      ( rs.getString ( "PASSWD"       ) );
-                                                   lr.setRoleCode    ( rs.getInt    ( "ROLE_CODE"    ) );
-                                                   lr.setRole        ( rs.getString ( "ROLE_NAME"    ) );
-                                                   lr.setActive      ( rs.getInt ( "active" ) == 1 );
-
-                                                   return lr;
-                                               }
-                                           } );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ AuthModel.authorizeUser: " + ex.getMessage ( ) );
-        }
-
-        return lr;
-    }
-   
-    /**
-     * Picks asingle challenge word from storage.
-     * @param ds
-     * @return ShuttleRec with an instance of ChallengeWordRec
-     */
-    public static ChallengeWordRec pickChallengeWord ( DataSource ds ) {
-
-        String SQLQuery =   "SELECT ads_15letterwords.wordCode, "                                                  +
-                                   "IFNULL(ads_15letterwords.word,'SUPERCALIFRAGILISTICEXPIALIDOCIOUS') AS WORD, " +
-                                   "IFNULL(ads_15letterwords.timesSelected,0) AS TIMES_SELECTED "                  +
-                            "FROM ads_15letterwords "                                                              +
-                            "ORDER BY RAND() "                                                                     +
-                            "LIMIT 1";  
-                
-        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
-
-        ChallengeWordRec r = new ChallengeWordRec ( );
-
-        try {
-            r = jdbcTemplate.queryForObject ( SQLQuery,
-                                               new RowMapper<ChallengeWordRec> ( ) {
-                                               @Override
-                                               public ChallengeWordRec mapRow(ResultSet rs, int rowNum) throws SQLException {
-                                                   ChallengeWordRec r = new ChallengeWordRec ( );
-
-                                                   r.setWordCode      ( rs.getInt    ( "wordCode"       ) );
-                                                   r.setWord          ( rs.getString ( "WORD"           ) );
-                                                   r.setTimesSelected ( rs.getInt    ( "TIMES_SELECTED" ) );
-
-                                                   return r;
-                                              }
-                                          } );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ AuthModel.pickChallengeWord: " + ex.getMessage ( ) );
-        }
-
-        return r;
 
     }
     
@@ -308,59 +160,6 @@ public class AuthModel {
                                               } );
         } catch ( DataAccessException ex ) {
             System.err.println ( "DataAccessException @ AuthModel.emailBelongsTo: " + ex.getMessage ( ) );
-        }
-
-        return r;
-
-    }
-   
-    /**
-     * Retrieves a PwdRecoveryRec from storage.
-     * @param recStr
-     * @param ds
-     * @return ShuttleRec with an instance of ChallengeWordRec
-     */
-    public static PwdRecoveryRec retrieveRecoveryInfo ( String recStr, DataSource ds ) {
-
-        String SQLQuery =   "SELECT fxt_passwordrecoveryentity.lineCode, "                            +
-                                   "fxt_passwordrecoveryentity.email, "                               +
-                                   "fxt_passwordrecoveryentity.userCode, "                            +
-                                   "fxt_passwordrecoveryentity.uuid, "                                +
-                                   "DATE_FORMAT(dateRequested,'%Y-%m-%d %H:%i:%s') AS REQUEST_DATE, " +
-                                   "fxt_passwordrecoveryentity.expiresIn, "                           +
-                                   "DATE_FORMAT(dateRecovered,'%Y-%m-%d %H:%i:%s') AS REGEN_DATE "    +
-
-                            "FROM fxt_passwordrecoveryentity "                                        + 
-
-                            "WHERE fxt_passwordrecoveryentity.uuid = '" + recStr + "'";  
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
-
-        PwdRecoveryRec r = new PwdRecoveryRec ( );
-
-        try {
-            r = jdbcTemplate.queryForObject ( SQLQuery,
-                                               new RowMapper<PwdRecoveryRec> ( ) {
-                                               @Override
-                                               public PwdRecoveryRec mapRow(ResultSet rs, int rowNum) throws SQLException {
-                                                   PwdRecoveryRec r = new PwdRecoveryRec ( );
-
-                                                   r.setEmail         ( rs.getString ( "email"          ) );
-                                                   r.setUserCode      ( rs.getInt    ( "userCode"       ) );
-                                                   r.setUuid          ( rs.getString ( "uuid"           ) );
-                                                   r.setDateRequested ( rs.getString ( "REQUEST_DATE"   ) );
-                                                   r.setExpiresIn     ( rs.getInt    ( "expiresIn"      ) );
-                                                   
-                                                   if ( rs.getString ( "REGEN_DATE" ) != null ) {
-                                                       r.setDateRegen ( rs.getString ( "REGEN_DATE"     ) );
-                                                   }
-
-                                                   return r;
-
-                                              }
-                                          } );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ AuthModel.retrieveRecoveryInfo: " + ex.getMessage ( ) );
         }
 
         return r;

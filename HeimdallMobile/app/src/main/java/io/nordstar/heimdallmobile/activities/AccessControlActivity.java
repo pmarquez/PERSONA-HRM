@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -28,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -168,7 +173,28 @@ public class AccessControlActivity extends AppCompatActivity {
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals ( action )
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals ( action )    ) {
 
-    		Log.v ( "resolveIntent ", action );
+    		Log.v ( "resolveIntent: ", action );
+
+//   SOUND PLAY - BEGIN
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            final MediaPlayer mMediaPlayer = new MediaPlayer();
+
+            try {
+                mMediaPlayer.setDataSource(getApplicationContext ( ), notification);
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+                mMediaPlayer.prepare();
+                mMediaPlayer.setLooping(false);
+                mMediaPlayer.start();
+                mMediaPlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
+                    public void onSeekComplete(MediaPlayer mp) {
+                        mp.stop();
+                        mp.release();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//   SOUND PLAY - END
 
             Parcelable[ ] rawMsgs = intent.getParcelableArrayExtra ( NfcAdapter.EXTRA_NDEF_MESSAGES );
             NdefMessage [ ] msgs;
