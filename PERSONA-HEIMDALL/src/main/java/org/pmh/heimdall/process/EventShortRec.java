@@ -36,6 +36,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Paulo Márquez
  * @version 1.0 - 2016-04-24 11:46
  */
+
+/*
+{ "sensorTagCode":"380016cb-c629-4080-8653-17146dd3622d",
+  "timestamp":"2016-05-12 16:13:51.451",
+  "authToken":"[B@218cf80d" }
+*/
+
 public class EventShortRec {
     private String authToken;
     private String sensorTagCode;

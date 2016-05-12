@@ -11,11 +11,13 @@ package org.pmh.heimdall.process;
  */
 public class TokenConfirmationDataRec {
     private String message;
+    private int   code;
     private Object data;
 
     public TokenConfirmationDataRec ( ) {
         this.message = "";
-        this.data  = null;
+        this.code    = 0;
+        this.data    = null;
     }
 
     /**
@@ -44,6 +46,20 @@ public class TokenConfirmationDataRec {
      */
     public void setObject(Object data) {
         this.data = data;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
     
     

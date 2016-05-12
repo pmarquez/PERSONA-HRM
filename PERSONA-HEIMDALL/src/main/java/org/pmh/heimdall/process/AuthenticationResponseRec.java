@@ -7,10 +7,12 @@ package org.pmh.heimdall.process;
  */
 public class AuthenticationResponseRec {
    private String                message;
+   private int                   code;
    private AuthenticationDataRec data;
 
     public AuthenticationResponseRec ( ) {
         this.message = "";
+        this.code    = 0;
         this.data    = new AuthenticationDataRec ( );
     }
 
@@ -40,6 +42,20 @@ public class AuthenticationResponseRec {
      */
     public void setData(AuthenticationDataRec data) {
         this.data = data;
+    }
+
+    /**
+     * @return the code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
    
    

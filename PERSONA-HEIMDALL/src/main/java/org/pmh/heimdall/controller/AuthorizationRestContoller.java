@@ -22,19 +22,10 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
-import com.fxt.navigation.NavigationRec;
-import com.fxt.validations.ValidationResultsRec;
 import com.fxt.auth.LoginRec;
-import com.fxt.cryptography.BCrypt;
-import com.fxt.navigation.NavCommandRec;
-import com.fxt.navigation.NavSectionRec;
 
 //   Domain Imports
-import org.pmh.heimdall.model.AuthModel;
-import org.pmh.heimdall.model.NavigationModel;
-import org.pmh.heimdall.model.UtilsModel;
 import org.pmh.heimdall.process.AuthenticationResponseRec;
-import org.pmh.heimdall.validations.LoginValidations;
 
 /**
  * AuthorizationRestController.java<br><br>
@@ -62,8 +53,9 @@ public class AuthorizationRestContoller {
 
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
     //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
-    String serverBaseURI       = "http://localhost:8084";
-    String cerberusBaseURI     = "/Cerberus/AuthenticationAPI/1.0/";
+    String serverBaseURI       = "http://13.79.175.6:8080";
+//    String serverBaseURI       = "http://localhost:8084";
+    String cerberusBaseURI     = "/Cerberus-1/AuthenticationAPI/1.0/";
     String loginAPIMethod      = "login/";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
 
@@ -97,27 +89,27 @@ public class AuthorizationRestContoller {
                 ResponseEntity<AuthenticationResponseRec> resp = restTemplate.exchange ( loginUri, HttpMethod.GET, entity, AuthenticationResponseRec.class );
                 response = resp.getBody ( );
 
-                if ( response.getMessage ( ).equals ( "Login valid" ) ) {
-                    lr.setAuthorizationToken ( response.getData ( ).getToken ( ) );
+                if ( response.getCode ( ) == 1 ) {   //   1 = Authentication Successful
+                    lr.setAuthorizationToken ( response.getData ( ).getUserToken ( ) );
                     lr.setUserOK             ( true );
-                    lr.setName               ( "Paulo" );
-                    lr.setLastName           ( "Marquez Herrero" );
-                    lr.setUserName           ( "" );
+                    lr.setName               ( response.getData ( ).getName     ( ) );
+                    lr.setLastName           ( response.getData ( ).getSurename ( ) );
+                    lr.setUserName           ( response.getData ( ).getUsername ( ) );
                     lr.setPasswd             ( "" );
                     
                     lr.setStatusCode ( LoginRec.AUTHENTICATION_SUCCESSFUL_CODE    );
-                    lr.setMessage   ( LoginRec.AUTHENTICATION_SUCCESSFUL_MESSAGE );
+                    lr.setMessage    ( LoginRec.AUTHENTICATION_SUCCESSFUL_MESSAGE );
 
                 } else {
-                    lr.setAuthorizationToken ( "" );
+                    lr.setAuthorizationToken ( ""    );
                     lr.setUserOK             ( false );
-                    lr.setName               ( "" );
-                    lr.setLastName           ( "" );
-                    lr.setUserName           ( "" );
-                    lr.setPasswd             ( "" );
+                    lr.setName               ( ""    );
+                    lr.setLastName           ( ""    );
+                    lr.setUserName           ( ""    );
+                    lr.setPasswd             ( ""    );
                     
                     lr.setStatusCode ( LoginRec.AUTHENTICATION_FAILED_CODE    );
-                    lr.setMessage   ( LoginRec.AUTHENTICATION_FAILED_MESSAGE );
+                    lr.setMessage    ( LoginRec.AUTHENTICATION_FAILED_MESSAGE );
                     
                 }
 
@@ -129,12 +121,12 @@ public class AuthorizationRestContoller {
 //   EXTERNAL STUFF - END
 
         System.out.println ( "Message   : " + response.getMessage ( ) );
-        System.out.println ( "Token     : " + response.getData    ( ).getToken      ( ) );
+        System.out.println ( "Token     : " + response.getData    ( ).getUserToken  ( ) );
         System.out.println ( "PersonCode: " + response.getData    ( ).getPersonCode ( ) );
 //        TempLoginData tld = AuthModel.tempAuthorizeUser ( lr, ds );
 
 //        tld.setCodStatus( 1 );
-        
+
         return lr;
 
     }

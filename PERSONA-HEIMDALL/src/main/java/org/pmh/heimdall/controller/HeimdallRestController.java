@@ -60,8 +60,9 @@ public class HeimdallRestController {
 
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
     //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
-    String serverBaseURI            = "http://localhost:8084";
-    String cerberusBaseURI          = "/Cerberus/AuthorizationAPI/1.0/";
+    String serverBaseURI            = "http://13.79.175.6:8080";
+//    String serverBaseURI            = "http://localhost:8084";
+    String cerberusBaseURI          = "/Cerberus-1/AuthorizationAPI/1.0/";
     String tokenValidationAPIMethod = "confirmToken";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
 
@@ -96,6 +97,8 @@ public class HeimdallRestController {
         //request.getHeader ( "authorization-token" );
 
         String authToken = event.getAuthToken ( );   //   JACK SPARROW - This must be an HttpHeader.
+        
+        System.out.println ( "HOLA - authToken: " + authToken );
         
         if ( this.isValidToken ( authToken ) ) {
 
@@ -140,6 +143,8 @@ public class HeimdallRestController {
      * @return 
      */
     private boolean isValidToken ( String authToken ) {
+        
+        System.out.println ( "ENTERING - isValidToken: " + authToken );
         
         RestTemplate restTemplate = new RestTemplate ( );
         HttpHeaders  headers      = new HttpHeaders  ( );
