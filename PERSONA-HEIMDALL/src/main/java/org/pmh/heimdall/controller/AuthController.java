@@ -66,7 +66,7 @@ public class AuthController {
     public String homeSimple ( HttpServletRequest request ) {
         HttpSession session = request.getSession ( );
         
-        return "landing";
+        return "dashboard";
     }
     
     @RequestMapping ( value = "/signout", method = RequestMethod.GET )
@@ -77,37 +77,10 @@ public class AuthController {
         return "landing";
     }
 
-  /**
-   * POST /uploadFile -> receive and locally save a file.
-   * 
-   * @param uploadfile The uploaded file as Multipart file parameter in the 
-   * HTTP request. The RequestParam name must be the same of the attribute 
-   * "name" in the input tag with type file.
-   * 
-   * @return An http OK status in case of success, an http 4xx status in case 
-   * of errors.
-   */
-  @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-  @ResponseBody
-  public ResponseEntity<?> uploadFile( @RequestParam ( "uploadfile" ) MultipartFile uploadfile ) {
-    
-    try {
-      // Get the filename and build the local file path
-      String filename = uploadfile.getOriginalFilename ( );
-      String directory = mce.getLocation ( );
-      String filepath = Paths.get ( directory, filename ).toString ( );
-      
-      // Save the file locally
-      BufferedOutputStream stream = new BufferedOutputStream ( new FileOutputStream ( new File ( filepath ) ) );
-      stream.write(uploadfile.getBytes());
-      stream.close();
+    @RequestMapping ( value = "/dashboard", method = RequestMethod.GET )
+    public String dashboard ( ) {
+        
+        return "dashboard";
     }
-    catch (Exception e) {
-      System.out.println(e.getMessage());
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-    
-    return new ResponseEntity<>(HttpStatus.OK);
-  } // method uploadFile
 
 }
