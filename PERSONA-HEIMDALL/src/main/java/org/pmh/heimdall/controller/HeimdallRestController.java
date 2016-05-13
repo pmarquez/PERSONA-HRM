@@ -23,11 +23,14 @@ import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
 import com.fxt.process.ResponseRec;
+import java.util.ArrayList;
+import java.util.List;
 
 //   Domain Imports
 import org.pmh.heimdall.model.EventsModel;
 import org.pmh.heimdall.external.person.PersonRec;
 import org.pmh.heimdall.model.SensorsModel;
+import org.pmh.heimdall.process.DashboardUsageDataRec;
 import org.pmh.heimdall.process.EventRec;
 import org.pmh.heimdall.process.EventShortRec;
 import org.pmh.heimdall.process.TokenConfirmationDataRec;
@@ -98,7 +101,7 @@ public class HeimdallRestController {
 
         String authToken = event.getAuthToken ( );   //   JACK SPARROW - This must be an HttpHeader.
         
-        System.out.println ( "HOLA - authToken: " + authToken );
+        System.out.println ( "authToken: " + authToken );
         
         if ( this.isValidToken ( authToken ) ) {
 
@@ -111,6 +114,16 @@ public class HeimdallRestController {
                 response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
                 response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
                 
+//   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - BEGIN
+                List<List<DashboardUsageDataRec>> data = new ArrayList<>( ); 
+
+                List<DashboardUsageDataRec> globalData = EventsModel.retrieveGlobalSensorUsage ( 24, ds );
+                data.add ( globalData );
+                
+                List<DashboardUsageDataRec> hourlyData = EventsModel.retrieveHourlySensorUsage ( 24, ds );
+                data.add ( hourlyData );
+//   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - END
+
             } else {
                 response.setResultCode    ( HeimdallRestController.SENSOR_CODE_NOT_VALID_CODE    );
                 response.setResultMessage ( HeimdallRestController.SENSOR_CODE_NOT_VALID_MESSAGE );

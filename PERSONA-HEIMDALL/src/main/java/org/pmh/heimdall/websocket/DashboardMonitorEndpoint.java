@@ -16,11 +16,10 @@ import javax.websocket.server.ServerEndpoint;
  * 
  */
 //TODO ENCODER
-//TODO Listener
 //TODO DataSource
 @ServerEndpoint ( value    = "/dashboardUpdates" )
 //@ServerEndpoint ( value    = "/parkingLotUpdates", encoders = { MonitorUpdateEncoder.class } )
-public class DashboardMonitorEndpoint {
+public class DashboardMonitorEndpoint implements DashboardUpdateListener {
 //public class DashboardMonitorEndpoint implements SensorEventListener {
 //public class DashboardMonitorEndpoint implements ParkingLotsDataSourceListener {
     private Session               session;
@@ -80,12 +79,12 @@ public class DashboardMonitorEndpoint {
 
     
     //   Pushes the new data to all connected clients
-//    @Override
-//    public void handleParkingLotUsageData ( ParkingLotsUpdate plu ) {
-//        try {
-//            session.getBasicRemote ( ).sendObject ( plu );
-//        } catch ( IOException | EncodeException ioe ) {
-//            this.handleError ( ioe );
-//        }
-//    }    
+    @Override
+    public void handleDashboardUpdate(String update) {
+        try {
+            session.getBasicRemote ( ).sendObject ( update );
+        } catch ( IOException | EncodeException ioe ) {
+            this.handleError ( ioe );
+        }
+    }
 }
