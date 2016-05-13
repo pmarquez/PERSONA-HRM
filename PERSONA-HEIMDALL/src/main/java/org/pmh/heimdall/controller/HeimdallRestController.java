@@ -110,6 +110,7 @@ public class HeimdallRestController {
                 EventsModel.persistEvent ( event, ds );
                 response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
                 response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
+                
             } else {
                 response.setResultCode    ( HeimdallRestController.SENSOR_CODE_NOT_VALID_CODE    );
                 response.setResultMessage ( HeimdallRestController.SENSOR_CODE_NOT_VALID_MESSAGE );

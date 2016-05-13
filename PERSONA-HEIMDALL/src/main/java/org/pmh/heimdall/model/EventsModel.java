@@ -22,6 +22,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 //   FENIX Framework Imports
 import java.util.ArrayList;
 import java.util.List;
+import org.pmh.heimdall.process.DashboardUsageDataRec;
 
 //   Domain Imports
 import org.pmh.heimdall.process.EventRec;
@@ -49,6 +50,100 @@ import org.pmh.heimdall.process.EventShortRec;
  * @version 1.0 - 2016-04-24 20:32
  */
 public class EventsModel {
+
+    /**
+     * Retrieves the Global Sensor Usage Count.
+     * @param hoursInterval
+     * @param ds
+     * @return List<DashboardUsageDataRec>
+     */
+    public static List<DashboardUsageDataRec> retrieveGlobalSensorUsage ( int hoursInterval, DataSource ds ) {
+
+        String SQLQuery = "SELECT IFNULL(hei_sensorentity.sensorName,'') AS SENSOR_NAME, "                                      +
+                                 "COUNT(hei_evententity.sensorTagCode) AS USE_COUNT "                                           +
+
+                          "FROM hei_evententity "                                                                               +
+
+                          "LEFT OUTER JOIN hei_sensorentity ON hei_sensorentity.sensorTagCode = hei_evententity.sensorTagCode " +
+
+                          "WHERE TIMESTAMP >= DATE_SUB(NOW(), INTERVAL " + hoursInterval + " HOUR) "                            +
+
+                          "GROUP BY hei_evententity.sensorTagCode "                                                             +
+
+                          "ORDER BY SENSOR_NAME";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<DashboardUsageDataRec> l = new ArrayList<> ( );
+
+        try {
+            l = jdbcTemplate.query ( SQLQuery,
+                                        new RowMapper<DashboardUsageDataRec> ( ) {
+                                            @Override
+                                            public DashboardUsageDataRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                DashboardUsageDataRec r = new DashboardUsageDataRec ( );
+
+                                                   r.setSensorName              ( rs.getString ( "SENSOR_NAME" ) );
+                                                   r.setUseCount                ( rs.getInt    ( "USE_COUNT"   ) );
+
+                                                return r;
+                                            }
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ EventsModel.retrieveGlobalSensorUsage: " + ex.getMessage ( ) );
+        }
+
+        return l;
+    }
+
+    /**
+     * Retrieves the Global Sensor Usage Count.
+     * @param hoursInterval
+     * @param ds
+     * @return List<DashboardUsageDataRec>
+     */
+    public static List<DashboardUsageDataRec> retrieveHourlySensorUsage ( int hoursInterval, DataSource ds ) {
+
+        String SQLQuery = "SELECT IFNULL(hei_sensorentity.sensorName,'') AS SENSOR_NAME, "                                      +
+                                 "COUNT(*) AS USE_COUNT, "                                                                      +
+                                 "HOUR(TIMESTAMP) AS HOUR "                                                                     +
+
+                          "FROM hei_evententity "                                                                               +
+
+                          "LEFT OUTER JOIN hei_sensorentity ON hei_sensorentity.sensorTagCode = hei_evententity.sensorTagCode " +
+
+                          "WHERE TIMESTAMP >= DATE_SUB(NOW(), INTERVAL " + hoursInterval + " HOUR) "                            +
+
+                          "GROUP BY HOUR(TIMESTAMP), hei_sensorentity.sensorName "                                              +
+
+                          "ORDER BY SENSOR_NAME, TIMESTAMP";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<DashboardUsageDataRec> l = new ArrayList<> ( );
+
+        try {
+            l = jdbcTemplate.query ( SQLQuery,
+                                        new RowMapper<DashboardUsageDataRec> ( ) {
+                                            @Override
+                                            public DashboardUsageDataRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                DashboardUsageDataRec r = new DashboardUsageDataRec ( );
+
+                                                   r.setSensorName              ( rs.getString ( "SENSOR_NAME" ) );
+                                                   r.setUseCount                ( rs.getInt    ( "USE_COUNT"   ) );
+                                                   r.setHour                    ( rs.getString ( "HOUR"        ) );
+
+                                                return r;
+                                            }
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ EventsModel.retrieveHourlySensorUsage: " + ex.getMessage ( ) );
+        }
+
+        return l;
+    }
 
     /**
      * Retrieves a list of events (EventRec) identified by "companyCode" from storage.
