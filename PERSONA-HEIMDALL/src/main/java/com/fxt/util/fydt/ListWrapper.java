@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 
 /**
- * ListWrapper.java<br/><br/>
- * Creation Date 2015-06-17 16:53<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * ListWrapper.java<br><br>
+ * Creation Date 2015-06-17 16:53<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p>fydt = F*ck you DataTables.</p>
  *
  *<PRE>
@@ -25,8 +25,8 @@ import java.util.ArrayList;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-06-17 16:53<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-06-17 16:53<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
@@ -35,6 +35,7 @@ import java.util.ArrayList;
  * @author Paulo Márquez
  * @version 1.0 - 2015-06-17 16:53
  */
+//TODO Get rid of this class!
 public class ListWrapper {
     private List aaData;
 

@@ -31,11 +31,9 @@ import org.pmh.heimdall.model.EventsModel;
 import org.pmh.heimdall.external.person.PersonRec;
 import org.pmh.heimdall.model.SensorsModel;
 import org.pmh.heimdall.process.DashboardUsageDataRec;
-import org.pmh.heimdall.process.EventRec;
 import org.pmh.heimdall.process.EventShortRec;
 import org.pmh.heimdall.process.TokenConfirmationDataRec;
 import org.pmh.heimdall.sensor.SensorRec;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  * HeimdallRestController.java<br><br>
