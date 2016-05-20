@@ -14,9 +14,9 @@ import com.fxt.address.PostCodeRulesRec;
 
 
 /**
- * BaseValidators.java<br/><br/>
- * Creation Date 2015-07-20 11:43<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * BaseValidators.java<br><br>
+ * Creation Date 2015-07-20 11:43<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -24,8 +24,8 @@ import com.fxt.address.PostCodeRulesRec;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-07-20 11:43<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-07-20 11:43<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>

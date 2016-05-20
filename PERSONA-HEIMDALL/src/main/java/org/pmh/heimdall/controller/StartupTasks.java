@@ -1,12 +1,9 @@
 package org.pmh.heimdall.controller;
 
 //   Standard Libraries Imports
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 //   Third Party Libraries Imports
-import com.pi4j.system.SystemInfo;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -17,9 +14,9 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * StartupTasks.java<br/><br/>
- * Creation Date 2015-06-02 15:01<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * StartupTasks.java<br><br>
+ * Creation Date 2015-06-02 15:01<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -27,8 +24,8 @@ import org.springframework.stereotype.Component;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-06-02 15:01<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-06-02 15:01<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
