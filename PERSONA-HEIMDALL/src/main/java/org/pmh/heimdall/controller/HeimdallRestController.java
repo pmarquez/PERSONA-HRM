@@ -23,8 +23,12 @@ import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
 import com.fxt.process.ResponseRec;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //   Domain Imports
 import org.pmh.heimdall.model.EventsModel;
@@ -34,6 +38,7 @@ import org.pmh.heimdall.process.DashboardUsageDataRec;
 import org.pmh.heimdall.process.EventShortRec;
 import org.pmh.heimdall.process.TokenConfirmationDataRec;
 import org.pmh.heimdall.sensor.SensorRec;
+import org.pmh.heimdall.websocket.WebsocketClientEndpoint;
 
 /**
  * HeimdallRestController.java<br><br>
@@ -76,7 +81,9 @@ public class HeimdallRestController {
 
     private static final String SENSOR_CODE_NOT_VALID_CODE            = "EV-003";
     private static final String SENSOR_CODE_NOT_VALID_MESSAGE         = "SENSOR CODE NOT VALID.";
-            
+    
+    private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8084/CinemaMonitor/cinemaSocket";
+    
     @Autowired
     private DataSource ds;
 
@@ -120,6 +127,15 @@ public class HeimdallRestController {
                 
                 List<DashboardUsageDataRec> hourlyData = EventsModel.retrieveHourlySensorUsage ( 24, ds );
                 data.add ( hourlyData );
+                
+                
+                try {
+                    WebsocketClientEndpoint wsce = new WebsocketClientEndpoint ( );
+                                            wsce.initClientEndpoint ( data, new URI ( HeimdallRestController.WEB_SOCKET_ADDRESS + "/0" ) );
+
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(HeimdallRestController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 //   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - END
 
             } else {

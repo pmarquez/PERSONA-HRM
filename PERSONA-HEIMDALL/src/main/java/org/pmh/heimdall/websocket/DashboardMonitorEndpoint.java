@@ -17,7 +17,7 @@ import javax.websocket.server.ServerEndpoint;
  */
 //TODO ENCODER
 //TODO DataSource
-@ServerEndpoint ( value    = "/dashboardUpdates" )
+@ServerEndpoint ( value = "/dashboardUpdates" )
 //@ServerEndpoint ( value    = "/parkingLotUpdates", encoders = { MonitorUpdateEncoder.class } )
 public class DashboardMonitorEndpoint implements DashboardUpdateListener {
 //public class DashboardMonitorEndpoint implements SensorEventListener {
