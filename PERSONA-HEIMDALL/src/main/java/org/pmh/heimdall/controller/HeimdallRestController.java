@@ -130,8 +130,7 @@ public class HeimdallRestController {
                 
                 
                 try {
-                    WebsocketClientEndpoint wsce = new WebsocketClientEndpoint ( );
-                                            wsce.initClientEndpoint ( data, new URI ( HeimdallRestController.WEB_SOCKET_ADDRESS + "/0" ) );
+                    WebsocketClientEndpoint wsce = new WebsocketClientEndpoint ( new URI ( HeimdallRestController.WEB_SOCKET_ADDRESS + "/0" ) );
 
                 } catch (URISyntaxException ex) {
                     Logger.getLogger(HeimdallRestController.class.getName()).log(Level.SEVERE, null, ex);
