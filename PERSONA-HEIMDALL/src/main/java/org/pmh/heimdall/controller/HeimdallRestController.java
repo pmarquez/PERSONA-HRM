@@ -33,10 +33,12 @@ import org.codehaus.jettison.json.JSONObject;
 import org.pmh.heimdall.model.EventsModel;
 import org.pmh.heimdall.external.person.PersonRec;
 import org.pmh.heimdall.model.SensorsModel;
+import org.pmh.heimdall.process.DashboardElement;
 import org.pmh.heimdall.process.DashboardUsageDataRec;
 import org.pmh.heimdall.process.EventShortRec;
 import org.pmh.heimdall.process.TokenConfirmationDataRec;
 import org.pmh.heimdall.sensor.SensorRec;
+import org.pmh.heimdall.websocket.DashboardDataJSONEncoder;
 import org.pmh.heimdall.websocket.WebsocketClientEndpoint;
 
 /**
@@ -74,6 +76,11 @@ public class HeimdallRestController {
     String tokenValidationAPIMethod = "confirmToken";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
 
+    
+    private static final int    HOURS_TO_MONITOR = 24;
+
+    private static final String GLOBAL_SENSOR_USAGE = "GLOBAL_SENSOR_USAGE";
+    private static final String HOURLY_SENSOR_USAGE = "HOURLY_SENSOR_USAGE";
     
     private static final String EVENT_REGISTERED_SUCCESSFULLY_CODE    = "EV-001";
     private static final String EVENT_REGISTERED_SUCCESSFULLY_MESSAGE = "Event registered successfully.";
@@ -142,21 +149,29 @@ public class HeimdallRestController {
                 EventsModel.persistEvent ( event, ds );
                 response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
                 response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
-                
-                List<List<DashboardUsageDataRec>> data = new ArrayList<>( ); 
 
-                List<DashboardUsageDataRec> globalData = EventsModel.retrieveGlobalSensorUsage ( 24, ds );
+                List<DashboardElement> data = new ArrayList<> ( ); 
+
+                //   GLOBAL_SENSOR_USAGE
+                DashboardElement globalData = new DashboardElement ( );
+                globalData.setItem ( HeimdallRestController.GLOBAL_SENSOR_USAGE );
+                globalData.setData ( EventsModel.retrieveGlobalSensorUsage ( HeimdallRestController.HOURS_TO_MONITOR, ds ) );
                 data.add ( globalData );
-                
-                List<DashboardUsageDataRec> hourlyData = EventsModel.retrieveHourlySensorUsage ( 24, ds );
+
+                //   HOURLY_SENSOR_USAGE
+                DashboardElement hourlyData = new DashboardElement ( );
+                hourlyData.setItem ( HeimdallRestController.HOURLY_SENSOR_USAGE );
+                hourlyData.setData ( EventsModel.retrieveHourlySensorUsage ( HeimdallRestController.HOURS_TO_MONITOR, ds ) );
                 data.add ( hourlyData );
 
-                JSONObject json = new JSONObject ( data );
+                System.out.println ( "Data: " + data );
+
+                String JSONData = DashboardDataJSONEncoder.encode ( data );
                 
 //   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - BEGIN
                 
-                System.out.println ( "received event:" + json.toString ( ) );
-                sendMessageOverSocket ( json.toString ( ) );
+                System.out.println ( "received event:" + JSONData );
+                sendMessageOverSocket ( JSONData );
                 //return "event received " + json;
 
 //   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - END
