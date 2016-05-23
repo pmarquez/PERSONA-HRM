@@ -27,8 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.codehaus.jettison.json.JSONObject;
 
 //   Domain Imports
 import org.pmh.heimdall.model.EventsModel;
@@ -64,6 +63,9 @@ import org.pmh.heimdall.websocket.WebsocketClientEndpoint;
 @RestController
 public class HeimdallRestController {
 
+    private WebsocketClientEndpoint client;
+    private final String webSocketAddress = "ws://localhost:8084/Heimdall/dashboardUpdates";
+    
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
     //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
     String serverBaseURI            = "http://13.79.175.6:8080";
@@ -86,6 +88,28 @@ public class HeimdallRestController {
     
     @Autowired
     private DataSource ds;
+    
+    private void initializeWebSocket ( ) throws URISyntaxException {
+        //ws://localhost:8084/Heimdall/dashboardUpdates
+        System.out.println ( "REST service: open websocket client at " + webSocketAddress );
+        client = new WebsocketClientEndpoint ( new URI ( webSocketAddress + "/0" ) );
+    }
+
+    private void sendMessageOverSocket ( String message ) {
+        
+        if ( client == null ) {
+            try {
+                initializeWebSocket ( );
+            
+            } catch ( URISyntaxException e ) {
+                e.printStackTrace ( );
+                
+            }
+        }
+        
+        client.sendMessage ( message );
+
+    }
 
     /**
      * 
@@ -119,7 +143,6 @@ public class HeimdallRestController {
                 response.setResultCode    ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_CODE    );
                 response.setResultMessage ( HeimdallRestController.EVENT_REGISTERED_SUCCESSFULLY_MESSAGE );
                 
-//   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - BEGIN
                 List<List<DashboardUsageDataRec>> data = new ArrayList<>( ); 
 
                 List<DashboardUsageDataRec> globalData = EventsModel.retrieveGlobalSensorUsage ( 24, ds );
@@ -127,14 +150,15 @@ public class HeimdallRestController {
                 
                 List<DashboardUsageDataRec> hourlyData = EventsModel.retrieveHourlySensorUsage ( 24, ds );
                 data.add ( hourlyData );
-                
-                
-                try {
-                    WebsocketClientEndpoint wsce = new WebsocketClientEndpoint ( new URI ( HeimdallRestController.WEB_SOCKET_ADDRESS + "/0" ) );
 
-                } catch (URISyntaxException ex) {
-                    Logger.getLogger(HeimdallRestController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                JSONObject json = new JSONObject ( data );
+                
+//   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - BEGIN
+                
+                System.out.println ( "received event:" + json.toString ( ) );
+                sendMessageOverSocket ( json.toString ( ) );
+                //return "event received " + json;
+
 //   LLAMAR LA ACTUALIZACIÓN DESDE AQUI - END
 
             } else {
