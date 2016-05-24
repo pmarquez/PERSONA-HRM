@@ -99,7 +99,7 @@ public class HeimdallRestController {
     private void initializeWebSocket ( ) throws URISyntaxException {
         //ws://localhost:8084/Heimdall/dashboardUpdates
         System.out.println ( "REST service: open websocket client at " + webSocketAddress );
-        client = new WebsocketClientEndpoint ( new URI ( webSocketAddress + "/0" ) );
+        client = new WebsocketClientEndpoint ( new URI ( webSocketAddress ) );
     }
 
     private void sendMessageOverSocket ( String message ) {

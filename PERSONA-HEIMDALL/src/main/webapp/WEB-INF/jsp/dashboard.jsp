@@ -108,12 +108,13 @@
 
     <!-- Custom JS -->
     <script src="js/menu.js"></script>
-    <script src="js/nexfidelitas/stats.js"></script>
+    <!-- script src="js/nexfidelitas/stats.js"></script -->
 
     <script src="js/jquery/jquery-2.1.0.js"></script>
     <script src="js/zingchart/zingchart.min.js"></script>
     <script src="js/zingchart/zingchart.jquery.js"></script>
-    <script src="js/heimdall/dashboard.js"></script>
+    <script src="js/heimdall/websocket.js"></script>
+    <!-- script src="js/heimdall/dashboard.js"></script -->
     
   </body>
 </html>
