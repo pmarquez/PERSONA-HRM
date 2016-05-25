@@ -30,7 +30,11 @@ $( function ( ) {
                       "scale-y": { "label": { "text":"Percentage Occupation" } },
                     
                       "series": [ { "values": [ 5 ] }, 
-                                  { "values": [ 3 ] } ] 
+                                  { "values": [ 3 ] },  
+                                  { "values": [ 2 ] },  
+                                  { "values": [ 7 ] },  
+                                  { "values": [ 4 ] },  
+                                  { "values": [ 1 ] } ] 
                     };
 //   Pie Chart - END
 
@@ -44,8 +48,10 @@ $( function ( ) {
 
                       "scale-y": { "label": { "text":"Percentage Occupation" } },
                     
-                      "series": [ { "values": [ 1 ] }, 
-                                  { "values": [ 2 ] } ] 
+                      "series": [ { "values": [ 3 ] }, 
+                                  { "values": [ 2 ] }, 
+                                  { "values": [ 5 ] }, 
+                                  { "values": [ 4 ] } ] 
                     };
 //   Bar Chart - END
 

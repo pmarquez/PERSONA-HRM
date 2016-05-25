@@ -58,7 +58,7 @@
                 </div>
             </div>
             <br>
-            
+
             <!-- Row Start -->
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -114,7 +114,7 @@
     <script src="js/zingchart/zingchart.min.js"></script>
     <script src="js/zingchart/zingchart.jquery.js"></script>
     <script src="js/heimdall/websocket.js"></script>
-    <!-- script src="js/heimdall/dashboard.js"></script -->
+    <script src="js/heimdall/dashboard.js"></script>
     
   </body>
 </html>

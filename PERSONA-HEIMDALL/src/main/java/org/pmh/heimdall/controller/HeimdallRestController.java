@@ -81,7 +81,7 @@ public class HeimdallRestController {
 
     private static final String GLOBAL_SENSOR_USAGE = "GLOBAL_SENSOR_USAGE";
     private static final String HOURLY_SENSOR_USAGE = "HOURLY_SENSOR_USAGE";
-    
+
     private static final String EVENT_REGISTERED_SUCCESSFULLY_CODE    = "EV-001";
     private static final String EVENT_REGISTERED_SUCCESSFULLY_MESSAGE = "Event registered successfully.";
 
@@ -90,12 +90,12 @@ public class HeimdallRestController {
 
     private static final String SENSOR_CODE_NOT_VALID_CODE            = "EV-003";
     private static final String SENSOR_CODE_NOT_VALID_MESSAGE         = "SENSOR CODE NOT VALID.";
-    
+
     private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8084/CinemaMonitor/cinemaSocket";
-    
+
     @Autowired
     private DataSource ds;
-    
+
     private void initializeWebSocket ( ) throws URISyntaxException {
         //ws://localhost:8084/Heimdall/dashboardUpdates
         System.out.println ( "REST service: open websocket client at " + webSocketAddress );
