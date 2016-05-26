@@ -6,22 +6,20 @@ websocket.onerror   = function ( evt ) { onError   ( evt ); };
 websocket.onopen    = function ( evt ) { onOpen    ( evt ); };
 
 function onMessage ( evt ) {
- alert ( "received over websockets: " + evt.data );
-// alert ( "looked for room index of: " + evt.data.indexOf ( "room" ) );
-// var index = evt.data.indexOf ( "room" );
-// writeToScreen ( evt.data );
-//    if ( index > 1 ) {
-//      alert ( "found room index of: "+ evt.data.indexOf ( "room" ) );   
-//      updateRoomDetails ( evt.data );
-//    }
+    alert ( "received over websockets: " + evt.data );
+    var obj = $.parseJSON( evt.data );
+    
+    if ( obj.dashboard !== undefined ) { processSnapshot   ( obj ); } 
+    else { "No Data To Update"; }
+    
 }
 
 function onError ( evt ) {
-    alert ( '<span style="color: red;">ERROR:</span> ' + evt.data );
+    console.log ( 'ERROR: ' + evt.data );
 }
 
 function onOpen ( ) {
-    alert ( "Connected to " + wsUri );
+    console.log ( "Connected to: " + wsUri );
 }
 
 // For testing purposes

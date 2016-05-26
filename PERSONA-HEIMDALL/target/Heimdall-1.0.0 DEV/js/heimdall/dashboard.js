@@ -14,11 +14,6 @@
 $( function ( ) {
     var websocket;
 
-    var openConnectionButton        = $( "#btnOpenConnection"        );
-    var startMonitorButton          = $( "#btnStartMonitor"          );
-    var stopMonitorButton           = $( "#btnStopMonitor"           );
-    var closeServerConnectionButton = $( "#btnCloseServerConnection" );
-
 //   Pie Chart - BEGIN
     var globalUsageChart = $( "#globalUsageChart" );
     var myGUChart = { "alpha":1,
@@ -29,12 +24,7 @@ $( function ( ) {
 
                       "scale-y": { "label": { "text":"Percentage Occupation" } },
                     
-                      "series": [ { "values": [ 5 ] }, 
-                                  { "values": [ 3 ] },  
-                                  { "values": [ 2 ] },  
-                                  { "values": [ 7 ] },  
-                                  { "values": [ 4 ] },  
-                                  { "values": [ 1 ] } ] 
+                      "series": [ { "values": [ ] } ] 
                     };
 //   Pie Chart - END
 
@@ -48,10 +38,7 @@ $( function ( ) {
 
                       "scale-y": { "label": { "text":"Percentage Occupation" } },
                     
-                      "series": [ { "values": [ 3 ] }, 
-                                  { "values": [ 2 ] }, 
-                                  { "values": [ 5 ] }, 
-                                  { "values": [ 4 ] } ] 
+                      "series": [ { "values": [ ] } ] 
                     };
 //   Bar Chart - END
 
@@ -60,10 +47,6 @@ $( function ( ) {
     function init ( ) {
 
         //   Setup all button and event listeners
-        openConnectionButton.on         ( "click", openSocketConnection  );
-        startMonitorButton.on           ( "click", sendStartCommand      );
-        stopMonitorButton.on            ( "click", sendStopCommand       );
-        closeServerConnectionButton.on  ( "click", sendCloseCommand      );
         window.addEventListener         ( "beforeunload", destroy, false );
 
         //   Initialize the chart object
@@ -72,29 +55,6 @@ $( function ( ) {
         
         hourlyUsageChart.zingchart ( );
         hourlyUsageChart.zingchart ( { JSON: myHUChart } );
-
-    }
-
-//   WebSocket Lifecycle - BEGIN
-    function openSocketConnection ( ) {
-        
-        //   Create the WebSocket
-        websocket = new WebSocket ( "ws://localhost:8084/A-Lotta-Parking/parkingLotUpdates" );
-
-        //   When the server messages the client, we receive the message here.
-        websocket.onmessage = function ( evt ) {
-
-            var obj = $.parseJSON( evt.data );
-            if ( obj.lotsMonitor !== undefined ) { processSnapshot   ( obj ); }
-        };
-
-        //   When the server closes the WebSocket, we receive the notification here.
-        websocket.onclose = function ( evt ) {
-            //alert("Server closed WebSocket");
-        };
-
-        //   Set html buttons state
-        buttonStates ( "openedState" );
 
     }
 
@@ -116,15 +76,6 @@ $( function ( ) {
     
     }
 
-    //   When the client requests that the server close the websocket, we send the "closeConnection" here.
-    //   
-    //   Of course, as a client, we have the power to close the websocket connection from
-    //   the client side using "websocket.close()". I just chose to do it in a different 
-    //   fashion and politely request the server to do so on our behalf.
-    //   
-    //   In this tutorial, we are also using the other method, we are listening to the "beforeunload" event, 
-    //   which is triggered when the user closes the browser window, in that case, we close the WebSocket from 
-    //   the client side (as can be seen in the "destroy" function a few linea ahead.
     function sendCloseCommand ( ) {
         websocket.send ( "closeConnection" ); 
 
@@ -148,85 +99,26 @@ $( function ( ) {
 
 //   Chart and Table Processing - BEGIN
     function processSnapshot ( obj ) {
-        processDataForChart ( obj );
-        processDataForTable ( obj );
+        processDataForChart ( obj.dashboard );
     }
 
     function processDataForChart ( obj ) {
 
         var seriesObject = { series: [ ] };
         
-        var series1Item = { values: [] };
-        var series2Item = { values: [] };
+        var GSUSeries = { values: [ ] };
+//        var series2Item = { values: [ ] };
 
-        $.each ( obj.lotsMonitor, function ( idx, lot ) {
-            var usedCapacityPercentage = Math.ceil ( ( lot.plUsedCapacity / lot.plCapacity ) * 100 );
-
-            series1Item.values.push ( usedCapacityPercentage );
-            series2Item.values.push ( 100 - usedCapacityPercentage );
+        $.each ( obj.dashboard[0].data, function ( idx, sensor ) {
+            GSUSeries.values.push ( sensor.useCount );
+//            series2Item.values.push ( 100 - usedCapacityPercentage );
 
         } );
         
-        seriesObject.series.push ( series1Item );
-        seriesObject.series.push ( series2Item );
+        seriesObject.series.push ( GSUSeries );
+//        seriesObject.series.push ( series2Item );
 
-        chartOutput.setJSON ( seriesObject );
+        globalUsageChart.setJSON ( seriesObject );
     }
-
-    function processDataForTable ( obj ) {
-
-        var tableData = "";
-        
-        $.each ( obj.lotsMonitor, function ( idx, lot ) {
-            tableData += "<tr>";
-            tableData += "<td>" + idx + "</td>";
-            tableData += "<td>" + lot.plName + "</td>";
-            tableData += "<td>" + lot.plCapacity + "</td>";
-            tableData += "<td>" + lot.plUsedCapacity + "</td>";
-            tableData += "<td>" + Math.ceil ( ( lot.plUsedCapacity / lot.plCapacity ) * 100 ) + "%</td>";
-            tableData += "<tr>";
-        } );
-        
-        $("#tableData").html ( tableData );
-    }
-//   Chart and Table Processing - END
-
-//   Button States - BEGIN
-    function buttonStates ( state ) {
-        switch ( state ) {
-            case "openedState":
-                openConnectionButton.attr              ( "disabled", "disabled" );
-                startMonitorButton.removeAttr          ( "disabled" );
-                stopMonitorButton.attr                 ( "disabled", "disabled" );
-                closeServerConnectionButton.removeAttr ( "disabled" );
-                break;
-                
-            case "startedState":
-                openConnectionButton.attr              ( "disabled", "disabled" );
-                startMonitorButton.attr                ( "disabled", "disabled" );
-                stopMonitorButton.removeAttr           ( "disabled" );
-                closeServerConnectionButton.removeAttr ( "disabled" );
-                break;
-                
-            case "stoppedState":
-                openConnectionButton.attr              ( "disabled", "disabled" );
-                startMonitorButton.removeAttr          ( "disabled" );
-                stopMonitorButton.attr                 ( "disabled", "disabled" );
-                closeServerConnectionButton.removeAttr ( "disabled" );
-                break;
-                
-            case "closedState":
-                openConnectionButton.removeAttr        ( "disabled" );
-                startMonitorButton.attr                ( "disabled", "disabled" );
-                stopMonitorButton.attr                 ( "disabled", "disabled" );
-                closeServerConnectionButton.attr       ( "disabled", "disabled" );
-                break;
-                
-            default:
-                message ( "Huh!? what's just happened?" );
-                
-        }
-    }
-//   Button States - END
 
 } );
