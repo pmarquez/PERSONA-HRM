@@ -114,7 +114,7 @@
     <script src="js/zingchart/zingchart.min.js"></script>
     <script src="js/zingchart/zingchart.jquery.js"></script>
     <script src="js/heimdall/websocket.js"></script>
-    <script src="js/heimdall/dashboard.js"></script>
+    <!-- script src="js/heimdall/dashboard.js"></script -->
     
   </body>
 </html>
