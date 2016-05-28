@@ -28,39 +28,6 @@
 
             <!-- Row Start -->
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                    <div class="wrapper">
-                      <button class="btn btn-block btn-default" id="btnOpenConnection" type="button">
-                        Open WS
-                      </button>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                    <div class="wrapper">
-                      <button class="btn btn-block btn-default" id="btnStartMonitor" type="button">
-                        Start Monitor
-                      </button>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                    <div class="wrapper">
-                      <button class="btn btn-block btn-default" id="btnStopMonitor" type="button">
-                        End Monitor
-                      </button>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                    <div class="wrapper">
-                      <button class="btn btn-block btn-default" id="btnCloseServerConnection" type="button">
-                        Close WS
-                      </button>
-                    </div>
-                </div>
-            </div>
-            <br>
-
-            <!-- Row Start -->
-            <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="widget">
                         <div class="widget-header">

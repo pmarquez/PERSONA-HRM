@@ -22,9 +22,9 @@ public class DashboardDataJSONEncoder {
 
             String dudr = "";
             for ( int j = 0; j < de.getData ( ).size ( ); j++ ) {
-                dudr += "{\"hour\": "      + de.getData ( ).get( j ).getHour       ( ) +  ",";
+                dudr += "{\"hour\": \""        + de.getData ( ).get( j ).getHour       ( ) +  "\",";
                 dudr += "\"sensorName\": \"" + de.getData ( ).get( j ).getSensorName ( ) +  "\",";
-                dudr += "\"useCount\": "   + de.getData ( ).get( j ).getUseCount   ( ) +  "},";
+                dudr += "\"useCount\": "     + de.getData ( ).get( j ).getUseCount   ( ) +  "},";
             }
 
             dashboardElements += "\"data\": [" + ( dudr.substring ( 0, dudr.length ( ) - 1 ) ) + " ]},";
