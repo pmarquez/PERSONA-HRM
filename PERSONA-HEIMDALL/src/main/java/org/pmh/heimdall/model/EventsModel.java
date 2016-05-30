@@ -52,6 +52,46 @@ import org.pmh.heimdall.process.EventShortRec;
 public class EventsModel {
 
     /**
+     * Retrieves the names of the sensors with reported activity within the required <code>hoursInterval</code>.
+     * @param hoursInterval
+     * @param ds
+     * @return List<String>
+     */
+    public static List<String> retrieveSensorsUsedInTimeRange ( int hoursInterval, DataSource ds ) {
+
+        String SQLQuery = "SELECT IFNULL(hei_sensorentity.sensorName,'') AS SENSOR_NAME "                                       +
+
+                          "FROM hei_evententity "                                                                               +
+
+                          "LEFT OUTER JOIN hei_sensorentity ON hei_sensorentity.sensorTagCode = hei_evententity.sensorTagCode " +
+
+                          "WHERE TIMESTAMP >= DATE_SUB(NOW(), INTERVAL " + hoursInterval + " HOUR) "                            +
+
+                          "GROUP BY SENSOR_NAME "                                                                               +
+
+                          "ORDER BY SENSOR_NAME";
+        
+        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
+
+        List<String> sensors = new ArrayList<> ( );
+
+        try {
+            sensors = jdbcTemplate.query ( SQLQuery,
+                                        new RowMapper<String> ( ) {
+                                            @Override
+                                            public String mapRow ( ResultSet rs, int rowNum ) throws SQLException {
+
+                                                return rs.getString ( "SENSOR_NAME" );
+                                            }
+                                        } );
+        } catch ( DataAccessException ex ) {
+            System.err.println ( "DataAccessException @ EventsModel.retrieveSensorsUsedInTimeRange: " + ex.getMessage ( ) );
+        }
+
+        return sensors;
+    }
+
+    /**
      * Retrieves the Global Sensor Usage Count.
      * @param hoursInterval
      * @param ds
@@ -107,7 +147,8 @@ public class EventsModel {
 
         String SQLQuery = "SELECT IFNULL(hei_sensorentity.sensorName,'') AS SENSOR_NAME, "                                      +
                                  "COUNT(*) AS USE_COUNT, "                                                                      +
-                                 "HOUR(TIMESTAMP) AS HOUR "                                                                     +
+                                 "HOUR(TIMESTAMP) AS HOUR, "                                                                    +
+                                 "DATE_FORMAT(TIMESTAMP,'%Y-%m_%d %H') AS HOURLY_GAP "                                          +
 
                           "FROM hei_evententity "                                                                               +
 
@@ -115,9 +156,9 @@ public class EventsModel {
 
                           "WHERE TIMESTAMP >= DATE_SUB(NOW(), INTERVAL " + hoursInterval + " HOUR) "                            +
 
-                          "GROUP BY HOUR(TIMESTAMP), hei_sensorentity.sensorName "                                              +
+                          "GROUP BY HOUR, hei_sensorentity.sensorName "                                                         +
 
-                          "ORDER BY SENSOR_NAME, TIMESTAMP";
+                          "ORDER BY SENSOR_NAME, HOURLY_GAP";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
 

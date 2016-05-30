@@ -35,9 +35,9 @@ $( function( ) {
                       "scale-y": { "label": { "text":"Times Sensor Used" } },
                     
                       "series": [ { "values": [ 1,2,3,4 ] }, 
-                                  { "values": [ 2,3,4,5 ] }, 
-                                  { "values": [ 3,4,5,6 ] }, 
-                                  { "values": [ 4,5,6,7 ] } ] 
+                                  { "values": [ 0,3,4,5 ] }, 
+                                  { "values": [ 3,5,0,6 ] }, 
+                                  { "values": [ 4,0,6,7 ] } ] 
                     };
 //   Bar Chart - END
 

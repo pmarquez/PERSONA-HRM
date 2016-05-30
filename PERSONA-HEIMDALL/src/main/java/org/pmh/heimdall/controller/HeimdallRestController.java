@@ -25,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fxt.process.ResponseRec;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.codehaus.jettison.json.JSONObject;
@@ -159,9 +160,19 @@ public class HeimdallRestController {
                 data.add ( globalData );
 
                 //   HOURLY_SENSOR_USAGE
+                
+                //   Get the sensors active in the last <HOURS_TO_MONITOR> hours
+                List<String> sensorsInvolved = EventsModel.retrieveSensorsUsedInTimeRange ( HOURS_TO_MONITOR, ds );
+
                 DashboardElement hourlyData = new DashboardElement ( );
+
                 hourlyData.setItem ( HeimdallRestController.HOURLY_SENSOR_USAGE );
-                hourlyData.setData ( EventsModel.retrieveHourlySensorUsage ( HeimdallRestController.HOURS_TO_MONITOR, ds ) );
+
+                //   Prime the DataSet with all sensors for each of the hours
+                hourlyData.setData ( this.primeSensorData ( HOURS_TO_MONITOR, sensorsInvolved ) );
+                
+                this.fillCronologicalSensorUsage ( hourlyData.getData ( ), EventsModel.retrieveHourlySensorUsage ( HeimdallRestController.HOURS_TO_MONITOR, ds ) );
+                
                 data.add ( hourlyData );
 
                 System.out.println ( "Data: " + data );
@@ -244,6 +255,60 @@ public class HeimdallRestController {
         
         return ( sensor.getSensorCode ( ) > 0 );
         
+    }
+
+    /**
+     * Prime the sensor data to display in monitor
+     * @param HOURS_TO_MONITOR
+     * @param sensorsInvolved
+     * @return List<DashboardUsageDataRec>
+     */
+    private List<DashboardUsageDataRec> primeSensorData ( int HOURS_TO_MONITOR, List<String> sensorsInvolved ) {
+        
+        LocalTime currentTime = LocalTime.now ( );
+        
+        List<DashboardUsageDataRec> l = new ArrayList<> ( ); 
+        
+        for ( String sensorsName : sensorsInvolved ) {
+
+            LocalTime lt = currentTime.minusHours ( HOURS_TO_MONITOR - 1 );
+
+            for ( int i = 0; i < HOURS_TO_MONITOR; i++ ) {
+                
+                DashboardUsageDataRec r = new DashboardUsageDataRec ( );
+                r.setHour ( String.valueOf ( lt.getHour ( ) ) );
+                r.setSensorName( sensorsName );
+             
+                lt = lt.plusHours ( 1 );
+                
+                l.add ( r );
+
+            }
+        }
+
+        return l;  
+        
+    }
+
+    /**
+     * Fills the actual usage data into the timeline for all hours and all sensors
+     * @param data
+     * @param hourlySensorUsage 
+     */
+    private void fillCronologicalSensorUsage ( List<DashboardUsageDataRec> data, List<DashboardUsageDataRec> hourlySensorUsage ) {
+
+        for ( DashboardUsageDataRec sensorUsage : hourlySensorUsage ) {
+
+            for ( DashboardUsageDataRec dashboardEntry : data ) {
+
+                if ( ( dashboardEntry.getSensorName ( ).equals ( sensorUsage.getSensorName ( ) ) ) && ( Integer.parseInt ( dashboardEntry.getHour ( ) ) == Integer.parseInt ( sensorUsage.getHour ( ) ) ) ) {
+                    dashboardEntry.setUseCount ( sensorUsage.getUseCount ( ) );
+                }
+
+            }
+
+        }
+
     }
 
 }
