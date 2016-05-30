@@ -29,12 +29,15 @@ $( function( ) {
     var myHUChart = { "alpha":1,
                       "background-color":"#f5f5f5",
                       "background-color-2":"#f5f5f5",
-                      "type" : "vbar",
+                      "type" : "bar",
                       "stacked" : "false",
 
-                      "scale-y": { "label": { "text":"Percentage Occupation" } },
+                      "scale-y": { "label": { "text":"Times Sensor Used" } },
                     
-                      "series": [ { "values": [ ] } ] 
+                      "series": [ { "values": [ 1,2,3,4 ] }, 
+                                  { "values": [ 2,3,4,5 ] }, 
+                                  { "values": [ 3,4,5,6 ] }, 
+                                  { "values": [ 4,5,6,7 ] } ] 
                     };
 //   Bar Chart - END
 
