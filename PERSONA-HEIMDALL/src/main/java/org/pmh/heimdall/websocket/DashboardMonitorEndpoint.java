@@ -33,7 +33,7 @@ private static Set<Session> peers = Collections.synchronizedSet ( new HashSet ( 
         peers.add ( session );
 
         try {
-            session.getBasicRemote ( ).sendText ( "good to be in touch" );
+            session.getBasicRemote ( ).sendText ( "{ \"message\": \"good to be in touch\" }" );
             
         } catch ( IOException e ) {
         }

@@ -34,10 +34,10 @@ $( function( ) {
 
                       "scale-y": { "label": { "text":"Times Sensor Used" } },
                     
-                      "series": [ { "values": [ 1,2,3,4 ] }, 
-                                  { "values": [ 0,3,4,5 ] }, 
-                                  { "values": [ 3,5,0,6 ] }, 
-                                  { "values": [ 4,0,6,7 ] } ] 
+                      "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
+                                  { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
+                                  { "values": [ 2,8,7,5,0,0,0,0,9,0,1,2,3,4,5,6,7,8,9,0,11,0,0,0 ] }, 
+                                  { "values": [ 4,0,6,7,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,10] } ] 
                     };
 //   Bar Chart - END
 
@@ -111,20 +111,18 @@ $( function( ) {
     }
 
     function processSnapshot ( obj ) {
-        processDataForChart ( obj.dashboard );
+        processDataForGlobalChart ( obj.dashboard[0] );
+        processDataForHourlyChart ( obj.dashboard[1] );
     }
 
-    function processDataForChart ( obj ) {
+    function processDataForGlobalChart ( obj ) {
 
         var seriesObject = { series: [ ] };
         
-//        var GSUSeries = { values: [ ] };
-//        var series2Item = { values: [ ] };
-
         var slice;
         var values;
                 
-        $.each ( obj [ 0 ].data, function ( idx, sensor ) {
+        $.each ( obj.data, function ( idx, sensor ) {
 
             slice  = new Object ( );
             values = new Array  ( );
@@ -136,12 +134,43 @@ $( function( ) {
             seriesObject.series.push ( slice );
         } );
         
-//        seriesObject.series.push ( GSUSeries );
-//        seriesObject.series.push ( series2Item );
-
         console.log ( JSON.stringify ( seriesObject ) );
 
         globalUsageChart.setJSON ( seriesObject );
+    }
+
+    function processDataForHourlyChart ( obj ) {
+
+/*
+        "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
+                    { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
+                    { "values": [ 2,8,7,5,0,0,0,0,9,0,1,2,3,4,5,6,7,8,9,0,11,0,0,0 ] }, 
+                    { "values": [ 4,0,6,7,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,10] } ] 
+*/
+
+        var seriesObject = { series: [ ] };
+        
+//        var GSUSeries = { values: [ ] };
+//        var series2Item = { values: [ ] };
+
+        var sensor;
+        var values;
+        
+        $.each ( obj.data, function ( idx, sensor ) {
+
+            series  = new Object ( );
+            values = new Array  ( );
+            values.push ( sensor.useCount );
+            
+            series.text   = sensor.sensorName;
+            series.values = values;
+
+            seriesObject.series.push ( series );
+        } );
+        
+        console.log ( JSON.stringify ( seriesObject ) );
+
+        hourlyUsageChart.setJSON ( seriesObject );
     }
 
     /*
