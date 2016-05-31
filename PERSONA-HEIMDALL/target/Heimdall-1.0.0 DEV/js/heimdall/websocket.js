@@ -4,40 +4,41 @@ $( function( ) {
 
 //   Pie Chart - BEGIN
     var globalUsageChart = $( "#globalUsageChart" );
-    var myGUChart = { "alpha":1,
-                      "background-color":"#f5f5f5",
-                      "background-color-2":"#f5f5f5",
-                      "type" : "pie",
-                      "stacked" : "true",
+    var myGUChart = { "alpha":              1,
+                      "background-color":   "#f5f5f5",
+                      "background-color-2": "#f5f5f5",
+                      "type":               "pie",
+                      "stacked":            "true",
 
                       "scale-y": { "label": { "text":"Percentage Occupation" } },
                     
-                     "series":[ { "text":"NFC 1", 
-                                  "values":[1] }, 
-                                { "text":"NFC 2", 
-                                  "values":[2] }, 
-                                { "text":"NFC 3",
-                                  "values":[7] }, 
-                                { "text":"NFC 4",
-                                  "values":[3] } ]
-//                      "series": [ { "values": [ ] } ] 
+//                     "series":[ { "text":"NFC 1", 
+//                                  "values":[1] }, 
+//                                { "text":"NFC 2", 
+//                                  "values":[2] }, 
+//                                { "text":"NFC 3",
+//                                  "values":[7] }, 
+//                                { "text":"NFC 4",
+//                                  "values":[3] } ]
+                      "series": [ { "values": [ ] } ] 
                     };
 //   Pie Chart - END
 
 //   Bar Chart - BEGIN
     var hourlyUsageChart = $( "#hourlyUsageChart" );
-    var myHUChart = { "alpha":1,
-                      "background-color":"#f5f5f5",
-                      "background-color-2":"#f5f5f5",
-                      "type" : "bar",
-                      "stacked" : "false",
+    var myHUChart = { "alpha":              1,
+                      "background-color":   "#f5f5f5",
+                      "background-color-2": "#f5f5f5",
+                      "type":               "bar",
+                      "stacked":            "false",
 
                       "scale-y": { "label": { "text":"Times Sensor Used per Hour (24 Hours)" } },
                     
-                      "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
-                                  { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
-                                  { "values": [ 2,8,7,5,0,0,0,0,9,0,1,2,3,4,5,6,7,8,9,0,11,0,0,0 ] }, 
-                                  { "values": [ 4,0,6,7,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,10] } ] 
+                      "series": [ { "values": [ ] } ] 
+//                      "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
+//                                  { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
+//                                  { "values": [ 2,8,7,5,0,0,0,0,9,0,1,2,3,4,5,6,7,8,9,0,11,0,0,0 ] }, 
+//                                  { "values": [ 4,0,6,7,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,10] } ] 
                     };
 //   Bar Chart - END
 
@@ -141,39 +142,27 @@ $( function( ) {
 
     function processDataForHourlyChart ( obj ) {
         
-        console.log ( "processDataForHourlyChart: ENTER" );
+//        console.log ( "processDataForHourlyChart: ENTER" );
 
-        console.log ( "processDataForHourlyChart - [OBJ]: " + JSON.stringify ( obj ) );
+//        console.log ( "processDataForHourlyChart - [OBJ]: " + JSON.stringify ( obj ) );
 
-/*
-        "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
-                    { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
-                    { "values": [ 2,8,7,5,0,0,0,0,9,0,1,2,3,4,5,6,7,8,9,0,11,0,0,0 ] }, 
-                    { "values": [ 4,0,6,7,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,10] } ] 
-        
-                  [ { "values": [0,0,11,7,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-                    { "values": [4,0,5,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-                    { "values": [0,0,3,12,2,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-                    { "values": [0,0,11,5,0,34,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,7,2] } ]
-*/
         var values = new Array ( );
         var series = new Array ( );
         
         var sensorSeries;
 
         var sentinnel = obj.data[0].sensorName;
-//        console.log ( "processDataForHourlyChart - [sentinnel]: " + sentinnel );
 
         $.each ( obj.data, function ( idx, sensor ) {
 
-            console.log ( "processDataForHourlyChart - [SENSOR]: " + JSON.stringify ( sensor ) );
+//            console.log ( "processDataForHourlyChart - [SENSOR]: " + JSON.stringify ( sensor ) );
     
             if ( sentinnel === sensor.sensorName ) {
                 values.push ( sensor.useCount );
             
             } else  {
                 
-                console.log ( "processDataForHourlyChart - [VALUES]: " + JSON.stringify ( values ) );
+//                console.log ( "processDataForHourlyChart - [VALUES]: " + JSON.stringify ( values ) );
 
                 sentinnel = sensor.sensorName;
                 
@@ -185,7 +174,7 @@ $( function( ) {
                 values.push ( sensor.useCount );
             
             }
-            console.log ( "processDataForHourlyChart - [sentinnel]: " + sentinnel + " - " + idx );
+//            console.log ( "processDataForHourlyChart - [sentinnel]: " + sentinnel + " - " + idx );
 
         } );
 
@@ -193,9 +182,9 @@ $( function( ) {
         sensorSeries.values = values;
         series.push ( sensorSeries );
 
-        console.log ( "processDataForHourlyChart - [VALUES]: " + JSON.stringify ( values ) );
+//        console.log ( "processDataForHourlyChart - [VALUES]: " + JSON.stringify ( values ) );
 
-        console.log ( "processDataForHourlyChart - [SERIES]: " + JSON.stringify ( series ) );
+//        console.log ( "processDataForHourlyChart - [SERIES]: " + JSON.stringify ( series ) );
 
         var seriesObject = new Object ( );
         
@@ -203,7 +192,7 @@ $( function( ) {
 
         hourlyUsageChart.setJSON ( seriesObject );
         
-        console.log ( "processDataForHourlyChart: EXIT" );
+//        console.log ( "processDataForHourlyChart: EXIT" );
     }
 
     /*
