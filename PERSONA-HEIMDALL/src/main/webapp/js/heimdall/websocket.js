@@ -32,7 +32,7 @@ $( function( ) {
                       "type" : "bar",
                       "stacked" : "false",
 
-                      "scale-y": { "label": { "text":"Times Sensor Used" } },
+                      "scale-y": { "label": { "text":"Times Sensor Used per Hour (24 Hours)" } },
                     
                       "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
                                   { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
@@ -140,37 +140,70 @@ $( function( ) {
     }
 
     function processDataForHourlyChart ( obj ) {
+        
+        console.log ( "processDataForHourlyChart: ENTER" );
+
+        console.log ( "processDataForHourlyChart - [OBJ]: " + JSON.stringify ( obj ) );
 
 /*
         "series": [ { "values": [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,4,7,3,20,21,12,2,17 ] }, 
                     { "values": [ 3,5,9,6,0,0,0,2,0,0,0,4,0,0,0,9,0,0,0,0,5,0,0,4 ] }, 
                     { "values": [ 2,8,7,5,0,0,0,0,9,0,1,2,3,4,5,6,7,8,9,0,11,0,0,0 ] }, 
                     { "values": [ 4,0,6,7,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,10] } ] 
+        
+                  [ { "values": [0,0,11,7,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+                    { "values": [4,0,5,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+                    { "values": [0,0,3,12,2,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+                    { "values": [0,0,11,5,0,34,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,7,2] } ]
 */
-
-        var seriesObject = { series: [ ] };
+        var values = new Array ( );
+        var series = new Array ( );
         
-//        var GSUSeries = { values: [ ] };
-//        var series2Item = { values: [ ] };
+        var sensorSeries;
 
-        var sensor;
-        var values;
-        
+        var sentinnel = obj.data[0].sensorName;
+//        console.log ( "processDataForHourlyChart - [sentinnel]: " + sentinnel );
+
         $.each ( obj.data, function ( idx, sensor ) {
 
-            series  = new Object ( );
-            values = new Array  ( );
-            values.push ( sensor.useCount );
+            console.log ( "processDataForHourlyChart - [SENSOR]: " + JSON.stringify ( sensor ) );
+    
+            if ( sentinnel === sensor.sensorName ) {
+                values.push ( sensor.useCount );
             
-            series.text   = sensor.sensorName;
-            series.values = values;
+            } else  {
+                
+                console.log ( "processDataForHourlyChart - [VALUES]: " + JSON.stringify ( values ) );
 
-            seriesObject.series.push ( series );
+                sentinnel = sensor.sensorName;
+                
+                sensorSeries = new Object ( );
+                sensorSeries.values = values;
+                series.push ( sensorSeries );
+                
+                values = new Array  ( ); 
+                values.push ( sensor.useCount );
+            
+            }
+            console.log ( "processDataForHourlyChart - [sentinnel]: " + sentinnel + " - " + idx );
+
         } );
+
+        sensorSeries = new Object ( );
+        sensorSeries.values = values;
+        series.push ( sensorSeries );
+
+        console.log ( "processDataForHourlyChart - [VALUES]: " + JSON.stringify ( values ) );
+
+        console.log ( "processDataForHourlyChart - [SERIES]: " + JSON.stringify ( series ) );
+
+        var seriesObject = new Object ( );
         
-        console.log ( JSON.stringify ( seriesObject ) );
+        seriesObject.series = series;
 
         hourlyUsageChart.setJSON ( seriesObject );
+        
+        console.log ( "processDataForHourlyChart: EXIT" );
     }
 
     /*
