@@ -67,7 +67,8 @@ import org.pmh.heimdall.websocket.WebsocketClientEndpoint;
 public class HeimdallRestController {
 
     private WebsocketClientEndpoint client;
-    private final String webSocketAddress = "ws://localhost:8084/Heimdall/dashboardUpdates";
+    private final String webSocketAddress = "ws://localhost:8080/Heimdall/dashboardUpdates";
+//    private final String webSocketAddress = "ws://13.79.175.6:8080/Heimdall/dashboardUpdates";
     
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
     //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
@@ -92,7 +93,8 @@ public class HeimdallRestController {
     private static final String SENSOR_CODE_NOT_VALID_CODE            = "EV-003";
     private static final String SENSOR_CODE_NOT_VALID_MESSAGE         = "SENSOR CODE NOT VALID.";
 
-    private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8084/CinemaMonitor/cinemaSocket";
+//    private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8084/CinemaMonitor/cinemaSocket";
+    private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8080/Heimdall/dashboardUpdates";
 
     @Autowired
     private DataSource ds;

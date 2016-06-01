@@ -1,5 +1,6 @@
 $( function( ) {
-    var wsUri = "ws://localhost:8084/Heimdall/dashboardUpdates";
+//    var wsUri = "ws://localhost:8084/Heimdall/dashboardUpdates";
+    var wsUri = "ws://13.79.175.6:8080/Heimdall/dashboardUpdates";
     var websocket;
 
 //   Pie Chart - BEGIN
