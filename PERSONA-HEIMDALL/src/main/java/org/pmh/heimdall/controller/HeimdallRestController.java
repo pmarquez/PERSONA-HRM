@@ -116,7 +116,7 @@ public class HeimdallRestController {
                 
             }
         }
-        
+
         client.sendMessage ( message );
 
     }
