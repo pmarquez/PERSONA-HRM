@@ -283,7 +283,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             startActivity ( i );
 
             // close this activity
-//			finish ( );
+            this.finish ( );
 
         } else {
             Toast.makeText ( getApplicationContext ( ), lr.getStatusCode ( ) + " - " + lr.getMessage ( ), Toast.LENGTH_LONG ).show ( );

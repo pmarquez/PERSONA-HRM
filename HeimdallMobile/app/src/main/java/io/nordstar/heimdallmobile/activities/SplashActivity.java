@@ -108,11 +108,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-
         Intent intent = null;
 
         SharedPreferences sharedPreferences = getSharedPreferences ( HeimdallPrefs.heimdallPrefs, Context.MODE_PRIVATE );

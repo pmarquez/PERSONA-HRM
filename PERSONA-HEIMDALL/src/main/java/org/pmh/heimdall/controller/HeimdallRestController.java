@@ -93,7 +93,6 @@ public class HeimdallRestController {
     private static final String SENSOR_CODE_NOT_VALID_CODE            = "EV-003";
     private static final String SENSOR_CODE_NOT_VALID_MESSAGE         = "SENSOR CODE NOT VALID.";
 
-//    private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8084/CinemaMonitor/cinemaSocket";
     private static final String WEB_SOCKET_ADDRESS                    = "ws://localhost:8080/Heimdall/dashboardUpdates";
 
     @Autowired

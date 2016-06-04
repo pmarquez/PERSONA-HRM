@@ -22,6 +22,7 @@
     <string name="nfc_error">Error</string>
     <string name="no_nfc">No NFC found on this device</string>
     <string name="nfc_disabled">NFC is not enabled. Please go to settings to enable it.</string>
+    <string name="logout">Logout</string>
     <!-- NFC RELATED MESSAGES - END -->
 
 </resources>

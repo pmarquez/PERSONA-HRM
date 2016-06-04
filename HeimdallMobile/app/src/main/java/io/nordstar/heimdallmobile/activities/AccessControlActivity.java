@@ -21,6 +21,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,6 +50,8 @@ import io.nordstar.heimdallmobile.process.ResponseEventRec;
 
 public class AccessControlActivity extends AppCompatActivity {
 
+    Button btnLogout;
+
     //   NFC
     private NfcAdapter    nfcAdapter;
     private PendingIntent nfcPendingIntent;
@@ -57,6 +61,14 @@ public class AccessControlActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_control);
+
+        btnLogout = ( Button ) findViewById ( R.id.btnLogout );
+        btnLogout.setOnClickListener ( new View.OnClickListener ( ) {
+            @Override
+            public void onClick ( View view ) {
+                doLogout ( );
+            }
+        } );
 
         //   NFC
         nfcInitialSetup ( );
@@ -83,6 +95,26 @@ public class AccessControlActivity extends AppCompatActivity {
             nfcAdapter.enableForegroundDispatch ( this, nfcPendingIntent, null, null );
             nfcAdapter.enableForegroundNdefPush ( this, nfcNdefPushMessage );
         }
+    }
+
+    private void doLogout ( ) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences ( HeimdallPrefs.heimdallPrefs, Context.MODE_PRIVATE );
+
+        SharedPreferences.Editor editor = sharedPreferences.edit ( );
+
+        editor.remove ( HeimdallPrefs.authorizationToken );
+        editor.remove ( HeimdallPrefs.userFirstName      );
+        editor.remove ( HeimdallPrefs.userLastName       );
+
+        editor.commit ( );
+
+        Intent intent = new Intent ( AccessControlActivity.this, LoginActivity.class );
+
+        startActivity ( intent );
+
+        this.finish ( );
+
     }
 
 //  *********************************************************************
