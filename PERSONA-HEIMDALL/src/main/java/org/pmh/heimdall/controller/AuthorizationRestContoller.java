@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
 import com.fxt.auth.LoginRec;
+import org.pmh.heimdall.Main;
 
 //   Domain Imports
 import org.pmh.heimdall.process.AuthenticationResponseRec;
@@ -52,9 +53,6 @@ import org.pmh.heimdall.process.AuthenticationResponseRec;
 public class AuthorizationRestContoller {
 
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
-    //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
-    String serverBaseURI       = "http://13.79.175.6:8080";
-//    String serverBaseURI       = "http://localhost:8084";
     String cerberusBaseURI     = "/Cerberus-1/AuthenticationAPI/1.0/";
     String loginAPIMethod      = "login/";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
@@ -83,7 +81,7 @@ public class AuthorizationRestContoller {
 
             HttpEntity<String> entity = new HttpEntity<> ( "parameters", headers );
 
-            String loginUri  = serverBaseURI + cerberusBaseURI  + loginAPIMethod  + lr.getUserName ( ) + "/" + lr.getPasswd ( );
+            String loginUri  = Main.SERVER_BASE_URI + cerberusBaseURI  + loginAPIMethod  + lr.getUserName ( ) + "/" + lr.getPasswd ( );
             
             try {
                 ResponseEntity<AuthenticationResponseRec> resp = restTemplate.exchange ( loginUri, HttpMethod.GET, entity, AuthenticationResponseRec.class );

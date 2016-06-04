@@ -46,8 +46,11 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 @Configuration                                                      // This annotation tells Spring that this class contains configuration information for the application.
 public class Main extends SpringBootServletInitializer {
     
-    private static final String MAX_REQUEST_SIZE = "10MB";
+//    public static final String SERVER_BASE_URI   = "http://localhost:8084";
+    public static final String SERVER_BASE_URI   = "http://13.79.175.6:8080";
     
+    private static final String MAX_REQUEST_SIZE = "10MB";
+
     @Bean
 //    @ConfigurationProperties(prefix="datasource.heimdall")
     public DataSource aexandriaDataSource ( ) {

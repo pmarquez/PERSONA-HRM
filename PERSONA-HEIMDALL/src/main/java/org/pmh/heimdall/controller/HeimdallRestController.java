@@ -29,6 +29,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.codehaus.jettison.json.JSONObject;
+import org.pmh.heimdall.Main;
 
 //   Domain Imports
 import org.pmh.heimdall.model.EventsModel;
@@ -68,12 +69,10 @@ public class HeimdallRestController {
 
     private WebsocketClientEndpoint client;
     private final String webSocketAddress = "ws://localhost:8080/Heimdall/dashboardUpdates";
-//    private final String webSocketAddress = "ws://13.79.175.6:8080/Heimdall/dashboardUpdates";
+//    private final String webSocketAddress = "ws://localhost:8084/Heimdall/dashboardUpdates";
     
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - BEGIN
     //http://localhost:8084/Cerberus/AuthenticationAPI/1.0/login/pepe/pepe
-    String serverBaseURI            = "http://13.79.175.6:8080";
-//    String serverBaseURI            = "http://localhost:8084";
     String cerberusBaseURI          = "/Cerberus-1/AuthorizationAPI/1.0/";
     String tokenValidationAPIMethod = "confirmToken";
     //TODO - JACK SPARROW WAS HERE - Get rid of this ASAP - END
@@ -226,34 +225,34 @@ public class HeimdallRestController {
         
         RestTemplate restTemplate = new RestTemplate ( );
         HttpHeaders  headers      = new HttpHeaders  ( );
-        
-        String tokenValidation  = serverBaseURI + cerberusBaseURI  + tokenValidationAPIMethod;
+
+        String tokenValidation    = Main.SERVER_BASE_URI + cerberusBaseURI + tokenValidationAPIMethod;
 
         headers.setAccept ( Arrays.asList ( MediaType.APPLICATION_JSON ) );
         headers.set ( "user-token", authToken );
         headers.set ( "service-id", "heimdall"  );
-        
+
         HttpEntity<String> entity = new HttpEntity<> ( "parameters", headers );
 
         TokenConfirmationDataRec tcdr = new TokenConfirmationDataRec  ( );
-        
+
         try {
             ResponseEntity<TokenConfirmationDataRec> response = restTemplate.exchange ( tokenValidation, HttpMethod.GET, entity, TokenConfirmationDataRec.class );
             tcdr = response.getBody ( );
             System.out.println("##### tcdr: " + tcdr);
         } catch ( RestClientException ex ) {
             System.err.print ( ex.getMessage ( ) );
-        
+
         }
-        
+
         return ( tcdr.getMessage ( ).equals ( "Token valid" ) );
-        
+
     }
 
     private boolean isValidTag ( String sensorTagCode ) {
-        
+
         SensorRec sensor = SensorsModel.retrieveSensorData ( sensorTagCode, ds );
-        
+
         return ( sensor.getSensorCode ( ) > 0 );
         
     }
