@@ -17,9 +17,9 @@ import com.fxt.util.StringUtil;
 
 
 /**
- * StrongAES.java<br/><br/>
- * Creation Date 2015-08-10 06:57<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * StrongAES.java<br><br>
+ * Creation Date 2015-08-10 06:57<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -27,8 +27,8 @@ import com.fxt.util.StringUtil;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-08-10 06:57<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-08-10 06:57<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
@@ -39,7 +39,8 @@ import com.fxt.util.StringUtil;
  */
 public class StrongAES {
     
-    String keyString = "N3xF1d3l1t45P3MH";   //   16 Bytes - 128 bits (Strongest possible for us)
+    String keyString = "H31md4llK3y20160";   //   16 Bytes - 128 bits (Strongest possible for us)
+
     byte [ ] key = StringUtil.hexStringToByteArray ( StringUtil.string2hex ( keyString ) );
 
     // Objects required for encryption/decryption
