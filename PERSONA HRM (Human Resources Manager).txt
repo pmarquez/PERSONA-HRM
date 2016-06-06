@@ -1,3 +1,19 @@
+PERSONA HRM
+
+Human Resources Management for the XXI Century.
+
+A Human Resources Manager is much more than just Payroll, in fact this type of system handles several areas, among them:
+
+* Persons
+* Companies
+* Contracts
+* Payroll
+* Access control and Attendance
+* Performance Reviews
+* etc.
+
+...
+
 PERSONA HRM (Human Resources Manager)
 
 Gestión de Recursos Humanos para el Siglo XXI

@@ -123,7 +123,6 @@ public class HeimdallRestController {
      * 
      * @param event
      * @param request
-     * @param authToken
      * @return 
      */
     @RequestMapping ( value = "/heimdallAPI/1.0/events/events", method = RequestMethod.POST, consumes="application/json" )
