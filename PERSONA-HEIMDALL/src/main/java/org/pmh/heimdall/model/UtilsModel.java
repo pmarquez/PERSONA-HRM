@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 //   FENIX Framework Imports
-import com.fxt.address.PostCodeRulesRec;
 import com.fxt.util.HtmlListElement;
 import com.fxt.validations.IssueRec;
 
@@ -24,9 +23,9 @@ import com.fxt.validations.IssueRec;
 
 
 /**
- * UtilsModel.java<br/><br/>
- * Created on 2015-07-14 16:44<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * UtilsModel.java<br><br>
+ * Created on 2015-07-14 16:44<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -539,49 +538,6 @@ public class UtilsModel {
 
         return ( numOccurrences > 0 );
 
-    }
-
-    public static PostCodeRulesRec retrievePostCodeRules ( int provinceCode, DataSource ds ) {
-        
-        String SQLQuery = "SELECT fxt_postcoderulesentity.lineCode, "                                                                     +
-                                 "fxt_postcoderulesentity.provinceCode, "                                                                 +
-                                 "IFNULL(fxt_provinceentity.provinceName,'') AS PROVINCE_NAME, "                                          +
-                                 "IFNULL(fxt_postcoderulesentity.postCodePrefix,'') AS POST_CODE_PREFIX, "                                +
-                                 "IFNULL(fxt_postcoderulesentity.postCodePatterns,'') AS POST_CODE_PATTERNS, "                            +
-                                 "fxt_postcoderulesentity.active "                                                                        +
-
-                          "FROM fxt_postcoderulesentity "                                                                                 +
-
-                          "LEFT OUTER JOIN fxt_provinceentity ON fxt_provinceentity.provinceCode = fxt_postcoderulesentity.provinceCode " +
-
-                          "WHERE fxt_postcoderulesentity.provinceCode = " + provinceCode;
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
-        
-        PostCodeRulesRec r = new PostCodeRulesRec ( );
-        
-        try {
-            r = jdbcTemplate.queryForObject ( SQLQuery,
-                                              new RowMapper<PostCodeRulesRec> ( ) {
-                                                  @Override
-                                                  public PostCodeRulesRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
-                                                      PostCodeRulesRec r = new PostCodeRulesRec ( );
-                                                      
-                                                      r.setLineCode         ( rs.getInt     ( "lineCode"           ) );
-                                                      r.setProvinceCode     ( rs.getInt     ( "provinceCode"       ) );
-                                                      r.setProvinceName     ( rs.getString  ( "PROVINCE_NAME"      ) );
-                                                      r.setPostCodePrefix   ( rs.getString  ( "POST_CODE_PREFIX"   ) );
-                                                      r.setPostCodePatterns ( rs.getString  ( "POST_CODE_PATTERNS" ) );
-                                                      r.setActive           ( rs.getBoolean ( "active"             ) );
-
-                                                      return r;
-                                                  }
-                                            } );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ UtilsModel.retrievePostCodeRules: " + ex.getMessage ( ) );
-        }
-
-        return r;
     }
 
 }

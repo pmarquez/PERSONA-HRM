@@ -2,7 +2,7 @@ PERSONA HRM
 
 Human Resources Management for the XXI Century.
 
-A Human Resources Manager is much more than just Payroll, in fact this type of system handles several areas, among them:
+A Human Resources Management platform is much more than just Payroll and Persons, in fact this type of system spans several other areas, among them:
 
 * Persons
 * Companies

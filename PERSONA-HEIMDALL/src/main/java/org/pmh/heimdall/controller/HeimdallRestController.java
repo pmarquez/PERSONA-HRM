@@ -5,6 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.UUID;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 //   Third Party Libraries Imports
 import org.springframework.web.bind.annotation.RestController;
@@ -23,15 +28,9 @@ import org.springframework.web.client.RestTemplate;
 
 //   FENIX Framework Imports
 import com.fxt.process.ResponseRec;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import org.codehaus.jettison.json.JSONObject;
-import org.pmh.heimdall.Main;
 
 //   Domain Imports
+import org.pmh.heimdall.Main;
 import org.pmh.heimdall.model.EventsModel;
 import org.pmh.heimdall.external.person.PersonRec;
 import org.pmh.heimdall.model.SensorsModel;

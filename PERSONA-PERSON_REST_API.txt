@@ -6,6 +6,13 @@ PERSONS
     URI:
         http://<server_name>:<server_port>/PERSONA-PERSON/personsAPI/1.0/persons
 
+    Response Status:
+
+        PERSONS_001 - OPERATION_SUCCESSFUL           - The requested operation was succesfully completed.
+        PERSONS_003 - INVALID_USER_PRIVILLEGES       - User does not have the required privilleges for this call.
+        PERSONS_004 - INVALID_AUTHORIZATION_TOKEN    - Authorization token received is not valid.
+        PERSONS_005 - INTERNAL_ERROR_ENCOUNTERED     - An internal error was encountered.
+
     Sample data from actual invocation:
 
 		[
@@ -50,6 +57,14 @@ PERSONS/{personCode}
 
     URI:
         http://<server_name>:<server_port>/PERSONA-PERSON/personsAPI/1.0/persons/{personCode}
+
+    Response Status:
+
+        PERSONS_001 - OPERATION_SUCCESSFUL           - The requested operation was succesfully completed.
+        PERSONS_002 - PERSON_NOT_FOUND               - Could not find requested person.
+        PERSONS_003 - INVALID_USER_PRIVILLEGES       - User does not have the required privilleges for this call.
+        PERSONS_004 - INVALID_AUTHORIZATION_TOKEN    - Authorization token received is not valid.
+        PERSONS_005 - INTERNAL_ERROR_ENCOUNTERED     - An internal error was encountered.
 
     Sample data from actual invocation:
 

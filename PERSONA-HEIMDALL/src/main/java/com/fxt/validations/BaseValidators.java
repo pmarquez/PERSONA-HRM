@@ -8,7 +8,7 @@ import com.aeat.valida.Validador;
 import org.apache.commons.validator.routines.EmailValidator;
 
 //   FENIX Framework Imports
-import com.fxt.address.PostCodeRulesRec;
+
 
 //   Domain Imports
 
@@ -178,18 +178,6 @@ public class BaseValidators {
         }
             
         return isValid;
-    }
-
-    /**
-     * Validatea a Postal Code string adheres to a specific pattern dictated by a Country-Province combination
-     * @param postCode
-     * @param pcrr
-     * @return 
-     */
-    //TODO Make the comparisson MULTI-PATTERN PostCodePatterns may contain more than one...keep an eye on this.
-    public static boolean validatePostalCode ( String postCode, PostCodeRulesRec pcrr ) {
-        return ( postCode.matches ( pcrr.getPostCodePatterns ( ) ) && 
-                 postCode.subSequence ( 0, pcrr.getPostCodePrefix ( ).length ( ) ).equals ( pcrr.getPostCodePrefix ( ) ) );
     }
 
 }
