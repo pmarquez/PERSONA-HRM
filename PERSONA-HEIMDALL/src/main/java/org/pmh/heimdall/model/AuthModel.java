@@ -20,12 +20,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 //   FENIX Framework Imports
-import com.fxt.auth.EmailBelongsToRec;
-import com.fxt.auth.PwdRecoveryRec;
 
 //   Domain Imports
-import com.fxt.auth.LoginRec;
-import com.fxt.auth.ChallengeWordRec;
 
 /**
  * AuthModel.java<br><br>
@@ -82,87 +78,6 @@ public class AuthModel {
         }
 
         return ( numOccurrences > 0 );
-
-    }
-    
-    static String SQLRecoveryInsertQuery = "INSERT into fxt_passwordrecoveryentity ( email, "                               +
-                                                                                    "userCode, "                            +
-                                                                                    "uuid, "                                +
-                                                                                    "dateRequested, "                       +
-                                                                                    "expiresIn ) VALUES ( :email, "         +
-                                                                                                         ":userCode, "      +
-                                                                                                         ":uuid, "          +
-                                                                                                         ":dateRequested, " +
-                                                                                                         ":expiresIn )";
-    
-    static String SQLPersonUpdateQuery = "UPDATE fxt_passwordrecoveryentity SET dateRegen = now() " +
-                                         "WHERE personCode = :personCode";
-    
-    /**
-     * Persists a PasswordRecoveryRec to storage
-     * @param ds The Data Source to use
-     * @param r The RecoveryRec to persist 
-     */
-    public static void persistRecovery ( PwdRecoveryRec r, DataSource ds ) {
-
-        String SQLQuery = SQLRecoveryInsertQuery;
-
-        System.out.println ( "AuthModel.persistRecovery.SQLQuery: " + SQLQuery );
-        
-        Map < String, Object > bind = new HashMap<> ( );
-
-                               bind.put ( "email",         r.getEmail            ( ) );
-                               bind.put ( "userCode",      r.getUserCode         ( ) );
-                               bind.put ( "uuid",          r.getUuid             ( ) );
-                               bind.put ( "dateRequested", r.getDateRequestedTS  ( ) );
-                               bind.put ( "expiresIn",     r.getExpiresIn        ( ) );
-
-        SqlParameterSource paramSource = new MapSqlParameterSource ( bind );
-
-        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate ( ds );
-
-        KeyHolder venueKeyHolder = new GeneratedKeyHolder ( );
-        
-        try {
-            jdbcTemplate.update ( SQLQuery, paramSource, venueKeyHolder );
-            r.setLineCode ( venueKeyHolder.getKey ( ).intValue ( ) );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ PersonsModel.persistPerson: " + ex.getMessage ( ) );
-        }
-        
-    }
-    
-    public static EmailBelongsToRec emailBelongsTo ( String email, DataSource ds ) {
-        
-        String SQLQuery = "SELECT nf_userentity.userCode, "                 +
-                                 "IFNULL(nf_userentity.email,'') AS EMAIL " +
-
-                          "FROM nf_userentity "                             +
-
-                          "WHERE nf_userentity.email = '" + email + "'";
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate ( ds );
-        
-        EmailBelongsToRec r = new EmailBelongsToRec ( );
-        
-        try {
-            r = jdbcTemplate.queryForObject ( SQLQuery,
-                                              new RowMapper<EmailBelongsToRec> ( ) {
-                                                @Override
-                                                public EmailBelongsToRec mapRow ( ResultSet rs, int rowNum ) throws SQLException {
-                                                    EmailBelongsToRec r = new EmailBelongsToRec ( );
-                                                    
-                                                    r.setUserCode ( rs.getInt    ( "userCode" ) );
-                                                    r.setEmail    ( rs.getString ( "EMAIL"    ) );
-
-                                                    return r;
-                                                }
-                                              } );
-        } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ AuthModel.emailBelongsTo: " + ex.getMessage ( ) );
-        }
-
-        return r;
 
     }
 

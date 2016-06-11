@@ -27,7 +27,6 @@ import org.pmh.heimdall.Main;
 
 //   Domain Imports
 import org.pmh.heimdall.process.AuthenticationResponseRec;
-
 /**
  * AuthorizationRestController.java<br><br>
  * Creation Date 2016-04-25 17:34<br><br>
