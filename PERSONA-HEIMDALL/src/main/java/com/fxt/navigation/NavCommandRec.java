@@ -14,9 +14,9 @@ package com.fxt.navigation;
 
 
 /**
- * NavCommandRec.java<br/><br/>
- * Creation Date 2015-06-18 10:49<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * NavCommandRec.java<br><br>
+ * Creation Date 2015-06-18 10:49<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -24,8 +24,8 @@ package com.fxt.navigation;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-06-18 10:49<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-06-18 10:49<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>

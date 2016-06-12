@@ -15,9 +15,9 @@ import java.util.List;
 
 
 /**
- * NavigationRec.java<br/><br/>
- * Creation Date 2015-06-18 10:51<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * NavigationRec.java<br><br>
+ * Creation Date 2015-06-18 10:51<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -25,8 +25,8 @@ import java.util.List;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-06-18 10:51<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-06-18 10:51<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
