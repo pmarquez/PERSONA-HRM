@@ -14,9 +14,9 @@ package com.fxt.util.date;
 
 
 /**
- * DateUtils.java<br/><br/>
- * Creation Date 2015-07-13 12:14<br/><br/>
- * <b>DESCRIPTION:</b><br/><br/>
+ * DateUtils.java<br><br>
+ * Creation Date 2015-07-13 12:14<br><br>
+ * <b>DESCRIPTION:</b><br><br>
  * <p></p>
  *
  *<PRE>
@@ -24,8 +24,8 @@ package com.fxt.util.date;
  *<tr><th colspan="2">   History   </th></tr>
  *
  *<tr>
- *<td width="20%">Version 1.0<br/>
- * Version Date: 2015-07-13 12:14<br/>
+ *<td width="20%">Version 1.0<br>
+ * Version Date: 2015-07-13 12:14<br>
  * Version Creator: Paulo Márquez</td>
  *<td width="80%"><p>Creation</p></td>
  *</tr>
