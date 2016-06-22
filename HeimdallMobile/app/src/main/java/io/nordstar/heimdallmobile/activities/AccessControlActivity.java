@@ -30,6 +30,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.kontakt.sdk.android.ble.connection.OnServiceReadyListener;
+import com.kontakt.sdk.android.ble.manager.ProximityManager;
+import com.kontakt.sdk.android.ble.manager.ProximityManagerContract;
+import com.kontakt.sdk.android.ble.manager.listeners.EddystoneListener;
+import com.kontakt.sdk.android.ble.manager.listeners.simple.SimpleEddystoneListener;
+import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
+import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +59,9 @@ public class AccessControlActivity extends AppCompatActivity {
 
     Button btnLogout;
 
+    //   Eddystone
+    private ProximityManagerContract proximityManager;
+
     //   NFC
     private NfcAdapter    nfcAdapter;
     private PendingIntent nfcPendingIntent;
@@ -73,6 +83,16 @@ public class AccessControlActivity extends AppCompatActivity {
         //   NFC
         nfcInitialSetup ( );
 
+        //   Eddystone
+        proximityManager = new ProximityManager ( this );
+        proximityManager.setEddystoneListener ( createEddystoneListener ( ) );
+
+    }
+
+    @Override
+    protected void onStart ( ) {
+        super.onStart ( );
+        startScanning ( );
     }
 
     @Override
@@ -95,6 +115,19 @@ public class AccessControlActivity extends AppCompatActivity {
             nfcAdapter.enableForegroundDispatch ( this, nfcPendingIntent, null, null );
             nfcAdapter.enableForegroundNdefPush ( this, nfcNdefPushMessage );
         }
+    }
+
+    @Override
+    protected void onStop ( ) {
+        proximityManager.stopScanning ( );
+        super.onStop ( );
+    }
+
+    @Override
+    protected void onDestroy ( ) {
+        proximityManager.disconnect ( );
+        proximityManager = null;
+        super.onDestroy ( );
     }
 
     private void doLogout ( ) {
@@ -480,6 +513,26 @@ public class AccessControlActivity extends AppCompatActivity {
 
         queue.add ( jsonObjectRequest );
 
+    }
+
+    //    Eddystone
+    private EddystoneListener createEddystoneListener ( ) {
+        return new SimpleEddystoneListener ( ) {
+            @Override
+            public void onEddystoneDiscovered(IEddystoneDevice eddystone, IEddystoneNamespace namespace) {
+                Log.i("HeimdallMobile", "Eddystone discovered: " + eddystone.getUniqueId());
+            }
+        };
+    }
+
+    //    Eddystone
+    private void startScanning ( ) {
+        proximityManager.connect ( new OnServiceReadyListener( ) {
+            @Override
+            public void onServiceReady ( ) {
+                proximityManager.startScanning ( );
+            }
+        });
     }
 
 }

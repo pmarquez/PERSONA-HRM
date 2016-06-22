@@ -10,9 +10,11 @@
     <string name="error_invalid_password">La contraseña es muy corta</string>
     <string name="error_incorrect_password">La contraeña es incorrecta</string>
     <string name="error_field_required">Este campo es requerido</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="permission_rationale">Contacts permissions are needed for providing email
+        completions.
     </string>
+
+    <string name="kontakt_io_api_key">fAaekPCpWCYSBCzQINvmqsWgDLJPMNcG</string>
 
     <string name="title_activity_splash">Splash Activity</string>
     <string name="dummy_button">Dummy Button</string>
