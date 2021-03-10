@@ -1,10 +1,9 @@
-package org.pmh.persona.person.person;
+package org.pmh.persona.person.model.person;
 
 //   Standard Libraries Imports
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

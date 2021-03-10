@@ -1,5 +1,5 @@
 
-package org.pmh.persona.person.person;
+package org.pmh.persona.person.model.person;
 
 //   Standard Libraries Imports
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 //   FENIX Framework Imports
 
 //   Application Domain Imports
-import org.pmh.persona.person.education.AcademiaBaseRec;
+import org.pmh.persona.person.model.education.AcademiaBaseRec;
 
 
 /**

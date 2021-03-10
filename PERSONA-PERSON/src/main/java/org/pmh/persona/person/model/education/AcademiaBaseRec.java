@@ -1,5 +1,5 @@
 
-package org.pmh.persona.person.education;
+package org.pmh.persona.person.model.education;
 
 //   Standard Libraries Imports
 import java.time.LocalDate;

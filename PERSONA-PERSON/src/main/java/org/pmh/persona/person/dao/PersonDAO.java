@@ -1,4 +1,4 @@
-package org.pmh.persona.person.model;
+package org.pmh.persona.person.dao;
 
 //   Standard Libraries Imports
 import java.sql.ResultSet;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.sql.DataSource;
 import java.util.List;
-import org.pmh.persona.person.education.AcademiaBaseRec;
+import org.pmh.persona.person.model.education.AcademiaBaseRec;
 
 //   Third Party Libraries Imports
 import org.springframework.dao.DataAccessException;
@@ -16,11 +16,11 @@ import org.springframework.jdbc.core.RowMapper;
 //   FENIX Framework Imports
 
 //   Application Domain Imports
-import org.pmh.persona.person.person.PersonBaseRec;
-import org.pmh.persona.person.person.PersonRec;
+import org.pmh.persona.person.model.person.PersonBaseRec;
+import org.pmh.persona.person.model.person.PersonRec;
 
 /**
- * PersonsModel.java<br><br>
+ * PersonDAO.java<br><br>
  * Creation Date 2015-03-23 17:45<br><br>
  * <b>DESCRIPTION:</b><br><br>
  * <p>Manage all the interactions with persistent Items data.</p>
@@ -40,7 +40,7 @@ import org.pmh.persona.person.person.PersonRec;
  * @author Paulo Márquez Herrero
  * @version 1.0 - 2015-03-23 17:45
  */
-public class PersonsModel {
+public class PersonDAO {
     
     static public List<PersonBaseRec> retrieveBasePersons ( DataSource ds ) {
         
@@ -95,7 +95,7 @@ public class PersonsModel {
                                             }
                                         } );
         } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ PersonsModel.retrieveBasePersons: " + ex.getMessage ( ) );
+            System.err.println ( "DataAccessException @ PersonDAO.retrieveBasePersons: " + ex.getMessage ( ) );
         }
 
         return l;
@@ -150,13 +150,13 @@ public class PersonsModel {
                                                             r.setCreationDate            ( rs.getString  ( "CREATION_DATE"          ) );
                                                             r.setActive                  ( rs.getBoolean ( "active"                 ) );
                                                            
-                                                            r.setAcademia ( PersonsModel.retrievePersonAcademia ( personCode, ds ) );
+                                                            r.setAcademia ( PersonDAO.retrievePersonAcademia ( personCode, ds ) );
                                                             
                                                         return r;
                                                     }
                                                 } );
         } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ PersonsModel.retrievePerson: " + ex.getMessage ( ) );
+            System.err.println ( "DataAccessException @ PersonDAO.retrievePerson: " + ex.getMessage ( ) );
         }
 
         return r;
@@ -210,7 +210,7 @@ public class PersonsModel {
                                             }
                                         } );
         } catch ( DataAccessException ex ) {
-            System.err.println ( "DataAccessException @ PersonsModel.retrievePersonAcademia: " + ex.getMessage ( ) );
+            System.err.println ( "DataAccessException @ PersonDAO.retrievePersonAcademia: " + ex.getMessage ( ) );
         }
 
         return l;

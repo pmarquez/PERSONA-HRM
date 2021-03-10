@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +40,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
  * @version 1.0 - 2015-02-17 21:51
  */
 @EnableAutoConfiguration                                                  // This annotation tells Spring to auto-wire your application
-@ComponentScan ( basePackages = { "org.pmh.persona.person.controller" } ) // This annotation tells Spring to look for controllers, etc. starting in the current package
+@ComponentScan ( basePackages = {"org.pmh.persona.person.web.controller"} ) // This annotation tells Spring to look for controllers, etc. starting in the current package
 @Configuration                                                            // This annotation tells Spring that this class contains configuration information for the application.
 public class Main extends SpringBootServletInitializer {
     

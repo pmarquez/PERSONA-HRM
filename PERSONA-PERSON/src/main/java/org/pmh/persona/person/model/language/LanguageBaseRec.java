@@ -1,5 +1,5 @@
 
-package org.pmh.persona.person.language;
+package org.pmh.persona.person.model.language;
 
 
 //   Standard Libraries Imports

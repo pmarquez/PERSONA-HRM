@@ -1,5 +1,5 @@
 
-package org.pmh.persona.person.controller;
+package org.pmh.persona.person.web.controller;
 
 //   Standard Libraries Imports
 import javax.servlet.http.HttpServletRequest;

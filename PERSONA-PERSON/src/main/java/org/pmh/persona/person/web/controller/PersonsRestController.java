@@ -1,5 +1,5 @@
 
-package org.pmh.persona.person.controller;
+package org.pmh.persona.person.web.controller;
 
 
 //   Standard Libraries Imports
@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 //   Third Party Libraries Imports
+import org.pmh.persona.person.dao.PersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,9 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.fxt.process.ResponseRec;
 
 //   Application Domain Imports
-import org.pmh.persona.person.person.PersonBaseRec;
-import org.pmh.persona.person.person.PersonRec;
-import org.pmh.persona.person.model.PersonsModel;
+import org.pmh.persona.person.model.person.PersonBaseRec;
+import org.pmh.persona.person.model.person.PersonRec;
 
 /**
  * PersonsRestController.java<br><br>
@@ -86,7 +86,7 @@ public class PersonsRestController {
         
         ResponseRec<List<PersonBaseRec>> rr = new ResponseRec<> ( );
         
-        List<PersonBaseRec> l = PersonsModel.retrieveBasePersons ( ds );
+        List<PersonBaseRec> l = PersonDAO.retrieveBasePersons ( ds );
 
         if ( l.size ( ) > PersonsRestController.EMPTY_PERSON_LIST ) {
             rr.setPayload       ( l );
@@ -115,7 +115,7 @@ public class PersonsRestController {
         
         ResponseRec<PersonRec> rr = new ResponseRec<> ( );
 
-        PersonRec r = PersonsModel.retrievePerson ( personCode, ds );
+        PersonRec r = PersonDAO.retrievePerson ( personCode, ds );
 
         if ( r.getPersonCode ( ) > PersonsRestController.EMPTY_PERSON_REC ) {
             rr.setPayload ( r );
@@ -127,7 +127,7 @@ public class PersonsRestController {
             rr.setResultMessage ( "Could not find requested person." );                     //TODO use the database based ISSUE_MESSAGE_ENTITY scheme. 
             
         }
-//        org.pmh.persona.person.education.AcademiaBaseRec abr = r.getAcademia().get ( 0 );
+//        org.pmh.persona.person.model.education.AcademiaBaseRec abr = r.getAcademia().get ( 0 );
         
         return rr;
     }
@@ -146,7 +146,7 @@ public class PersonsRestController {
         
         ResponseRec<Boolean> rr = new ResponseRec<> ( );
 
-        PersonRec r = PersonsModel.retrievePerson ( personCode, ds );
+        PersonRec r = PersonDAO.retrievePerson ( personCode, ds );
 
         if ( r.getPersonCode ( ) > PersonsRestController.EMPTY_PERSON_REC ) {
             rr.setPayload ( Boolean.TRUE );
